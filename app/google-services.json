@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "355575663792",
+    "project_id": "happy-hour-ad071",
+    "storage_bucket": "happy-hour-ad071.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355575663792:android:eb99c0705c0c34079d7f75",
+        "android_client_info": {
+          "package_name": "com.example.happyhour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355575663792-8fe9ap9hhpe94cini6ahvsj8m04htfou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0lsuDZJNJirH3l2mrMuhu8Zl3vh75DZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355575663792-8fe9ap9hhpe94cini6ahvsj8m04htfou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
