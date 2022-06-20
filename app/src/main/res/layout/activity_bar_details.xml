@@ -1,9 +1,388 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Activity_bar_details">
+    tools:context=".activities.Activity_bar_details"
+    android:background="#FAF9F9">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/barDetails_FRM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/barDetails_IMG_barPhoto"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:clickable="true"
+                    android:src="@drawable/imgfg"
+                    app:civ_border_color="#555B6E"
+                    app:civ_border_width="3dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeBarPhoto"
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:backgroundTint="#ECFAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="1dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#F7A19C9C"
+                    app:useCompatPadding="false" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Jono Bar"
+                    android:textColor="#555B6E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeBarName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/barDetails_BTN_uploadPost"
+                    android:layout_width="160dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FF577F"
+                    android:text="Upload Post"
+                    android:textColor="#FAF9F9"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeWidth="0dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/barDetails_BTN_follow"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FF577F"
+                    android:text="Follow"
+                    android:visibility="invisible"
+                    app:iconTint="@color/black"
+                    android:textColor="#FAF9F9"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeWidth="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/barDetails_BTN_makeReservation"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FAF9F9"
+                    android:text="Table Reservation"
+                    android:visibility="invisible"
+                    android:textColor="#555B6E"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="#FF577F"
+                    app:strokeWidth="3dp" />
+            </LinearLayout>
+            </RelativeLayout>
+            <RatingBar
+                android:id="@+id/barDetails_RAB_rating"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
+                android:background="#FAF9F9"
+                android:numStars="5"
+                android:rating="3.5"
+                android:theme="@style/RatingBar" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="7dp"
+                android:background="#6CA19C9C" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_barType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Wine bar"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeBarType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/barDetails_TXT_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Description:"
+                    android:textColor="#555B6E"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/barDetails_TXT_description"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:paddingTop="7dp"
+                    android:text="Juno is an old Tel Aviv institutifrom 2009, on the one hand it is a wine bar in a classic Roman style that offers a wide variety of wines and on the other hand a cafe that offers fine coffee and a rich and varied menu."
+                    android:textColor="#555B6E"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="5dp"
+                android:background="#6CA19C9C" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_musicType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:drawableStart="@drawable/ic_music"
+                    android:drawablePadding="3dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Jazz , Rock"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeMusicType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_happyHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/ic_sale"
+                    android:drawablePadding="3dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="1 + 1 friday 18:00 - 21:00"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeHappyHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/barDetails_LBL_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/ic_menu"
+                    android:drawablePadding="3dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="click for see the menu"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/barDetails_FAB_changeMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#6CA19C9C"
+                    app:useCompatPadding="false" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/barDetails_TXTdf_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:text="Reviews:"
+                    android:textColor="#555B6E"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/barDetails_BTN_writeReview"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="#FAF9F9"
+                    android:text="Write A Review"
+                    android:textColor="#555B6E"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="#6CA19C9C"
+                    app:strokeWidth="3dp" />
+            </RelativeLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_marginBottom="45dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:showIn="@layout/activity_bar_account">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/barDetails_LST_Reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

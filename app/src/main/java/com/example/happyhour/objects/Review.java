@@ -3,27 +3,26 @@ package com.example.happyhour.objects;
 import java.util.Date;
 
 public class Review {
-    private String reviewer_id;
+    private String reviewer_name;
     private String description;
     private float stars_rating;
-    private Date data;
 
     public Review() {
 
     }
 
     public Review(String reviewer_id, String description, float stars_rating) {
-        this.reviewer_id = reviewer_id;
+        this.reviewer_name = reviewer_id;
         this.description = description;
         this.stars_rating = stars_rating;
     }
 
-    public String getReviewer_id() {
-        return reviewer_id;
+    public String getReviewer_name() {
+        return reviewer_name;
     }
 
-    public Review setReviewer_id(String reviewer_id) {
-        this.reviewer_id = reviewer_id;
+    public Review setReviewer_name(String reviewer_name) {
+        this.reviewer_name = reviewer_name;
         return this;
     }
 
@@ -45,12 +44,4 @@ public class Review {
         return this;
     }
 
-    public Date getData() {
-        return data;
-    }
-
-    public Review setData(Date data) {
-        this.data = data;
-        return this;
-    }
 }

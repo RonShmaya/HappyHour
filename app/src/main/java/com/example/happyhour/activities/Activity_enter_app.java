@@ -82,11 +82,9 @@ public class Activity_enter_app extends AppCompatActivity {
             DataManager.getDataManager().set_account(account);
             if(userType == DataManager.eUserTypes.Business) {
                 go_next(Activity_bar_account.class);
-                MyServices.getInstance().makeToast("3");
             }
             else if(userType == DataManager.eUserTypes.Private){
                 go_next(Activity_private_account.class);
-                MyServices.getInstance().makeToast("4");
             }
         }
 

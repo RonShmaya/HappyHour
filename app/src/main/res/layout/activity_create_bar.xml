@@ -1,12 +1,447 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.Activity_create_bar">
 
+    <include
+        android:id="@+id/app_top_main"
+        layout="@layout/app_top_bar" />
+
+    <ImageView
+        android:id="@+id/main_IMG_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_top_main"
+        android:background="#FAF9F9"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_background" />
 
 
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_top_main"
+        android:layout_margin="5dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/createBar_LBL_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:gravity="center"
+                android:text="create your Bar"
+                android:textColor="#555B6E"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/createBar_FRM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/createBar_LBL_title"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/createBar_IMG_barPhoto"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/imgfg"
+                android:clickable="true"
+                app:civ_border_color="#555B6E"
+                app:civ_border_width="3dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/navigation_header_container_FAB_profile_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:clickable="true"
+                android:backgroundTint="#FAF9F9"
+                style="@style/Widget.Material3.Button.Icon"
+                app:fabCustomSize="30dp"
+                app:srcCompat="@drawable/ic_edit"
+                app:borderWidth="1dp"
+                app:tint="#000000"
+                app:useCompatPadding="false" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/createBar_FRM"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createBar_TIL_barName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:hint="Bar Name"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:counterEnabled="true"
+                    app:errorEnabled="true"
+                    app:counterMaxLength="20"
+                    app:hintTextColor="#555B6E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createBar_TIETL_barName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:imeOptions="actionDone"
+                        android:maxLength="20"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createBar_TIL_description"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    app:errorEnabled="true"
+                    android:hint="Description"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150"
+                    app:hintTextColor="#555B6E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createBar_TIETL_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:imeOptions="actionDone"
+                        android:maxLength="150"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createBar_TIL_barType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:hint="Bar Type"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="#555B6E"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    >
+
+                <AutoCompleteTextView
+                    android:id="@+id/createBar_ACTV_barType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="30"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:outlineAmbientShadowColor="#555B6E"
+                    android:shadowColor="#555B6E"
+                    android:textColor="#555B6E"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/createBar_LBL_musicType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:layout_marginTop="17dp"
+                    android:gravity="start"
+                    android:text="Select Music Types:"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:textStyle="bold" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/createBar_LBL_musicTypeError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:gravity="start"
+                    android:text=""
+                    android:textColor="#960606"
+                    android:textSize="12sp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="3dp"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/createBar_CG_musicTypes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Hip_Hop"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Hip Hop"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_years_90"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="years 90"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_years_80"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="years 80"
+                            android:textColor="#FAF9F9"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_years_70"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="years 70"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Electronic"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Electronic"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_israeli"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="israeli"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Rock"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Rock"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Soul"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Soul"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Funk"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Funk"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Reggae"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Reggae"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Jazz"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Jazz"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Classic"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Classic"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Latin"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Latin"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_Blues"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:text="Blues"
+                            android:textColor="#FAF9F9"
+                            android:textStyle="bold"
+                            app:checkedIcon="@drawable/ic_yes"
+                            app:checkedIconTint="#555B6E"
+                            app:chipBackgroundColor="#B7FF577F"
+                            app:chipIconEnabled="true" />
+
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/createBar_BTN_create"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:backgroundTint="#555B6E"
+                    android:text="Create"
+                    app:checkedIconTint="@color/white"
+                    android:textColor="#FAF9F9"
+                    android:textSize="15sp"
+                    app:cornerRadius="20dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

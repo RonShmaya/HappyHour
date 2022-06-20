@@ -134,9 +134,11 @@ public class Activity_user_connect extends AppCompatActivity {
     private void login_next_page(boolean isUserFound, Account account) {
         if(account instanceof PrivateAccount){
             go_next(Activity_private_account.class);
+            DataManager.getDataManager().set_account(account);
         }
         else if(account instanceof BusinessAccount){
             go_next(Activity_bar_account.class);
+            DataManager.getDataManager().set_account(account);
         }
         else{
             MyServices.getInstance().makeToast("the account not exists\nplease create account");

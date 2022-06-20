@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.happyhour.callbacks.Callback_account_creating;
 import com.example.happyhour.callbacks.Callback_find_account;
 import com.example.happyhour.objects.Account;
+import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.BusinessAccounts;
 import com.example.happyhour.objects.PrivateAccount;
@@ -20,11 +21,13 @@ import com.google.firebase.database.ValueEventListener;
 public class MyDB {
     public static final String BUSINESS_ACCOUNTS = "BUSINESS_ACCOUNTS";
     public static final String PRIVATE_ACCOUNTS = "PRIVATE_ACCOUNTS";
+    public static final String BARS = "BARS";
 
     private static MyDB _instance = new MyDB();
     private FirebaseDatabase database;
     private DatabaseReference refBusinessAccounts;
     private DatabaseReference refPrivateAccounts;
+    private DatabaseReference refBars;
     private Callback_find_account callback_find_user;
     private Callback_account_creating callback_account_creating;
 
@@ -32,6 +35,7 @@ public class MyDB {
         database = FirebaseDatabase.getInstance();
         refBusinessAccounts = database.getReference(BUSINESS_ACCOUNTS);
         refPrivateAccounts = database.getReference(PRIVATE_ACCOUNTS);
+        refBars = database.getReference(BARS);
     }
 
     public static MyDB getInstance() {
@@ -90,4 +94,24 @@ public class MyDB {
         }
     }
 
+    public void update_business_account(BusinessAccount businessAccount) {
+        refBusinessAccounts.child(businessAccount.getId()).setValue(businessAccount);
+    }
+    public void add_business_account_bar(BusinessAccount businessAccount, String barID , Bar bar) {
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(barID).setValue(bar);
+    }
+
+    public void logout() {
+         callback_find_user = null;
+         callback_account_creating = null;
+    }
+
+    public void add_bar(String id, Bar bar) {
+        refBars.child(id).setValue(bar);
+    }
+
+    public void delete_bar(BusinessAccount businessAccount, Bar bar) {
+        refBars.child(bar.getId()).removeValue();
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).removeValue();
+    }
 }

@@ -16,4 +16,16 @@ public class BusinessAccount extends Account{
         this.myBars = myBars;
         return this;
     }
+    public BusinessAccount addBar(Bar bar, String id) {
+        this.myBars.put(id,bar);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessAccount{" +
+                "id='" + id + '\'' +
+                ", myBars=" + myBars +
+                '}';
+    }
 }

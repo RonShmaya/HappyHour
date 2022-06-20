@@ -71,17 +71,6 @@
                     android:textSize="15sp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/listBars_BTN_share_account"
-                    style="@style/Widget.Material3.Button.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:insetTop="3dp"
-                    android:insetBottom="3dp"
-                    app:icon="@drawable/ic_share_account"
-                    app:iconSize="25dp"
-                    app:iconTint="#555B6E" />
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/listBars_BTN_remove_account"
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="wrap_content"

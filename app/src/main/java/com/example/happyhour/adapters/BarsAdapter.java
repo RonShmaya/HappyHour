@@ -20,7 +20,6 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public interface Barlistener {
         void clicked(Bar bar, int position);
-        void share(Bar bar, int position);
         void minus(Bar bar, int position);
     }
 
@@ -51,11 +50,12 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         holder.listBars_LBL_name.setText(bar.getName());
         holder.listBars_LBL_description.setText(bar.getDescription());
-        holder.listBars_RAB_rating.setRating(3.5F);
+        holder.listBars_RAB_rating.setRating(3.5F);// TODO: 19/06/2022 set real rating
 
 
        // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
      //   holder.listBars_IMG.setImageResource(resourceId);
+        // TODO: 19/06/2022 set photo
     }
 
     @Override
@@ -74,7 +74,6 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private AppCompatImageView listBars_IMG;
         private MaterialTextView listBars_LBL_name;
         private MaterialTextView listBars_LBL_description;
-        private MaterialButton listBars_BTN_share_account;
         private MaterialButton listBars_BTN_remove_account;
         private RatingBar listBars_RAB_rating;
 
@@ -84,19 +83,9 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             listBars_IMG = itemView.findViewById(R.id.listBars_IMG);
             listBars_LBL_name = itemView.findViewById(R.id.listBars_LBL_name);
             listBars_LBL_description = itemView.findViewById(R.id.listBars_LBL_description);
-            listBars_BTN_share_account = itemView.findViewById(R.id.listBars_BTN_share_account);
             listBars_BTN_remove_account = itemView.findViewById(R.id.listBars_BTN_remove_account);
             listBars_RAB_rating = itemView.findViewById(R.id.listBars_RAB_rating);
 
-
-            listBars_BTN_share_account.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (barlistener != null) {
-                        barlistener.share(getItem(getAdapterPosition()), getAdapterPosition());
-                    }
-                }
-            });
 
             listBars_BTN_remove_account.setOnClickListener(new View.OnClickListener() {
                 @Override

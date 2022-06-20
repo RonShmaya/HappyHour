@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Bar {
     private String name = "";
     private String description = "";
+    private String id = "";
+    private String owner_id = "";
     private ArrayList<Review> reviews = new ArrayList<>();
     private eBarType barType;
     private ArrayList<eMusicType> musicTypes = new ArrayList<>();
@@ -95,6 +97,24 @@ public class Bar {
 
     public Bar setSum_ranks(float sum_ranks) {
         this.sum_ranks = sum_ranks;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Bar setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getOwner_id() {
+        return owner_id;
+    }
+
+    public Bar setOwner_id(String owner_id) {
+        this.owner_id = owner_id;
         return this;
     }
 }

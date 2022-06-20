@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFC764"
+            app:borderWidth="0dp"
             android:src="@drawable/ic_plus"
             app:layout_anchor="@id/bottom_app_bar"
             app:maxImageSize="30dp" />

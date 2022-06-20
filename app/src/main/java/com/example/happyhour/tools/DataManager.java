@@ -1,10 +1,14 @@
 package com.example.happyhour.tools;
 
 import com.example.happyhour.objects.Account;
+import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.PrivateAccount;
+import com.example.happyhour.objects.eBarType;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class DataManager {
     private static DataManager _instance = new DataManager();
@@ -63,5 +67,32 @@ public class DataManager {
             set_private_account((PrivateAccount)account);
         }
     }
+    public ArrayList<String> getBarTypesNames() {
+        ArrayList<String> barsType_name = new ArrayList<>();
+
+        for (eBarType barType: eBarType.values()) {
+            barsType_name.add(barType.toString().replace('_',' '));
+        }
+        return barsType_name;
+    }
+
+
+    public void addBusinessAccountBar(Bar bar) {
+        businessAccount.addBar(bar , bar.getId());
+        MyDB.getInstance().add_business_account_bar(businessAccount, bar.getId() ,bar);
+        MyDB.getInstance().add_bar(bar.getId() ,bar);
+    }
+    public void logout() {
+         privateAccount = null;
+         businessAccount = null;
+        FirebaseAuth.getInstance().signOut();
+        MyDB.getInstance().logout();
+    }
+    public void delete_bar(Bar bar, int position) {
+        this.businessAccount.getMyBars().remove(bar.getId(),bar);
+        MyDB.getInstance().delete_bar(businessAccount , bar);
+    }
+
+
 
 }
