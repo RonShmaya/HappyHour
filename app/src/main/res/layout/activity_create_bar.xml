@@ -64,7 +64,7 @@
                 app:civ_border_width="3dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/navigation_header_container_FAB_profile_pic"
+                android:id="@+id/createBar_FAB_profile_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
@@ -148,6 +148,36 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/createBar_TIL_HappyHour"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    app:errorEnabled="true"
+                    android:hint="Your Happy Hours"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="125"
+                    app:hintTextColor="#555B6E">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/createBar_TIETL_HappyHour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:imeOptions="actionDone"
+                        android:maxLength="150"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/createBar_TIL_barType"
@@ -163,19 +193,18 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     >
 
-                <AutoCompleteTextView
-                    android:id="@+id/createBar_ACTV_barType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="30"
-                    android:fontFamily="@font/comfortaa_bold"
-                    android:outlineAmbientShadowColor="#555B6E"
-                    android:shadowColor="#555B6E"
-                    android:textColor="#555B6E"
-                    android:inputType="none"
-                    />
+                    <AutoCompleteTextView
+                        android:id="@+id/createBar_ACTV_barType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:inputType="none"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/createBar_LBL_musicType"
                     android:layout_width="match_parent"
@@ -422,6 +451,57 @@
 
                     </com.google.android.material.chip.ChipGroup>
                 </HorizontalScrollView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/createBar_LBL_add_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:layout_marginTop="17dp"
+                    android:gravity="start"
+                    android:text="Upload Bar Menu:"
+                    android:textColor="#555B6E"
+                    android:textSize="15sp"
+                    android:layout_marginStart="5dp"
+                    android:textStyle="bold" />
+                <FrameLayout
+                    android:id="@+id/createBar_FRM_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_below="@id/createBar_LBL_title"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/listBars_IMG"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="100dp"
+                        app:strokeColor="#6CA19C9C"
+                        app:strokeWidth="3dp"
+                        android:layout_margin="20dp"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/semiRoundedImageView"
+                        android:src="@drawable/imgfg" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/createBar_FAB_upload_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:clickable="true"
+                        android:backgroundTint="#FAF9F9"
+                        style="@style/Widget.Material3.Button.Icon"
+                        app:fabCustomSize="30dp"
+                        app:srcCompat="@drawable/ic_edit"
+                        app:borderWidth="1dp"
+                        app:tint="#000000"
+                        app:useCompatPadding="false" />
+
+
+                </FrameLayout>
+
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/createBar_BTN_create"

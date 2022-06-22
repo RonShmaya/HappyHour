@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Activity_bar_details"
-    android:background="#FAF9F9">
+    android:background="#FAF9F9"
+    tools:context=".activities.Activity_bar_details">
+
 
 
     <ScrollView
@@ -17,6 +17,32 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="7dp"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#FAF9F9"
+                app:borderWidth="0dp"
+                android:src="@drawable/ic_log_out"
+                app:maxImageSize="30dp" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_return_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="7dp"
+                android:backgroundTint="#FAF9F9"
+                app:borderWidth="0dp"
+                android:src="@drawable/ic_back"
+                app:maxImageSize="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,56 +112,84 @@
                     app:tint="#6CA19C9C"
                     app:useCompatPadding="false" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/barDetails_BTN_uploadPost"
-                    android:layout_width="160dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#FF577F"
-                    android:text="Upload Post"
-                    android:textColor="#FAF9F9"
-                    android:textSize="13sp"
-                    app:cornerRadius="20dp"
-                    app:strokeWidth="0dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/barDetails_BTN_follow"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#FF577F"
-                    android:text="Follow"
-                    android:visibility="invisible"
-                    app:iconTint="@color/black"
-                    android:textColor="#FAF9F9"
-                    android:textSize="13sp"
-                    app:cornerRadius="20dp"
-                    app:strokeWidth="0dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/barDetails_BTN_makeReservation"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#FAF9F9"
-                    android:text="Table Reservation"
-                    android:visibility="invisible"
-                    android:textColor="#555B6E"
-                    android:textSize="13sp"
-                    app:cornerRadius="20dp"
-                    app:strokeColor="#FF577F"
-                    app:strokeWidth="3dp" />
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/barDetails_BTN_uploadPost"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF577F"
+                        android:text="Upload Post"
+                        android:textColor="#FAF9F9"
+                        android:textSize="13sp"
+                        app:cornerRadius="20dp"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/barDetails_BTN_myTables"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FAF9F9"
+                        android:text="My Tables"
+                        android:textColor="#555B6E"
+                        android:textSize="13sp"
+                        app:cornerRadius="20dp"
+                        app:strokeColor="#FF577F"
+                        app:strokeWidth="3dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/barDetails_BTN_follow"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FF577F"
+                        android:text="Follow"
+                        android:textColor="#FAF9F9"
+                        android:textSize="13sp"
+                        android:visibility="invisible"
+                        app:cornerRadius="20dp"
+                        app:iconTint="@color/black"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/barDetails_BTN_makeReservation"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#FAF9F9"
+                        android:text="Table Reservation"
+                        android:textColor="#555B6E"
+                        android:textSize="13sp"
+                        android:visibility="invisible"
+                        app:cornerRadius="20dp"
+                        app:strokeColor="#FF577F"
+                        app:strokeWidth="3dp" />
+                </LinearLayout>
             </RelativeLayout>
+
             <RatingBar
                 android:id="@+id/barDetails_RAB_rating"
                 style="@style/Widget.AppCompat.RatingBar.Indicator"
@@ -145,7 +199,7 @@
                 android:layout_marginStart="5dp"
                 android:background="#FAF9F9"
                 android:numStars="5"
-                android:rating="3.5"
+                android:rating="0"
                 android:theme="@style/RatingBar" />
 
             <View
@@ -153,6 +207,7 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="7dp"
                 android:background="#6CA19C9C" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
@@ -215,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/barDetails_TXT_description"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentStart="true"
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/comfortaa_bold"
                     android:paddingTop="7dp"
@@ -249,18 +304,6 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/barDetails_FAB_changeMusicType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="#FAF9F9"
-                    android:clickable="true"
-                    app:borderWidth="0dp"
-                    app:fabCustomSize="30dp"
-                    app:srcCompat="@drawable/ic_edit"
-                    app:tint="#6CA19C9C"
-                    app:useCompatPadding="false" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -359,30 +402,22 @@
                     app:strokeColor="#6CA19C9C"
                     app:strokeWidth="3dp" />
             </RelativeLayout>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/barDetails_LST_Reviews"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_marginBottom="45dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:showIn="@layout/activity_bar_account">
+                android:layout_height="600dp"
+                android:layout_margin="5dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/barDetails_LST_Reviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>

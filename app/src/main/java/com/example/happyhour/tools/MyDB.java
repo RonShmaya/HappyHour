@@ -7,9 +7,10 @@ import com.example.happyhour.callbacks.Callback_find_account;
 import com.example.happyhour.objects.Account;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
-import com.example.happyhour.objects.BusinessAccounts;
+import com.example.happyhour.objects.MyTime;
 import com.example.happyhour.objects.PrivateAccount;
-import com.example.happyhour.objects.PrivateAccounts;
+import com.example.happyhour.objects.Table;
+import com.example.happyhour.objects.eBarType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -94,9 +95,7 @@ public class MyDB {
         }
     }
 
-    public void update_business_account(BusinessAccount businessAccount) {
-        refBusinessAccounts.child(businessAccount.getId()).setValue(businessAccount);
-    }
+
     public void add_business_account_bar(BusinessAccount businessAccount, String barID , Bar bar) {
         refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(barID).setValue(bar);
     }
@@ -113,5 +112,41 @@ public class MyDB {
     public void delete_bar(BusinessAccount businessAccount, Bar bar) {
         refBars.child(bar.getId()).removeValue();
         refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).removeValue();
+    }
+
+    public void delete_table(BusinessAccount businessAccount, Bar bar, Table table) {
+        refBars.child(bar.getId()).child("tables").child(table.getId()).removeValue();
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("tables").child(table.getId()).removeValue();
+    }
+    public void add_table(BusinessAccount businessAccount, Bar bar, Table table) {
+        refBars.child(bar.getId()).child("tables").child(table.getId()).setValue(table);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("tables").child(table.getId()).setValue(table);
+    }
+
+    public void change_bar_description(BusinessAccount businessAccount, Bar bar, String description) {
+        refBars.child(bar.getId()).child("description").setValue(description);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("description").setValue(description);
+    }
+    public void change_bar_name(BusinessAccount businessAccount, Bar bar, String name) {
+        refBars.child(bar.getId()).child("name").setValue(name);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("name").setValue(name);
+    }
+    public void change_bar_happyHour(BusinessAccount businessAccount, Bar bar, String happyHour) {
+        refBars.child(bar.getId()).child("happy_hour").setValue(happyHour);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("happy_hour").setValue(happyHour);
+    }
+    public void change_bar_type(BusinessAccount businessAccount, Bar bar, eBarType barType) {
+        refBars.child(bar.getId()).child("barType").setValue(barType);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("barType").setValue(barType);
+    }
+
+    public void change_bar_open_time(BusinessAccount businessAccount, Bar bar, MyTime time) {
+        refBars.child(bar.getId()).child("openTime").setValue(time);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("openTime").setValue(time);
+    }
+
+    public void change_bar_close_time(BusinessAccount businessAccount, Bar bar, MyTime time) {
+        refBars.child(bar.getId()).child("closingTime").setValue(time);
+        refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("closingTime").setValue(time);
     }
 }

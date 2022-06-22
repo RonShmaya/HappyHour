@@ -1,20 +1,18 @@
 package com.example.happyhour.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.happyhour.R;
 import com.example.happyhour.adapters.BarsAdapter;
 import com.example.happyhour.objects.Bar;
-import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyServices;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -22,8 +20,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
+// TODO: 20/06/2022 add rating
+// TODO: 20/06/2022 where to add bar reservations?
 public class Activity_bar_account extends AppCompatActivity {
     private RecyclerView main_LST_bars;
     private ArrayList<Bar> bars;
@@ -59,11 +57,12 @@ public class Activity_bar_account extends AppCompatActivity {
    BarsAdapter.Barlistener barlistener = new BarsAdapter.Barlistener() {
        @Override
        public void clicked(Bar bar, int position) {
-//           Bundle bundle = new Bundle().putString();
-//                   Intent intent = new Intent(Activity_bar_account.this, Activity_bar_details.class).
-//                   putExtras(new Bundle().put());
-//
-//           startActivity(intent);
+           Bundle bundle = new Bundle();
+           bundle.putString(DataManager.EXTRA_BAR , bar.getId());
+           Intent intent = new Intent(Activity_bar_account.this, Activity_bar_details.class);
+           intent.putExtras(bundle);
+           startActivity(intent);
+           finish();
        }
 
        @Override
@@ -104,6 +103,7 @@ public class Activity_bar_account extends AppCompatActivity {
     private <T extends AppCompatActivity> void go_next(Class<T> nextActivity ) {
         Intent intent = new Intent(this, nextActivity);
         startActivity(intent);
+        finish();
     }
 
     private void init_toolbar() {

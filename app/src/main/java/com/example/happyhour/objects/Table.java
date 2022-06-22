@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class Table {
     private String id;
+    private String name;
+    private String description;
     private int numOfPlaces;
-    private ArrayList<Order> orders;
+    private ArrayList<Order> orders = new ArrayList<>();
 
     public Table() {
     }
@@ -34,6 +36,24 @@ public class Table {
 
     public Table setOrders(ArrayList<Order> orders) {
         this.orders = orders;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Table setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Table setDescription(String description) {
+        this.description = description;
         return this;
     }
 }

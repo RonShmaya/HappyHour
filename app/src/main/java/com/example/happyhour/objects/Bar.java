@@ -1,17 +1,21 @@
 package com.example.happyhour.objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bar {
     private String name = "";
     private String description = "";
     private String id = "";
+    private String happy_hour = "";
     private String owner_id = "";
     private ArrayList<Review> reviews = new ArrayList<>();
     private eBarType barType;
     private ArrayList<eMusicType> musicTypes = new ArrayList<>();
     private ArrayList<String> followers = new ArrayList<>();
-    private ArrayList<Table> tables = new ArrayList<>();
+    private HashMap<String,Table> tables = new HashMap<>();
+    private MyTime openTime = new MyTime();
+    private MyTime closingTime = new MyTime();
     private float sum_ranks = 0;
 
     //private String menu; // TODO image storage database?
@@ -73,6 +77,24 @@ public class Bar {
         return this;
     }
 
+    public MyTime getOpenTime() {
+        return openTime;
+    }
+
+    public Bar setOpenTime(MyTime openTime) {
+        this.openTime = openTime;
+        return this;
+    }
+
+    public MyTime getClosingTime() {
+        return closingTime;
+    }
+
+    public Bar setClosingTime(MyTime closingTime) {
+        this.closingTime = closingTime;
+        return this;
+    }
+
     public ArrayList<String> getFollowers() {
         return followers;
     }
@@ -82,12 +104,20 @@ public class Bar {
         return this;
     }
 
-    public ArrayList<Table> getTables() {
+    public HashMap<String,Table> getTables() {
         return tables;
     }
 
-    public Bar setTables(ArrayList<Table> tables) {
+    public Bar setTables(HashMap<String,Table> tables) {
         this.tables = tables;
+        return this;
+    }
+    public Bar addTable(String id,Table table) {
+        this.tables.put(id , table);
+        return this;
+    }
+    public Bar removeTable(String id) {
+        this.tables.remove(id);
         return this;
     }
 
@@ -117,4 +147,43 @@ public class Bar {
         this.owner_id = owner_id;
         return this;
     }
+
+    public String getHappy_hour() {
+        return happy_hour;
+    }
+
+    public Bar setHappy_hour(String happy_hour) {
+        this.happy_hour = happy_hour;
+        return this;
+    }
+
+    public String barTypeToString() {
+        if(barType == null){
+            return " ";
+        }
+        return barType.toString().replace('_',' ');
+
+    }
+
+    public String barMusicToString() {
+        if(musicTypes.size() == 0){
+            return " ";
+        }
+        StringBuffer buffer = new StringBuffer();
+        musicTypes.forEach(type -> {
+            buffer.append(type.toString().replace('_',' '));
+            if(musicTypes.indexOf(type) != (musicTypes.size()-1)) // if not last
+                buffer.append(", ");
+        });
+        return buffer.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bar bar = (Bar) o;
+        return bar.getOwner_id().equals(owner_id) && bar.getId().equals(id);
+    }
+
 }
