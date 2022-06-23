@@ -79,10 +79,10 @@ public class Activity_bar_account extends AppCompatActivity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        bar.getFollowers().forEach( (f_id , f_name) -> DataManager.getDataManager().remove_follower_private(bar , f_id));
                         bars.remove(position);
                         barsAdapter.notifyItemRemoved(position);
                         DataManager.getDataManager().delete_bar(bar , position);
-                        // TODO: 19/06/2022 delete from custumers before delete bar
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

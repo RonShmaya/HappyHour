@@ -1,6 +1,7 @@
 package com.example.happyhour.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,34 +12,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Bar;
+import com.example.happyhour.tools.DataManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
-public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CustomerBarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface Barlistener {
         void clicked(Bar bar, int position);
-        void minus(Bar bar, int position);
+        void follow(Bar bar, int position);
     }
 
     private Activity activity;
     private Barlistener barlistener;
     private ArrayList<Bar> bars = new ArrayList<>();
 
-    public BarsAdapter(Activity activity, ArrayList<Bar> bars){
+    public CustomerBarsAdapter(Activity activity, ArrayList<Bar> bars){
         this.activity = activity;
         this.bars = bars;
     }
 
-    public void setBarlistener(Barlistener barlistener) {
+    public CustomerBarsAdapter setBarlistener(Barlistener barlistener) {
         this.barlistener = barlistener;
+        return this;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_bars, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_bars_customer_side, parent, false);
         BarHolder barHolder = new BarHolder(view);
         return barHolder;
     }
@@ -48,10 +51,18 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final BarHolder holder = (BarHolder) viewHolder;
         Bar bar = getItem(position);
 
-        holder.listBars_LBL_name.setText(bar.getName());
-        holder.listBars_LBL_barType.setText(bar.barTypeToString());
-        holder.listBars_RAB_rating.setRating(bar.starsAvg());
 
+        holder.list_bar_customer_LBL_name.setText(bar.getName());
+        holder.list_bar_customer_LBL_barType.setText(bar.barTypeToString());
+        if(bar.getFollowers().containsKey(DataManager.getDataManager().getPrivateAccount().getId())){
+            holder.list_bar_customer_BTN_follow.setBackgroundColor(Color.parseColor("#555B6E"));
+        }
+        else{
+            holder.list_bar_customer_BTN_follow.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+
+        holder.list_bar_customer_RAB_rating.setRating(bar.starsAvg());
+        holder.list_bar_customer_LBL_followers.setText(bar.getFollowers().size() + " Followers");
 
        // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
      //   holder.listBars_IMG.setImageResource(resourceId);
@@ -70,28 +81,29 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     class BarHolder extends RecyclerView.ViewHolder {
-
-        private AppCompatImageView listBars_IMG;
-        private MaterialTextView listBars_LBL_name;
-        private MaterialTextView listBars_LBL_barType;
-        private MaterialButton listBars_BTN_remove_account;
-        private RatingBar listBars_RAB_rating;
+        private AppCompatImageView list_bar_customer_IMG;
+        private MaterialTextView list_bar_customer_LBL_name;
+        private MaterialTextView list_bar_customer_LBL_barType;
+        private MaterialTextView list_bar_customer_LBL_followers;
+        private MaterialButton list_bar_customer_BTN_follow;
+        private RatingBar list_bar_customer_RAB_rating;
 
 
         public BarHolder(View itemView) {
             super(itemView);
-            listBars_IMG = itemView.findViewById(R.id.listBars_IMG);
-            listBars_LBL_name = itemView.findViewById(R.id.listBars_LBL_name);
-            listBars_LBL_barType = itemView.findViewById(R.id.listBars_LBL_barType);
-            listBars_BTN_remove_account = itemView.findViewById(R.id.listBars_BTN_remove_account);
-            listBars_RAB_rating = itemView.findViewById(R.id.listBars_RAB_rating);
+            list_bar_customer_IMG = itemView.findViewById(R.id.list_bar_customer_IMG);
+            list_bar_customer_LBL_name = itemView.findViewById(R.id.list_bar_customer_LBL_name);
+            list_bar_customer_LBL_followers = itemView.findViewById(R.id.list_bar_customer_LBL_followers);
+            list_bar_customer_LBL_barType = itemView.findViewById(R.id.list_bar_customer_LBL_barType);
+            list_bar_customer_BTN_follow = itemView.findViewById(R.id.list_bar_customer_BTN_follow);
+            list_bar_customer_RAB_rating = itemView.findViewById(R.id.list_bar_customer_RAB_rating);
 
 
-            listBars_BTN_remove_account.setOnClickListener(new View.OnClickListener() {
+            list_bar_customer_BTN_follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (barlistener != null) {
-                        barlistener.minus(getItem(getAdapterPosition()), getAdapterPosition());
+                        barlistener.follow(getItem(getAdapterPosition()), getAdapterPosition());
                     }
                 }
             });

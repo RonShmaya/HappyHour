@@ -32,6 +32,11 @@
                     android:textColor="#555B6E"
                     android:textSize="19sp"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="7dp"
+                    android:background="#6CA19C9C" />
 
 
                 <com.google.android.material.textfield.TextInputLayout

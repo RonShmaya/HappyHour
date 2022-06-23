@@ -41,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 // TODO: 23/06/2022 upload photo
 // TODO: 23/06/2022 upload menu
+// TODO: 23/06/2022 add location?
 public class Activity_create_bar extends AppCompatActivity {
     private CircleImageView createBar_IMG_barPhoto;
     private FloatingActionButton createBar_FAB_profile_pic;

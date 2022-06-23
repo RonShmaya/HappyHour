@@ -10,28 +10,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
 import com.example.happyhour.adapters.ReviewAdapter;
+import com.example.happyhour.callbacks.Callback_get_bars;
+import com.example.happyhour.dialogs.DialogAddReview;
 import com.example.happyhour.dialogs.DialogChangeBarDetails;
+import com.example.happyhour.dialogs.DialogShowFollowers;
 import com.example.happyhour.objects.Bar;
+import com.example.happyhour.objects.Follower;
 import com.example.happyhour.objects.Review;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
+import com.example.happyhour.tools.MyDB;
 import com.example.happyhour.tools.MyServices;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+// TODO: 20/06/2022 visabi return back
+
 // TODO: 20/06/2022 upload post
 // TODO: 20/06/2022 photoes list
 // TODO: 20/06/2022 add photo
-// TODO: 20/06/2022 add rating
 // TODO: 20/06/2022 add menu
-// TODO: 20/06/2022 add reviews
+// TODO: 20/06/2022 add reviews - photo
+// TODO: 20/06/2022 add followers - photo
+
 public class Activity_bar_details extends AppCompatActivity {
 
     private FloatingActionButton barDetails_FAB_changeBarName;
@@ -53,6 +60,7 @@ public class Activity_bar_details extends AppCompatActivity {
     private MaterialTextView barDetails_LBL_musicType;
     private MaterialTextView barDetails_LBL_happyHour;
     private MaterialTextView barDetails_LBL_menu;
+    private MaterialTextView barDetails_LBL_followers;
 
     private FloatingActionButton action_logout;
     private FloatingActionButton action_return_back;
@@ -65,6 +73,7 @@ public class Activity_bar_details extends AppCompatActivity {
     private ReviewAdapter reviewsAdapter;
     private ArrayList<Review> reviews;
     private Bar bar;
+    private String barId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,57 +81,13 @@ public class Activity_bar_details extends AppCompatActivity {
         setContentView(R.layout.activity_bar_details);
 
         Bundle bundle = getIntent().getExtras();
-        String barId = bundle.getString(DataManager.EXTRA_BAR);
-        bar = DataManager.getDataManager().getBar(barId);
+        barId = bundle.getString(DataManager.EXTRA_BAR);
+
 
         findViews();
         update_ui_by_account_type();
-        reviews = new ArrayList<>(get()); // TODO: 19/06/2022 get reviews  DataManager.getDataManager().getBusinessAccount().getMyBars().values()
-        reviewsAdapter = new ReviewAdapter(this, reviews);
-        barDetails_LST_Reviews.setAdapter(reviewsAdapter);
     }
 
-    private ArrayList<Review> get() { // TODO: 19/06/2022  delete this!
-        return new ArrayList<>(Arrays.asList(
-                new Review()
-                        .setDescription("it was nice")
-                        .setStars_rating(3.5F)
-                        .setReviewer_name("yao ming"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash"),
-                new Review()
-                        .setDescription("it was great , i will come again for sure")
-                        .setStars_rating(4F)
-                        .setReviewer_name("stiv nash")
-
-        ));
-    }
 
     private void update_ui_by_account_type() {
         action_logout.setOnClickListener(view -> logout());
@@ -144,7 +109,6 @@ public class Activity_bar_details extends AppCompatActivity {
         business_views_visability(business_visible_value);
         private_views_visability(private_visible_value);
 
-        views_get_data();
     }
 
     private void views_get_data() {
@@ -157,6 +121,8 @@ public class Activity_bar_details extends AppCompatActivity {
         barDetails_LBL_barType.setText(bar.barTypeToString());
         barDetails_LBL_musicType.setText(bar.barMusicToString());
         barDetails_LBL_happyHour.setText(bar.getHappy_hour());
+        barDetails_RAB_rating.setRating(bar.starsAvg());
+        barDetails_LBL_followers.setText(bar.getFollowers().size() + " - Followers");
 
 
         // TODO: 20/06/2022 add photo        barDetails_LBL_menu
@@ -171,6 +137,14 @@ public class Activity_bar_details extends AppCompatActivity {
         barDetails_BTN_makeReservation.setVisibility(visibility_value);
         barDetails_BTN_follow.setVisibility(visibility_value);
         barDetails_BTN_writeReview.setVisibility(visibility_value);
+
+        if (visibility_value == View.VISIBLE) {
+            MyDB.getInstance().setCallback_get_bars(callback_get_bar);
+            MyDB.getInstance().get_bar(barId);
+            barDetails_BTN_writeReview.setOnClickListener(add_review_listener);
+            barDetails_BTN_follow.setOnClickListener(btn_follow_clicked);
+            //barDetails_BTN_makeReservation.setOnClickListener();
+        }
     }
 
     private void business_views_visability(int visibility_value) {
@@ -183,6 +157,7 @@ public class Activity_bar_details extends AppCompatActivity {
             business_account_actions.forEach((action, fab) -> fab.setOnClickListener(action));
             barDetails_BTN_myTables.setOnClickListener(go_to_my_table);
             action_return_back.setOnClickListener(view -> go_next(Activity_bar_account.class));
+            init_data(DataManager.getDataManager().getBar(barId));
         }
 
     }
@@ -197,6 +172,7 @@ public class Activity_bar_details extends AppCompatActivity {
         business_account_actions.put(changeMenu, findViewById(R.id.barDetails_FAB_changeMenu));
 
         barDetails_BTN_writeReview = findViewById(R.id.barDetails_BTN_writeReview);
+        barDetails_LBL_followers = findViewById(R.id.barDetails_LBL_followers);
 
         barDetails_BTN_uploadPost = findViewById(R.id.barDetails_BTN_uploadPost);
         barDetails_BTN_follow = findViewById(R.id.barDetails_BTN_follow);
@@ -216,6 +192,8 @@ public class Activity_bar_details extends AppCompatActivity {
 
         action_logout = findViewById(R.id.action_logout);
         action_return_back = findViewById(R.id.action_return_back);
+
+        barDetails_LBL_followers.setOnClickListener(show_followers_callback);
     }
 
     private View.OnClickListener changeBarName = new View.OnClickListener() {
@@ -245,7 +223,7 @@ public class Activity_bar_details extends AppCompatActivity {
         public void onClick(View view) {
             new DialogChangeBarDetails()
                     .setCallback_change_bar(callback_change_bar)
-                    .AutoCompleteTextView_show(Activity_bar_details.this , barDetails_LBL_barType.getId());
+                    .AutoCompleteTextView_show(Activity_bar_details.this, barDetails_LBL_barType.getId());
         }
     };
 
@@ -261,6 +239,23 @@ public class Activity_bar_details extends AppCompatActivity {
                             barDetails_LBL_description.getText().toString(),
                             Activity_bar_details.this,
                             barDetails_LBL_description.getId());
+        }
+    };
+
+    private View.OnClickListener btn_follow_clicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String userId = DataManager.getDataManager().getPrivateAccount().getId();
+            String userName = DataManager.getDataManager().getPrivateAccount().getName();
+
+            if (DataManager.getDataManager().getPrivateAccount().getFollow_bars().containsKey(bar.getId())) {
+                barDetails_BTN_follow.setText("not follow");
+                DataManager.getDataManager().remove_follower(bar, userId);
+
+            } else {
+                barDetails_BTN_follow.setText("following");
+                DataManager.getDataManager().add_follower(bar, userId, userName);
+            }
         }
     };
 
@@ -284,6 +279,22 @@ public class Activity_bar_details extends AppCompatActivity {
 
         }
     };
+    private View.OnClickListener add_review_listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DialogAddReview dialogAddReview = new DialogAddReview().setCallback_add_table(new DialogAddReview.Callback_add_review() {
+                @Override
+                public void review_to_add(Review review) {
+                    reviews.add(review);
+                    bar.add_review(review.getId(),review);
+                    barDetails_RAB_rating.setRating(bar.starsAvg());
+                    reviewsAdapter.notifyItemChanged((reviews.size() -1) );
+                    MyDB.getInstance().add_review(bar , review);
+                }
+            });
+            dialogAddReview.show(Activity_bar_details.this);
+        }
+    };
     private View.OnClickListener go_to_my_table = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -303,31 +314,75 @@ public class Activity_bar_details extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    private <T extends AppCompatActivity> void go_next(Class<T> nextActivity ) {
+
+    private <T extends AppCompatActivity> void go_next(Class<T> nextActivity) {
         Intent intent = new Intent(this, nextActivity);
         startActivity(intent);
         finish();
     }
+
     private DialogChangeBarDetails.Callback_change_bar callback_change_bar = new DialogChangeBarDetails.Callback_change_bar() {
         @Override
         public void change_text(String newTxt, int objResId) {
             if (barDetails_LBL_description.getId() == objResId) {
                 barDetails_LBL_description.setText(newTxt);
-                DataManager.getDataManager().change_bar_description(bar.getId(),newTxt);
+                DataManager.getDataManager().change_bar_description(bar.getId(), newTxt);
 
             } else if (barDetails_LBL_name.getId() == objResId) {
                 barDetails_LBL_name.setText(newTxt);
-                DataManager.getDataManager().change_bar_name(bar.getId(),newTxt);
+                DataManager.getDataManager().change_bar_name(bar.getId(), newTxt);
 
             } else if (barDetails_LBL_barType.getId() == objResId) {
                 barDetails_LBL_barType.setText(newTxt);
-                DataManager.getDataManager().change_bar_type(bar.getId(), eBarType.valueOf(newTxt.replace(' ','_')));
+                DataManager.getDataManager().change_bar_type(bar.getId(), eBarType.valueOf(newTxt.replace(' ', '_')));
 
             } else if (barDetails_LBL_happyHour.getId() == objResId) {
                 barDetails_LBL_happyHour.setText(newTxt);
-                DataManager.getDataManager().change_bar_happy_hour(bar.getId(),newTxt);
+                DataManager.getDataManager().change_bar_happy_hour(bar.getId(), newTxt);
             }
 
+        }
+    };
+    private Callback_get_bars callback_get_bar = new Callback_get_bars() {
+        @Override
+        public void get_bars(HashMap<String, Bar> bars) {
+        }
+
+        @Override
+        public void get_bar(Bar bar) {
+            init_data(bar);
+        }
+
+        @Override
+        public void failed() {
+            MyServices.getInstance().makeToast("something went wrong");
+        }
+    };
+
+    private void init_data(Bar bar) {
+        this.bar = bar;
+        views_get_data();
+        reviews = new ArrayList<>(bar.getReviews().values());
+        reviewsAdapter = new ReviewAdapter(this, reviews);
+        barDetails_LST_Reviews.setAdapter(reviewsAdapter);
+        if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private)
+            private_account_specifications();
+
+    }
+
+    private void private_account_specifications() {
+        if (DataManager.getDataManager().getPrivateAccount().getFollow_bars().containsKey(bar.getId())) {
+            barDetails_BTN_follow.setText("un follow");
+        } else {
+            barDetails_BTN_follow.setText("follow");
+        }
+    }
+    private View.OnClickListener show_followers_callback = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ArrayList<Follower> followers = new ArrayList<>();
+            bar.getFollowers().forEach( (k , name) -> followers.add(new Follower(name)));
+            new DialogShowFollowers().show(Activity_bar_details.this , followers);
         }
     };
 }

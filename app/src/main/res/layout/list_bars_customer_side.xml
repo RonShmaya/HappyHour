@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="7dp"
@@ -14,7 +15,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/listBars_IMG"
+            android:id="@+id/list_bar_customer_IMG"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
@@ -28,7 +29,7 @@
         android:padding="5dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/listBars_LBL_name"
+            android:id="@+id/list_bar_customer_LBL_name"
             android:padding="3dp"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
@@ -37,11 +38,11 @@
             android:layout_marginTop="5dp"
             android:text="Jono"
             android:textColor="#555B6E"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <RatingBar
-            android:id="@+id/listBars_RAB_rating"
+            android:id="@+id/list_bar_customer_RAB_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -53,34 +54,49 @@
             />
     </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/listBars_LBL_barType"
+                    android:id="@+id/list_bar_customer_LBL_barType"
                     android:layout_marginStart="10dp"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:layout_weight="4"
                     android:text="description...."
                     android:textColor="#555B6E"
                     android:textSize="15sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/list_bar_customer_LBL_followers"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="3dp"
+                android:layout_weight="4"
+                android:text="--- followers"
+                android:textColor="#555B6E"
+                android:textSize="13sp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/listBars_BTN_remove_account"
+                    android:id="@+id/list_bar_customer_BTN_follow"
                     style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:insetTop="3dp"
                     android:insetBottom="3dp"
-                    app:icon="@drawable/ic_minus"
-                    app:iconSize="25dp"
-                    app:iconTint="#555B6E" />
-            </LinearLayout>
+                    app:icon="@drawable/ic_star"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#646B6767"
+                    app:iconSize="30dp"
+                    app:iconTint="#FF577F" />
+        </LinearLayout>
 
     </LinearLayout>
 

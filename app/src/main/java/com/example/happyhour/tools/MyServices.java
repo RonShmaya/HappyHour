@@ -29,7 +29,7 @@ public class MyServices {
 
     private MyServices(Context context) {
         this.context = context.getApplicationContext();
-        this.toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+        this.toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
         toast.getView().getBackground().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.DARKEN);
         ((TextView) toast.getView().findViewById(android.R.id.message)).setTextColor(Color.parseColor("#FF577F"));
     }

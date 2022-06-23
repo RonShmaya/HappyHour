@@ -44,11 +44,11 @@ public class MyTime implements Comparable<MyTime> {
     public String toString() {
         String myHour;
         String myMinutes;
-        if(hour == 0)
+        if(hour < 10)
             myHour = "0"+hour;
         else
             myHour = ""+hour;
-        if(minutes == 0)
+        if(minutes < 10)
             myMinutes = "0"+minutes;
         else
             myMinutes = ""+minutes;

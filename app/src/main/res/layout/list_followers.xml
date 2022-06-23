@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="7dp"
+    app:cardCornerRadius="30dp"
+    android:background="#FAF9F9"
+    app:cardElevation="7dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/listFollower_IMG_reviewer"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/ic_user"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#555B6E"
+            app:civ_border_width="3dp" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/listFollower_LBL_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:text="yao cho"
+                android:textColor="#555B6E"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,11 +1,11 @@
 package com.example.happyhour.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.happyhour.R;
 import com.example.happyhour.callbacks.Callback_account_creating;
@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import java.util.List;
 
+// TODO: 23/06/2022 new private to another activity 
 public class Activity_user_connect extends AppCompatActivity {
     public enum eUserPick {CreatePrivateAccount, CreateBusinessAccount, Login }
     private DataManager.eUserTypes userType;
@@ -122,18 +123,19 @@ public class Activity_user_connect extends AppCompatActivity {
         if(isUserFound){
             MyServices.getInstance().makeToast("the private account already exists, making login");
             DataManager.getDataManager().set_private_account(account);
-            go_next(Activity_private_account.class);
+            go_next(Activity_customer_main_page.class);
         }
         else{
             account = new PrivateAccount();
             account.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            account.setName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
             MyDB.getInstance().create_account(account , userType);
         }
     }
 
     private void login_next_page(boolean isUserFound, Account account) {
         if(account instanceof PrivateAccount){
-            go_next(Activity_private_account.class);
+            go_next(Activity_customer_main_page.class);
             DataManager.getDataManager().set_account(account);
         }
         else if(account instanceof BusinessAccount){
@@ -192,7 +194,7 @@ public class Activity_user_connect extends AppCompatActivity {
             if(userType == DataManager.eUserTypes.Business)
                 go_next(Activity_bar_account.class);
             else if(userType == DataManager.eUserTypes.Business)
-                go_next(Activity_private_account.class);
+                go_next(Activity_customer_main_page.class);
         }
 
         @Override

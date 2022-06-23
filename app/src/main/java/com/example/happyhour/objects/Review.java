@@ -1,9 +1,8 @@
 package com.example.happyhour.objects;
 
-import java.util.Date;
-
 public class Review {
     private String reviewer_name;
+    private String id;
     private String description;
     private float stars_rating;
 
@@ -23,6 +22,15 @@ public class Review {
 
     public Review setReviewer_name(String reviewer_name) {
         this.reviewer_name = reviewer_name;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Review setId(String id) {
+        this.id = id;
         return this;
     }
 

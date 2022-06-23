@@ -103,7 +103,7 @@ public class DataManager {
         MyDB.getInstance().add_table(businessAccount , bar, table);
     }
     public Bar getBar(String barId) {
-        return  this.businessAccount.getMyBars().get(barId);
+        return this.businessAccount.getMyBars().get(barId);
     }
 
     public void change_bar_description(String barId, String description) {
@@ -135,6 +135,18 @@ public class DataManager {
         Bar bar =  this.businessAccount.getMyBars().get(barId);
         bar.setClosingTime(time);
         MyDB.getInstance().change_bar_close_time(this.businessAccount , bar , time);
+    }
+    public void remove_follower(Bar bar, String userId) {
+        this.privateAccount.getFollow_bars().remove(bar.getId());
+        MyDB.getInstance().remove_follower_private(bar , userId);
+        MyDB.getInstance().remove_follower_business(bar , userId);
+    }
+    public void remove_follower_private(Bar bar, String userId) {
+        MyDB.getInstance().remove_follower_private(bar , userId);
+    }
+    public void add_follower(Bar bar, String userId, String userName) {
+        this.privateAccount.getFollow_bars().put(bar.getId(), userName);
+        MyDB.getInstance().add_follower(bar , userId, userName);
     }
 
 }

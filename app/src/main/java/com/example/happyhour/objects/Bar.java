@@ -9,14 +9,13 @@ public class Bar {
     private String id = "";
     private String happy_hour = "";
     private String owner_id = "";
-    private ArrayList<Review> reviews = new ArrayList<>();
     private eBarType barType;
     private ArrayList<eMusicType> musicTypes = new ArrayList<>();
-    private ArrayList<String> followers = new ArrayList<>();
+    private HashMap<String , Review> reviews =new HashMap<String , Review>();
+    private HashMap<String , String> followers = new HashMap<>();
     private HashMap<String,Table> tables = new HashMap<>();
     private MyTime openTime = new MyTime();
     private MyTime closingTime = new MyTime();
-    private float sum_ranks = 0;
 
     //private String menu; // TODO image storage database?
     //private String location; // TODO change it?
@@ -43,19 +42,27 @@ public class Bar {
         this.description = description;
         return this;
     }
-    public float getStarsAvg(){
+    public float starsAvg(){
         int size = this.reviews.size();
+        float sum = 0;
+        for (Review review: this.reviews.values()) {
+            sum+=review.getStars_rating();
+        }
         if(size != 0 )
-            return sum_ranks/(float) size;
+            return sum/(float) size;
         return 0;
     }
 
-    public ArrayList<Review> getReviews() {
+    public HashMap<String , Review> getReviews() {
         return reviews;
     }
 
-    public Bar setReviews(ArrayList<Review> reviews) {
+    public Bar setReviews(HashMap<String , Review> reviews) {
         this.reviews = reviews;
+        return this;
+    }
+    public Bar add_review(String id, Review review) {
+        this.reviews.put(id,review);
         return this;
     }
 
@@ -95,12 +102,16 @@ public class Bar {
         return this;
     }
 
-    public ArrayList<String> getFollowers() {
+    public HashMap<String , String> getFollowers() {
         return followers;
     }
 
-    public Bar setFollowers(ArrayList<String> followers) {
+    public Bar setFollowers(HashMap<String , String> followers) {
         this.followers = followers;
+        return this;
+    }
+    public Bar setFollower(String userID, String name) {
+        this.followers.put(userID , name);
         return this;
     }
 
@@ -118,15 +129,6 @@ public class Bar {
     }
     public Bar removeTable(String id) {
         this.tables.remove(id);
-        return this;
-    }
-
-    public float getSum_ranks() {
-        return sum_ranks;
-    }
-
-    public Bar setSum_ranks(float sum_ranks) {
-        this.sum_ranks = sum_ranks;
         return this;
     }
 
