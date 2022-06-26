@@ -4,6 +4,7 @@ public class Review {
     private String reviewer_name;
     private String id;
     private String description;
+    private String img = "";
     private float stars_rating;
 
     public Review() {
@@ -52,4 +53,12 @@ public class Review {
         return this;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public Review setImg(String img) {
+        this.img = img;
+        return this;
+    }
 }

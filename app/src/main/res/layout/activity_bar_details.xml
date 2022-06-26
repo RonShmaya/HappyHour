@@ -68,7 +68,7 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:clickable="true"
-                        android:src="@drawable/imgfg"
+                        android:src="@drawable/img_bar_basic"
                         app:civ_border_color="#555B6E"
                         app:civ_border_width="3dp" />
 

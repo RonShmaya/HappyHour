@@ -9,17 +9,16 @@ public class Bar {
     private String id = "";
     private String happy_hour = "";
     private String owner_id = "";
+    private String bar_photo = "";
+    private String menu_photo = "";
     private eBarType barType;
     private ArrayList<eMusicType> musicTypes = new ArrayList<>();
     private HashMap<String , Review> reviews =new HashMap<String , Review>();
-    private HashMap<String , String> followers = new HashMap<>();
+    private HashMap<String , Follower> followers = new HashMap<>();
     private HashMap<String,Table> tables = new HashMap<>();
     private MyTime openTime = new MyTime();
     private MyTime closingTime = new MyTime();
 
-    //private String menu; // TODO image storage database?
-    //private String location; // TODO change it?
-   // private String main_image; //TODO image storage database?
 
 
     public Bar() {
@@ -102,16 +101,16 @@ public class Bar {
         return this;
     }
 
-    public HashMap<String , String> getFollowers() {
+    public HashMap<String , Follower> getFollowers() {
         return followers;
     }
 
-    public Bar setFollowers(HashMap<String , String> followers) {
+    public Bar setFollowers(HashMap<String , Follower> followers) {
         this.followers = followers;
         return this;
     }
-    public Bar setFollower(String userID, String name) {
-        this.followers.put(userID , name);
+    public Bar setFollower(String userID, Follower follower) {
+        this.followers.put(userID , follower);
         return this;
     }
 
@@ -188,4 +187,21 @@ public class Bar {
         return bar.owner_id.equals(owner_id) && bar.id.equals(id);
     }
 
+    public String getBar_photo() {
+        return bar_photo;
+    }
+
+    public Bar setBar_photo(String bar_photo) {
+        this.bar_photo = bar_photo;
+        return this;
+    }
+
+    public String getMenu_photo() {
+        return menu_photo;
+    }
+
+    public Bar setMenu_photo(String menu_photo) {
+        this.menu_photo = menu_photo;
+        return this;
+    }
 }

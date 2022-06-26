@@ -2,7 +2,6 @@ package com.example.happyhour.activities.business_account;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,25 +11,32 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
+import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.objects.eMusicType;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyServices;
-import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.example.happyhour.tools.MyStorage;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,10 +45,11 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
 
-// TODO: 23/06/2022 upload photo
-// TODO: 23/06/2022 upload menu
-// TODO: 23/06/2022 add location?
+
 public class Activity_create_bar extends AppCompatActivity {
     private CircleImageView createBar_IMG_barPhoto;
     private FloatingActionButton createBar_FAB_profile_pic;
@@ -54,6 +61,8 @@ public class Activity_create_bar extends AppCompatActivity {
     private TextInputLayout createBar_TIL_description;
     private TextInputLayout createBar_TIL_barType;
     private AutoCompleteTextView createBar_ACTV_barType;
+    private ShapeableImageView createBar_IMG_menu;
+    private FloatingActionButton createBar_FAB_upload_menu;
     private MaterialButton createBar_BTN_create;
     private ArrayList<String> barTypes;
     private ArrayAdapter<String> adapter;
@@ -63,14 +72,23 @@ public class Activity_create_bar extends AppCompatActivity {
     private MaterialTextView createBar_LBL_musicTypeError;
     private MaterialToolbar toolbar;
     private boolean isAllInputsOk = true;
+    private Uri uriBarPhoto;
+    private Uri uriMenuPhoto;
+    private boolean isUploadBarPhoto;
+    private String barID;
+    private String urlMenuPhoto;
+    private LottieAnimationView loading_animation_view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_bar);
 
+
         init_toolbar();
         findViews();
+        MyStorage.getInstance().setCallback_create_bar_img_upload(callback_create_bar_img_upload);
         init_actions();
 
     }
@@ -85,7 +103,14 @@ public class Activity_create_bar extends AppCompatActivity {
 
         musicTypesChips.forEach(chip -> chip.setOnCheckedChangeListener(chip_clicked));
 
-        createBar_FAB_profile_pic.setOnClickListener(upload_image_listener);
+        createBar_FAB_profile_pic.setOnClickListener(view -> {
+            isUploadBarPhoto = true;
+            add_photo();
+        });
+        createBar_FAB_upload_menu.setOnClickListener(view -> {
+            isUploadBarPhoto = false;
+            add_photo();
+        });
 
     }
 
@@ -105,6 +130,8 @@ public class Activity_create_bar extends AppCompatActivity {
 
     private void findViews() {
         createBar_IMG_barPhoto = findViewById(R.id.createBar_IMG_barPhoto);
+        createBar_IMG_menu = findViewById(R.id.createBar_IMG_menu);
+        createBar_FAB_upload_menu = findViewById(R.id.createBar_FAB_upload_menu);
         createBar_FAB_profile_pic = findViewById(R.id.createBar_FAB_profile_pic);
         createBar_TIETL_barName = findViewById(R.id.createBar_TIETL_barName);
         createBar_TIL_barName = findViewById(R.id.createBar_TIL_barName);
@@ -117,6 +144,8 @@ public class Activity_create_bar extends AppCompatActivity {
         createBar_TIETL_HappyHour = findViewById(R.id.createBar_TIETL_HappyHour);
         createBar_TIL_HappyHour = findViewById(R.id.createBar_TIL_HappyHour);
         createBar_LBL_musicTypeError = findViewById(R.id.createBar_LBL_musicTypeError);
+        loading_animation_view = findViewById(R.id.loading_animation_view);
+
 
         musicTypesChips = new ArrayList<>(Arrays.asList(
                 findViewById(R.id.chip_Hip_Hop),
@@ -155,6 +184,14 @@ public class Activity_create_bar extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             isAllInputsOk = true;
+            if(uriMenuPhoto == null){
+                isAllInputsOk = false;
+                MyServices.getInstance().makeToast("Please add menu");
+            }
+            if(uriBarPhoto == null){
+                isAllInputsOk = false;
+                MyServices.getInstance().makeToast("Please add main photo");
+            }
             verify_text_inputs.forEach((k, v) -> verifyInput(k, v));
 
             if (musicTypesChipsChecked.size() <= 0) {
@@ -164,13 +201,17 @@ public class Activity_create_bar extends AppCompatActivity {
                 createBar_LBL_musicTypeError.setText("");
             }
             if (isAllInputsOk) {
-                finish_creating_bar();
+                barID = UUID.randomUUID().toString();
+                loading_animation_view.setVisibility(View.VISIBLE);
+                loading_animation_view.playAnimation();
+                MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barID , uriMenuPhoto);
+                MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barID , uriBarPhoto);
             }
 
         }
     };
 
-    private void finish_creating_bar() {
+    private void finish_creating_bar(String url) {
         eBarType ebarType = eBarType.valueOf(createBar_ACTV_barType.getText().toString().replace(' ', '_'));
         ArrayList<eMusicType> emusicTypeList = new ArrayList<>();
         musicTypesChipsChecked.forEach(musicType -> emusicTypeList.add(eMusicType.valueOf(musicType.getText().toString().replace(' ', '_'))));
@@ -180,7 +221,9 @@ public class Activity_create_bar extends AppCompatActivity {
                 .setName(createBar_TIETL_barName.getText().toString())
                 .setHappy_hour(createBar_TIETL_HappyHour.getText().toString())
                 .setMusicTypes(emusicTypeList)
-                .setId(UUID.randomUUID().toString())
+                .setId(barID)
+                .setBar_photo(url)
+                .setMenu_photo(urlMenuPhoto)
                 .setOwner_id(DataManager.getDataManager().getBusinessAccount().getId());
         DataManager.getDataManager().addBusinessAccountBar(bar);
         Bundle bundle = new Bundle();
@@ -227,34 +270,54 @@ public class Activity_create_bar extends AppCompatActivity {
         finish();
     }
 
-    private View.OnClickListener upload_image_listener = new View.OnClickListener() {
-        @RequiresApi(api = Build.VERSION_CODES.M)
-        @Override
-        public void onClick(View v) {
-            ImagePicker.Companion.with(Activity_create_bar.this)
-                    .crop()                    //Crop image(Optional), Check Customization for more option
-                    .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                    .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
-                    .start();
+    private void add_photo() {
+        ImagePicker.Companion.with(this)
+                .crop()
+                .cropOval()
+                .maxResultSize(512, 512, true)
+                .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+                .createIntentFromDialog((Function1) (new Function1() {
+                    public Object invoke(Object var1) {
+                        this.invoke((Intent) var1);
+                        return Unit.INSTANCE;
+                    }
 
+                    public final void invoke(@NotNull Intent it) {
+                        Intrinsics.checkNotNullParameter(it, "it");
+                        launcher.launch(it);
+                    }
+                }));
+    }
+    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Uri uri = result.getData().getData();
+            if(isUploadBarPhoto) {
+                createBar_IMG_barPhoto.setImageURI(uri);
+                uriBarPhoto = uri;
+            }
+            else{
+                createBar_IMG_menu.setImageURI(uri);
+                uriMenuPhoto = uri;
+            }
+        } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+            MyServices.getInstance().makeToast("image upload failed please, try again");
+        }
+    });
+    private Callback_create_bar_img_upload callback_create_bar_img_upload = new Callback_create_bar_img_upload() {
+        @Override
+        public void main_img(String url) {
+            finish_creating_bar(url);
+        }
+
+        @Override
+        public void menu_img(String url) {
+            urlMenuPhoto = url;
+        }
+
+        @Override
+        public void failed() {
+            MyServices.getInstance().makeToast("something went wrong please try again");
         }
     };
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-       // if (resultCode == Activity_create_bar.this.RESULT_OK) {
-            Uri resultUri = data.getData();
-            createBar_IMG_barPhoto.setImageURI(resultUri);
-            MyServices.getInstance().makeToast("ok");
-            MyServices.getInstance().toLog("ok");
-     //   }
-      //  else{
-
-            MyServices.getInstance().makeToast("not ok");
-            MyServices.getInstance().toLog("not ok");
-     //   }
-
-
-    }
 
 }

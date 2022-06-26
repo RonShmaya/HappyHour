@@ -3,6 +3,7 @@ package com.example.happyhour.tools;
 import com.example.happyhour.objects.Account;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
+import com.example.happyhour.objects.Follower;
 import com.example.happyhour.objects.MyTime;
 import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.objects.Table;
@@ -146,15 +147,16 @@ public class DataManager {
     public void remove_follower_private(Bar bar, String userId) {
         MyDB.getInstance().remove_follower_private(bar , userId);
     }
-    public void add_follower(Bar bar, String userId, String userName) {
-        this.privateAccount.getFollow_bars().put(bar.getId(), userName);
-        MyDB.getInstance().add_follower(bar , userId, userName);
+    public void add_follower(Bar bar, String userId, Follower follower) {
+        this.privateAccount.getFollow_bars().put(bar.getId(), bar.getName());
+        MyDB.getInstance().add_follower(bar , userId, follower);
     }
 
-    public void set_private_account_favorites(eBarType fav_1, eBarType fav_2) {
+    public void set_private_account_details(eBarType fav_1, eBarType fav_2, String uri) {
         this.privateAccount.setFavorite_1(fav_1);
         this.privateAccount.setFavorite_2(fav_2);
-        MyDB.getInstance().add_private_account_favorites( this.privateAccount.getId(),fav_1, fav_2);
+        this.privateAccount.setImgUri(uri);
+        MyDB.getInstance().add_private_account_details( this.privateAccount.getId(),fav_1, fav_2,uri);
 
     }
 

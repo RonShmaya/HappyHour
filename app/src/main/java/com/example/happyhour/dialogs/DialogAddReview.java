@@ -53,6 +53,7 @@ public class DialogAddReview {
                             .setReviewer_name(DataManager.getDataManager().getPrivateAccount().getName())
                             .setDescription(dialogAddReview_TIETL_description.getText().toString())
                             .setId(UUID.randomUUID().toString())
+                            .setImg(DataManager.getDataManager().getPrivateAccount().getImgUri())
                             .setStars_rating(dialogAddReview_RAB_rating.getRating());
 
                     callback_add_review.review_to_add(review);

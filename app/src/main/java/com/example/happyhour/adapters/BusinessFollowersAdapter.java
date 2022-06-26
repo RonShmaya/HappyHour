@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Follower;
 import com.google.android.material.textview.MaterialTextView;
@@ -39,13 +40,10 @@ public class BusinessFollowersAdapter extends RecyclerView.Adapter<RecyclerView.
         final FollowerHolder holder = (FollowerHolder) viewHolder;
         Follower follower = getItem(position);
 
-        //holder.listFollower_IMG_reviewer.setText(review.getReviewer_name()); // TODO: 23/06/2022 image
+
         holder.listFollower_LBL_name.setText(follower.getName());
+        Glide.with(activity).load(follower.getImg()).placeholder(R.drawable.ic_user).into(holder.listFollower_IMG_reviewer);
 
-
-       // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
-     //   holder.listReview_IMG_reviewer.setImageResource(resourceId);
-        // TODO: 19/06/2022 set photo
     }
 
     @Override

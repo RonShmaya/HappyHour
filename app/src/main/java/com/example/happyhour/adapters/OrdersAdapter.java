@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Bar;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -40,7 +41,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         final BarHolder holder = (BarHolder) viewHolder;
         Bar bar = getItem(position);
 
-      //  holder.listOrder_IMG.setText(bar.getName()); // TODO: 19/06/2022 set photo
+
         holder.listOrder_LBL_bar_name.setText(bar.getName());
         holder.listOrder_LBL_table_name.setText("table: "+bar.getTables().get(TABLE_KEY).getName());
         holder.listOrder_LBL_table_description.setText(bar.getTables().get(TABLE_KEY).getDescription());
@@ -49,10 +50,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         new SimpleDateFormat("dd/MM/yy", Locale.US).format(bar.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate()));
         holder.listOrder_LBL_happy_hour.setText(bar.getHappy_hour());
 
-
-       // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
-     //   holder.listBars_IMG.setImageResource(resourceId);
-        // TODO: 19/06/2022 set photo
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.listOrder_IMG);
     }
 
     @Override

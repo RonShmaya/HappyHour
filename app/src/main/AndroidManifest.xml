@@ -15,9 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.HappyHour">
-        <activity
-            android:name=".activities.Activity_test"
-            android:exported="false" />
+
         <activity
             android:name=".activities.private_account.Activity_my_reservations"
             android:exported="false"
@@ -67,6 +65,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

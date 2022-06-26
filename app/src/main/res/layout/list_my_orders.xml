@@ -23,7 +23,7 @@
             android:padding="3dp"
             app:shapeAppearanceOverlay="@style/RoundedImageView"
             android:scaleType="centerCrop"
-            android:src="@drawable/imgfg" />
+            android:src="@drawable/img_bar_basic" />
 
 
         <LinearLayout

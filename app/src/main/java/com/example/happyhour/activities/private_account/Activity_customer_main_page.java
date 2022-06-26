@@ -18,6 +18,7 @@ import com.example.happyhour.activities.Activity_user_connect;
 import com.example.happyhour.adapters.CustomerBarsAdapter;
 import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.objects.Bar;
+import com.example.happyhour.objects.Follower;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyDB;
@@ -90,12 +91,14 @@ public class Activity_customer_main_page extends AppCompatActivity {
         public void follow(Bar bar, int position) {
             String userId = DataManager.getDataManager().getPrivateAccount().getId();
             String userName = DataManager.getDataManager().getPrivateAccount().getName();
+            String img = DataManager.getDataManager().getPrivateAccount().getImgUri();
+            Follower follower = new Follower(userName,img);
             if (bar.getFollowers().containsKey(userId)) { //unfollow
                 bar.getFollowers().remove(userId);
                 DataManager.getDataManager().remove_follower(bar, userId);
             } else {
-                bar.setFollower(userId, userName);
-                DataManager.getDataManager().add_follower(bar, userId, userName);
+                bar.setFollower(userId, follower);
+                DataManager.getDataManager().add_follower(bar, userId, follower);
             }
             if_contain_change(fav_1, fav_1_adapter, bar);
             if_contain_change(hot_today, hotTodayAdapter, bar);

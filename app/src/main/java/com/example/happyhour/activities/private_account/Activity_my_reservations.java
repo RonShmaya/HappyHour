@@ -59,6 +59,10 @@ public class Activity_my_reservations extends AppCompatActivity {
         MyDB.getInstance().setCallback_get_bars(callback_get_bars);
         bars_I_order = DataManager.getDataManager().getPrivateAccount().getOrders();
         bars_I_order.forEach( (order_id , order) ->  MyDB.getInstance().get_bar(order.getBarId()));
+        if(bars_I_order.size() == 0){
+            loading_animation_view.cancelAnimation();
+            loading_animation_view.setVisibility(View.GONE);
+        }
 
     }
     private Callback_get_bars callback_get_bars = new Callback_get_bars() {

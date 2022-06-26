@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Bar;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -45,15 +46,12 @@ public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.V
         final BarHolder holder = (BarHolder) viewHolder;
         Bar bar = getItem(position);
 
-        // TODO photo holder.listBarFollowing_IMG);
+
         holder.listBarFollowing_LBL_name.setText(bar.getName());
         holder.listBarFollowing_LBL_barType.setText(bar.barTypeToString());
         holder.listBarFollowing_LBL_business_hours.setText("Open: "+bar.getOpenTime().toString()+ " - " + bar.getClosingTime().toString());
         holder.listBarFollowing_LBL_happy_hour.setText(bar.getHappy_hour());
-
-       // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
-     //   holder.listBars_IMG.setImageResource(resourceId);
-        // TODO: 19/06/2022 set photo
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.listBarFollowing_IMG);
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.objects.Account;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
+import com.example.happyhour.objects.Follower;
 import com.example.happyhour.objects.MyTime;
 import com.example.happyhour.objects.Order;
 import com.example.happyhour.objects.PrivateAccount;
@@ -196,9 +197,9 @@ public class MyDB {
         refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("followers").child(userId).removeValue();
     }
 
-    public void add_follower(Bar bar, String userId, String userName) {
-        refBars.child(bar.getId()).child("followers").child(userId).setValue(userName);
-        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("followers").child(userId).setValue(userName);
+    public void add_follower(Bar bar, String userId, Follower follower) {
+        refBars.child(bar.getId()).child("followers").child(userId).setValue(follower);
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("followers").child(userId).setValue(follower);
         refPrivateAccounts.child(userId).child("follow_bars").child(bar.getId()).setValue(bar.getName());
     }
 
@@ -243,9 +244,10 @@ public class MyDB {
         refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).removeValue();
     }
 
-    public void add_private_account_favorites(String userId , eBarType fav_1, eBarType fav_2) {
+    public void add_private_account_details(String userId , eBarType fav_1, eBarType fav_2, String uri) {
         refPrivateAccounts.child(userId).child("favorite_1").setValue(fav_1);
         refPrivateAccounts.child(userId).child("favorite_2").setValue(fav_2);
+        refPrivateAccounts.child(userId).child("imgUri").setValue(uri);
     }
 }
 

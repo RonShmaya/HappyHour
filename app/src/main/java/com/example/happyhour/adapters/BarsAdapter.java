@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Bar;
 import com.google.android.material.button.MaterialButton;
@@ -52,10 +53,8 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder.listBars_LBL_barType.setText(bar.barTypeToString());
         holder.listBars_RAB_rating.setRating(bar.starsAvg());
 
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.listBars_IMG);
 
-       // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
-     //   holder.listBars_IMG.setImageResource(resourceId);
-        // TODO: 19/06/2022 set photo
     }
 
     @Override

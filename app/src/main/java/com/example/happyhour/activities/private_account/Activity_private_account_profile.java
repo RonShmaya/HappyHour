@@ -1,20 +1,29 @@
 package com.example.happyhour.activities.private_account;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
+import com.example.happyhour.callbacks.Callback_upload_profile_img;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyServices;
+import com.example.happyhour.tools.MyStorage;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
@@ -22,14 +31,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
 
-//todo add photo
-//todo remove tool bar in first time
+
 public class Activity_private_account_profile extends AppCompatActivity {
 
 
@@ -47,6 +59,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private ArrayList<String> barTypes_fav_2;
     private FloatingActionButton fab_search;
     private BottomNavigationView nav_view;
+    private String imgUri = "";
 
 
     @Override
@@ -56,6 +69,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
 
         init_toolbar();
         findViews();
+        MyStorage.getInstance().setCallback_upload_img(callback_upload_img);
 
     }
 
@@ -74,12 +88,38 @@ public class Activity_private_account_profile extends AppCompatActivity {
         init_favorite(profile_ACTV_favorite1);
         init_favorite(profile_ACTV_favorite2);
 
-        profile_BTN_create.setOnClickListener(View -> save_clicked());
+        String userUri = DataManager.getDataManager().getPrivateAccount().getImgUri();
+        if(!userUri.isEmpty())
+            Glide.with(this).load(userUri).placeholder(R.drawable.ic_user).into(profile_IMG_photo);
+
+        profile_BTN_create.setOnClickListener(view -> save_clicked());
+        profile_FAB_upload_pic.setOnClickListener(view -> {
+            add_photo();
+        });
 
     }
 
+    private void add_photo() {
+        ImagePicker.Companion.with(this)
+                .crop()
+                .cropOval()
+                .maxResultSize(512, 512, true)
+                .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+                .createIntentFromDialog((Function1) (new Function1() {
+                    public Object invoke(Object var1) {
+                        this.invoke((Intent) var1);
+                        return Unit.INSTANCE;
+                    }
+
+                    public final void invoke(@NotNull Intent it) {
+                        Intrinsics.checkNotNullParameter(it, "it");
+                        launcher.launch(it);
+                    }
+                }));
+    }
+
     private void save_clicked() {
-        //todo verify upload phote
+        //photo is not must
         profile_TIL_favorite1.setError("");
         profile_TIL_favorite2.setError("");
         boolean input_ok = true;
@@ -100,7 +140,10 @@ public class Activity_private_account_profile extends AppCompatActivity {
 
         eBarType fav_1 = eBarType.valueOf(profile_ACTV_favorite1.getText().toString().replace(' ', '_'));
         eBarType fav_2 = eBarType.valueOf(profile_ACTV_favorite2.getText().toString().replace(' ', '_'));
-        DataManager.getDataManager().set_private_account_favorites(fav_1, fav_2);
+        if(imgUri.isEmpty()){
+            imgUri =  DataManager.getDataManager().getPrivateAccount().getImgUri();
+        }
+        DataManager.getDataManager().set_private_account_details(fav_1, fav_2,imgUri);
         if(is_first_time_user)
             go_next(Activity_customer_main_page.class);
         MyServices.getInstance().makeToast("Saved...");
@@ -183,4 +226,23 @@ public class Activity_private_account_profile extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Uri uri = result.getData().getData();
+            profile_IMG_photo.setImageURI(uri);
+            MyStorage.getInstance().uploadImageProfile(DataManager.getDataManager().getPrivateAccount().getId() , uri);
+        } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+            MyServices.getInstance().makeToast("image upload failed please, try again");
+        }
+    });
+    private Callback_upload_profile_img callback_upload_img = new Callback_upload_profile_img() {
+        @Override
+        public void img_uploaded(String url) {
+            imgUri = url;
+        }
+        @Override
+        public void failed() {
+            MyServices.getInstance().makeToast("image upload failed please, try again");
+        }
+    };
 }

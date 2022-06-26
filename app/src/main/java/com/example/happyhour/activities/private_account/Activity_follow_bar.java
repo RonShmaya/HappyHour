@@ -49,6 +49,10 @@ public class Activity_follow_bar extends AppCompatActivity {
         MyDB.getInstance().setCallback_get_bars(callback_get_bars);
         follow_bars = DataManager.getDataManager().getPrivateAccount().getFollow_bars();
         follow_bars.forEach( (f_id , f_name) ->  MyDB.getInstance().get_bar(f_id));
+        if(follow_bars.size() == 0){
+            loading_animation_view.cancelAnimation();
+            loading_animation_view.setVisibility(View.GONE);
+        }
     }
 
     private void findViews() {

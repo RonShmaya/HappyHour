@@ -19,6 +19,20 @@
         android:background="#FAF9F9"
         android:scaleType="centerCrop"
         android:src="@drawable/img_background" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_animation_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_loading"
+            app:lottie_speed="3" />
+    </RelativeLayout>
 
 
     <ScrollView
@@ -58,7 +72,7 @@
                 android:id="@+id/createBar_IMG_barPhoto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/imgfg"
+                android:src="@drawable/img_bar_basic"
                 android:clickable="true"
                 app:civ_border_color="#555B6E"
                 app:civ_border_width="3dp"/>
@@ -473,16 +487,16 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/listBars_IMG"
+                        android:id="@+id/createBar_IMG_menu"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:layout_height="100dp"
+                        android:layout_height="200dp"
                         app:strokeColor="#6CA19C9C"
-                        app:strokeWidth="3dp"
+                        app:strokeWidth="7dp"
                         android:layout_margin="20dp"
                         android:scaleType="centerCrop"
                         app:shapeAppearanceOverlay="@style/semiRoundedImageView"
-                        android:src="@drawable/imgfg" />
+                        android:src="@drawable/img_menu" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/createBar_FAB_upload_menu"

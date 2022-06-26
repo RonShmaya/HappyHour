@@ -6,13 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
-import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.Review;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -47,10 +45,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.listReview_LBL_review.setText(review.getDescription());
         holder.listReview_RAB_rating.setRating(review.getStars_rating());
 
+        Glide.with(activity).load(review.getImg()).placeholder(R.drawable.ic_user).into(holder.listReview_IMG_reviewer);
 
-       // int resourceId = activity.getResources().getIdentifier(bar.getImage(), "drawable", activity.getPackageName());
-     //   holder.listReview_IMG_reviewer.setImageResource(resourceId);
-        // TODO: 19/06/2022 set photo
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.widget.RatingBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.business_account.Activity_bar_account;
 import com.example.happyhour.activities.business_account.Activity_bar_tables;
@@ -36,12 +37,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 // TODO: 20/06/2022 upload post
-// TODO: 20/06/2022 photoes list
-// TODO: 20/06/2022 add photo
-// TODO: 20/06/2022 add menu
-// TODO: 20/06/2022 add reviews - photo
-// TODO: 20/06/2022 add followers - photo
-
+// TODO: 20/06/2022 post -> create object remove for b in dialog (passing arg for visiabilty BTN remove), remove -> delete likes in private and photo in storage
+// TODO: 20/06/2022 photos list + show all
+// TODO: 20/06/2022 change bar photo
+// TODO: 20/06/2022 see menu
+// TODO: 20/06/2022 change menu
 
 public class Activity_bar_details extends AppCompatActivity {
 
@@ -120,6 +120,7 @@ public class Activity_bar_details extends AppCompatActivity {
             MyServices.getInstance().makeToast("something went wrong! signOut");
             return;
         }
+        Glide.with(this).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(barDetails_IMG_barPhoto);
         barDetails_LBL_description.setText(bar.getDescription());
         barDetails_LBL_name.setText(bar.getName());
         barDetails_LBL_barType.setText(bar.barTypeToString());
@@ -132,7 +133,7 @@ public class Activity_bar_details extends AppCompatActivity {
         // TODO: 20/06/2022 add photo        barDetails_LBL_menu
         // TODO: 20/06/2022 add               barDetails_RAB_rating
         // TODO: 20/06/2022 photo     barDetails_IMG_barPhoto
-        // TODO: 20/06/2022   add                 reviews
+        // TODO: 20/06/2022 photo                 reviews
 
 
     }
@@ -252,14 +253,20 @@ public class Activity_bar_details extends AppCompatActivity {
         public void onClick(View view) {
             String userId = DataManager.getDataManager().getPrivateAccount().getId();
             String userName = DataManager.getDataManager().getPrivateAccount().getName();
+            String img = DataManager.getDataManager().getPrivateAccount().getImgUri();
+            Follower follower = new Follower(userName,img);
 
             if (DataManager.getDataManager().getPrivateAccount().getFollow_bars().containsKey(bar.getId())) {
                 barDetails_BTN_follow.setText("not follow");
+                bar.getFollowers().remove(userId);
+                barDetails_LBL_followers.setText(bar.getFollowers().size() + " - Followers");
                 DataManager.getDataManager().remove_follower(bar, userId);
 
             } else {
                 barDetails_BTN_follow.setText("following");
-                DataManager.getDataManager().add_follower(bar, userId, userName);
+                bar.getFollowers().put(userId,follower);
+                barDetails_LBL_followers.setText(bar.getFollowers().size() + " - Followers");
+                DataManager.getDataManager().add_follower(bar, userId, follower);
             }
         }
     };
@@ -385,8 +392,7 @@ public class Activity_bar_details extends AppCompatActivity {
     private View.OnClickListener show_followers_callback = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            ArrayList<Follower> followers = new ArrayList<>();
-            bar.getFollowers().forEach( (k , name) -> followers.add(new Follower(name)));
+            ArrayList<Follower> followers = new ArrayList<>( bar.getFollowers().values());
             new DialogShowFollowers().show(Activity_bar_details.this , followers);
         }
     };
