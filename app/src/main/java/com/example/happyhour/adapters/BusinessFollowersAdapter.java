@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class BusinessFollowersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private Activity activity;
     private ArrayList<Follower> followers = new ArrayList<>();
 
-    public FollowersAdapter(Activity activity, ArrayList<Follower> followers){
+    public BusinessFollowersAdapter(Activity activity, ArrayList<Follower> followers){
         this.activity = activity;
         this.followers = followers;
     }

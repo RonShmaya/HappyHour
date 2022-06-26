@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
+import com.example.happyhour.objects.MyTime;
 import com.example.happyhour.objects.Table;
 import com.example.happyhour.tools.DataManager;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private DataManager.eUserTypes userType;
     private Callback_table callback_table;
     private ArrayList<Table> tables = new ArrayList<>();
+    private MyTime timeOrder = new MyTime();
 
     public TableAdapter(Activity activity, ArrayList<Table> tables, DataManager.eUserTypes userType) {
         this.activity = activity;
@@ -45,6 +48,11 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return this;
     }
 
+    public TableAdapter setTimeOrder(MyTime timeOrder) {
+        this.timeOrder = timeOrder;
+        return this;
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final TableHolder holder = (TableHolder) viewHolder;
@@ -52,12 +60,17 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         holder.listTable_LBL_name.setText(table.getName());
         holder.listTable_LBL_description.setText(table.getDescription()+"\nPlaces: "+table.getNumOfPlaces());
-        if (this.userType == DataManager.eUserTypes.Business)
+        if (this.userType == DataManager.eUserTypes.Business) {
             holder.listTable_BTN_Order_or_remove.setText("Remove");
-        else if (this.userType == DataManager.eUserTypes.Private)
+        }
+        else if (this.userType == DataManager.eUserTypes.Private) {
             holder.listTable_BTN_Order_or_remove.setText("Order");
-        else
+            holder.listTable_BTN_time.setText(timeOrder.toString());
+            holder.listTable_MCV_time.setVisibility(View.VISIBLE);
+        }
+        else {
             holder.listTable_BTN_Order_or_remove.setText("---");
+        }
     }
 
     @Override
@@ -74,6 +87,8 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private MaterialTextView listTable_LBL_name;
         private MaterialTextView listTable_LBL_description;
+        private MaterialTextView listTable_BTN_time;
+        private MaterialCardView listTable_MCV_time;
         private MaterialButton listTable_BTN_Order_or_remove;
 
 
@@ -82,6 +97,8 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             listTable_LBL_name = itemView.findViewById(R.id.listTable_LBL_name);
             listTable_LBL_description = itemView.findViewById(R.id.listTable_LBL_description);
             listTable_BTN_Order_or_remove = itemView.findViewById(R.id.listTable_BTN_Order_or_remove);
+            listTable_BTN_time = itemView.findViewById(R.id.listTable_BTN_time);
+            listTable_MCV_time = itemView.findViewById(R.id.listTable_MCV_time);
 
             listTable_BTN_Order_or_remove.setOnClickListener(new View.OnClickListener() {
                 @Override

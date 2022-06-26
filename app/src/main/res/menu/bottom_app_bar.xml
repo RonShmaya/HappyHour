@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+    <item
+        android:id="@+id/action_home"
+        android:title=""
+        android:icon="@drawable/ic_home"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/action_follow"
+        android:title=""
+        android:icon="@drawable/ic_star_tb"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/action_order"
+        android:title=""
+        android:icon="@drawable/ic_bar"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/action_profile"
+        android:title=""
+        android:icon="@drawable/ic_user_tb"
+        app:showAsAction="always"
+        />
+
+
+
+
+
+</menu>

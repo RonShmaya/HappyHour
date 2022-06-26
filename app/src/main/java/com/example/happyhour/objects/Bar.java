@@ -185,7 +185,7 @@ public class Bar {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bar bar = (Bar) o;
-        return bar.getOwner_id().equals(owner_id) && bar.getId().equals(id);
+        return bar.owner_id.equals(owner_id) && bar.id.equals(id);
     }
 
 }

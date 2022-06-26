@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.private_account.Activity_private_account_profile">
+
+    <include
+        android:id="@+id/app_top_main"
+        layout="@layout/app_top_bar" />
+
+    <ImageView
+        android:id="@+id/main_IMG_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_top_main"
+        android:background="#FAF9F9"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_background" />
+
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_top_main"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/profile_LBL_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/comfortaa_bold"
+                android:gravity="center"
+                android:text="Profile"
+                android:textColor="#555B6E"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:id="@+id/profile_FRM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_LBL_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_IMG_photo"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_user"
+                    app:civ_border_color="#555B6E"
+                    app:civ_border_width="3dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/profile_FAB_upload_pic"
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:backgroundTint="#FAF9F9"
+                    android:clickable="true"
+                    app:borderWidth="1dp"
+                    app:fabCustomSize="30dp"
+                    app:srcCompat="@drawable/ic_edit"
+                    app:tint="#000000"
+                    app:useCompatPadding="false" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_FRM"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/profile_LBL_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:gravity="start"
+                    android:text="Name: "
+                    android:textColor="#555B6E"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/profile_TIL_favorite1"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:hint="Favorite Bar Type 1"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="#555B6E">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/profile_ACTV_favorite1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:inputType="none"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E"
+                        android:textSize="17sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/profile_TIL_favorite2"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:hint="Favorite Bar Type 2"
+                    android:textColorHint="#555B6E"
+                    app:boxStrokeColor="#555B6E"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="#555B6E">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/profile_ACTV_favorite2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="30"
+                        android:fontFamily="@font/comfortaa_bold"
+                        android:inputType="none"
+                        android:outlineAmbientShadowColor="#555B6E"
+                        android:shadowColor="#555B6E"
+                        android:textColor="#555B6E"
+                        android:textSize="17sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profile_BTN_create"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:backgroundTint="#555B6E"
+                    android:text="Save"
+                    app:checkedIconTint="@color/white"
+                    android:textColor="#FAF9F9"
+                    android:textSize="15sp"
+                    app:cornerRadius="20dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="center"
+            app:fabCradleRoundedCornerRadius="50dp"
+            app:fabCradleMargin="1dp"
+            />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF577F"
+            app:borderWidth="0dp"
+            android:src="@drawable/ic_search"
+            app:layout_anchor="@id/bottom_app_bar"
+            app:maxImageSize="30dp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="bottom"
+
+            >
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="0dp"
+                android:foregroundGravity="bottom"
+                app:itemIconSize="30dp"
+                android:background="#FF577F"
+                app:itemIconTint="#FFFFFF"
+                android:padding="0dp"
+                app:menu="@menu/bottom_app_bar" />
+
+        </FrameLayout>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

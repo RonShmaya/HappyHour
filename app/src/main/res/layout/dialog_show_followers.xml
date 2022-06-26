@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="450dp"
     android:background="#FAF9F9"
-    tools:context=".activities.Activity_create_bar">
+    tools:context=".activities.business_account.Activity_create_bar">
 
 
 

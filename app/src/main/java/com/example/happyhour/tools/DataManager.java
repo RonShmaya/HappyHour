@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class DataManager {
     private static DataManager _instance = new DataManager();
     public static String EXTRA_BAR = "EXTRA_BAR";
+
+
     public enum eUserTypes {Private, Business}
     private PrivateAccount privateAccount;
     private BusinessAccount businessAccount;
@@ -147,6 +149,13 @@ public class DataManager {
     public void add_follower(Bar bar, String userId, String userName) {
         this.privateAccount.getFollow_bars().put(bar.getId(), userName);
         MyDB.getInstance().add_follower(bar , userId, userName);
+    }
+
+    public void set_private_account_favorites(eBarType fav_1, eBarType fav_2) {
+        this.privateAccount.setFavorite_1(fav_1);
+        this.privateAccount.setFavorite_2(fav_2);
+        MyDB.getInstance().add_private_account_favorites( this.privateAccount.getId(),fav_1, fav_2);
+
     }
 
 }

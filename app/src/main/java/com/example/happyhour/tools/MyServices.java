@@ -1,5 +1,6 @@
 package com.example.happyhour.tools;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -18,8 +20,11 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.happyhour.objects.MyTime;
 
+import java.util.Date;
+
 public class MyServices {
     private static MyServices _instance = null;
+    private final int LEN_MSG_SHORT = 15;
     private Context context;
     private Toast toast;
     private View viewToast;
@@ -29,7 +34,7 @@ public class MyServices {
 
     private MyServices(Context context) {
         this.context = context.getApplicationContext();
-        this.toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+        this.toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
         toast.getView().getBackground().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.DARKEN);
         ((TextView) toast.getView().findViewById(android.R.id.message)).setTextColor(Color.parseColor("#FF577F"));
     }
@@ -45,6 +50,10 @@ public class MyServices {
     }
 
     public void makeToast(String msg){
+        if(msg.length() < LEN_MSG_SHORT)
+            toast.makeText(context, "", Toast.LENGTH_SHORT);
+        else
+            toast.makeText(context, "", Toast.LENGTH_LONG);
         toast.setText(msg);
         toast.show();
     }
@@ -81,6 +90,40 @@ public class MyServices {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             if(this.callback_time != null){
                 this.callback_time.get_input_time(new MyTime(hourOfDay , minute));
+            }
+        }
+    }
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        public interface Callback_date {
+            void get_input_date(Date date);
+        }
+        private Callback_date callback_date;
+
+        public DatePickerFragment setCallback_date(Callback_date callback_date) {
+            this.callback_date = callback_date;
+            return this;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            if(this.callback_date != null){
+                final Calendar c = Calendar.getInstance();
+                c.set(year, month, day , 0, 0 ,0);
+                this.callback_date.get_input_date(c.getTime());
             }
         }
     }

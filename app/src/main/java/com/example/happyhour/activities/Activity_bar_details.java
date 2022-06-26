@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
+import com.example.happyhour.activities.business_account.Activity_bar_account;
+import com.example.happyhour.activities.business_account.Activity_bar_tables;
+import com.example.happyhour.activities.private_account.Activity_customer_main_page;
+import com.example.happyhour.activities.private_account.Activity_reservation;
 import com.example.happyhour.adapters.ReviewAdapter;
 import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.dialogs.DialogAddReview;
@@ -30,7 +34,6 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-// TODO: 20/06/2022 visabi return back
 
 // TODO: 20/06/2022 upload post
 // TODO: 20/06/2022 photoes list
@@ -38,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 // TODO: 20/06/2022 add menu
 // TODO: 20/06/2022 add reviews - photo
 // TODO: 20/06/2022 add followers - photo
+
 
 public class Activity_bar_details extends AppCompatActivity {
 
@@ -141,9 +145,10 @@ public class Activity_bar_details extends AppCompatActivity {
         if (visibility_value == View.VISIBLE) {
             MyDB.getInstance().setCallback_get_bars(callback_get_bar);
             MyDB.getInstance().get_bar(barId);
+            action_return_back.setOnClickListener(view -> go_next(Activity_customer_main_page.class));
             barDetails_BTN_writeReview.setOnClickListener(add_review_listener);
             barDetails_BTN_follow.setOnClickListener(btn_follow_clicked);
-            //barDetails_BTN_makeReservation.setOnClickListener();
+            barDetails_BTN_makeReservation.setOnClickListener(make_reservation);
         }
     }
 
@@ -383,6 +388,17 @@ public class Activity_bar_details extends AppCompatActivity {
             ArrayList<Follower> followers = new ArrayList<>();
             bar.getFollowers().forEach( (k , name) -> followers.add(new Follower(name)));
             new DialogShowFollowers().show(Activity_bar_details.this , followers);
+        }
+    };
+    private View.OnClickListener make_reservation = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Bundle bundle = new Bundle();
+            bundle.putString(DataManager.EXTRA_BAR, bar.getId());
+            Intent intent = new Intent(Activity_bar_details.this, Activity_reservation.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
     };
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="#FAF9F9"
     android:elevation="7dp"
     app:cardCornerRadius="30dp"
-    android:background="#FAF9F9"
     app:cardElevation="7dp">
 
     <LinearLayout
@@ -19,9 +18,9 @@
             android:id="@+id/listReview_IMG_reviewer"
             android:layout_width="75dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_table"
             android:background="#9D9090"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_table" />
 
 
         <LinearLayout
@@ -39,7 +38,7 @@
                 android:layout_marginTop="5dp"
                 android:text="table 1"
                 android:textColor="#555B6E"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
 
@@ -50,27 +49,64 @@
                 android:padding="3dp"
                 android:text="out , smoking"
                 android:textColor="#555B6E"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/listTable_BTN_Order_or_remove"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.6"
-            android:layout_marginEnd="7dp"
-            android:backgroundTint="#FAF9F9"
-            android:text="Remove"
-            android:textColor="#555B6E"
-            android:layout_gravity="bottom"
-            android:textSize="13sp"
-            app:cornerRadius="20dp"
-            app:strokeColor="#9D9090"
-            app:strokeWidth="3dp" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/listTable_MCV_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="17dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="end"
+                android:visibility="invisible"
+                android:elevation="7dp"
+                app:cardBackgroundColor="#555B6E"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="7dp">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/listTable_BTN_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/comfortaa_bold"
+                    android:gravity="center"
+                    android:text="00 : 00"
+                    android:textColor="#FF577F"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/listTable_BTN_Order_or_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="7dp"
+                android:layout_weight="0.6"
+                android:backgroundTint="#FAF9F9"
+                android:text="Remove"
+                android:textColor="#555B6E"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:strokeColor="#9D9090"
+                app:strokeWidth="3dp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </com.google.android.material.card.MaterialCardView>

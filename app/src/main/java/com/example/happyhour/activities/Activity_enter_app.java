@@ -10,8 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.happyhour.R;
+import com.example.happyhour.activities.business_account.Activity_bar_account;
+import com.example.happyhour.activities.private_account.Activity_customer_main_page;
+import com.example.happyhour.activities.private_account.Activity_private_account_profile;
 import com.example.happyhour.callbacks.Callback_find_account;
 import com.example.happyhour.objects.Account;
+import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyDB;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,7 +85,11 @@ public class Activity_enter_app extends AppCompatActivity {
                 go_next(Activity_bar_account.class);
             }
             else if(userType == DataManager.eUserTypes.Private){
-                go_next(Activity_customer_main_page.class);
+                if(((PrivateAccount)account).getFavorite_1() == null)
+                    go_next(Activity_private_account_profile.class);
+                else
+                    go_next(Activity_customer_main_page.class);
+
             }
         }
 

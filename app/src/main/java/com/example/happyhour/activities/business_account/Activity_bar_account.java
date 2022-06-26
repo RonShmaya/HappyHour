@@ -1,4 +1,4 @@
-package com.example.happyhour.activities;
+package com.example.happyhour.activities.business_account;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
+import com.example.happyhour.activities.Activity_bar_details;
+import com.example.happyhour.activities.Activity_user_connect;
 import com.example.happyhour.adapters.BarsAdapter;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.tools.DataManager;
@@ -20,8 +22,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-// TODO: 20/06/2022 add rating
-// TODO: 20/06/2022 where to add bar reservations?
+
 public class Activity_bar_account extends AppCompatActivity {
     private RecyclerView main_LST_bars;
     private ArrayList<Bar> bars;
@@ -125,7 +126,6 @@ public class Activity_bar_account extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_logout) {
-            DataManager.getDataManager().logout();
             logout();
             return true;
         }
@@ -134,6 +134,7 @@ public class Activity_bar_account extends AppCompatActivity {
 
     private void logout() {
         MyServices.getInstance().makeToast("logout...");
+        DataManager.getDataManager().logout();
         Intent intent = new Intent(this, Activity_user_connect.class);
         startActivity(intent);
         finish();

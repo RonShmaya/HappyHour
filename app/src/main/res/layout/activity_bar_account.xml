@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Activity_bar_account">
+    tools:context=".activities.business_account.Activity_bar_account">
 
     <ImageView
         android:id="@+id/main_IMG_background"
@@ -36,7 +36,7 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom"
             app:backgroundTint="@color/white"
             app:fabAlignmentMode="center"

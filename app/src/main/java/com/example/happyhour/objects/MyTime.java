@@ -40,6 +40,27 @@ public class MyTime implements Comparable<MyTime> {
         return minutes - time.minutes;
     }
 
+    public boolean isBetweenByHours(MyTime start , MyTime end ) {
+        int startHour = start.getHour();
+        int endHour = end.getHour();
+
+        if(hour == startHour || hour == endHour ){
+            return true;
+        }
+        if(hour >= startHour && hour <= endHour){
+            return true;
+        }
+        if(startHour > endHour && startHour > hour){
+            if( hour <=  endHour )
+                return true;
+        }
+        if(startHour > endHour && hour > endHour){
+            if( hour >=  startHour)
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         String myHour;
@@ -52,6 +73,6 @@ public class MyTime implements Comparable<MyTime> {
             myMinutes = "0"+minutes;
         else
             myMinutes = ""+minutes;
-        return myHour+":"+myMinutes;
+        return myHour+" : "+myMinutes;
     }
 }

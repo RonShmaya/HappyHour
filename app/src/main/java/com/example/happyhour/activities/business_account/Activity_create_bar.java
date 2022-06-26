@@ -1,4 +1,4 @@
-package com.example.happyhour.activities;
+package com.example.happyhour.activities.business_account;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhour.R;
+import com.example.happyhour.activities.Activity_user_connect;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.objects.eMusicType;

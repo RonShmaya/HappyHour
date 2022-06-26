@@ -9,6 +9,7 @@ import com.example.happyhour.objects.Account;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.MyTime;
+import com.example.happyhour.objects.Order;
 import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.objects.Review;
 import com.example.happyhour.objects.Table;
@@ -145,6 +146,11 @@ public class MyDB {
     public void delete_table(BusinessAccount businessAccount, Bar bar, Table table) {
         refBars.child(bar.getId()).child("tables").child(table.getId()).removeValue();
         refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).child("tables").child(table.getId()).removeValue();
+
+        table.getOrders().forEach( (order_id , order) -> {
+            refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).removeValue();
+        });
+
     }
 
     public void add_table(BusinessAccount businessAccount, Bar bar, Table table) {
@@ -215,6 +221,31 @@ public class MyDB {
     public void add_review(Bar bar, Review review) {
         refBars.child(bar.getId()).child("reviews").child(review.getId()).setValue(review);
         refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("reviews").child(review.getId()).setValue(review);
+    }
+
+    public void add_reservation(Bar bar, String tableId, Order order) {
+        refBars.child(bar.getId()).child("tables").child(tableId).child("orders").child(order.getOrder_id()).setValue(order);
+
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId())
+                .child("tables").child(tableId).child("orders")
+                .child(order.getOrder_id()).setValue(order);
+
+        refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).setValue(order);
+    }
+
+    public void remove_order(Bar bar, String tableId, Order order) {
+        refBars.child(bar.getId()).child("tables").child(tableId).child("orders").child(order.getOrder_id()).removeValue();
+
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId())
+                .child("tables").child(tableId).child("orders")
+                .child(order.getOrder_id()).removeValue();
+
+        refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).removeValue();
+    }
+
+    public void add_private_account_favorites(String userId , eBarType fav_1, eBarType fav_2) {
+        refPrivateAccounts.child(userId).child("favorite_1").setValue(fav_1);
+        refPrivateAccounts.child(userId).child("favorite_2").setValue(fav_2);
     }
 }
 

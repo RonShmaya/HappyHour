@@ -1,16 +1,16 @@
 package com.example.happyhour.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.happyhour.R;
 
-public class Activity_registration_private_account extends AppCompatActivity {
+public class Activity_test extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_private_account);
+        setContentView(R.layout.activity_test);
     }
 }

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.happyhour.R;
-import com.example.happyhour.adapters.FollowersAdapter;
+import com.example.happyhour.adapters.BusinessFollowersAdapter;
 import com.example.happyhour.objects.Follower;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -16,12 +16,12 @@ import java.util.ArrayList;
 public class DialogShowFollowers {
     private RecyclerView showFollowers_LST_followers;
     private MaterialTextView showFollowers_LBL_numOfFollowers;
-    private FollowersAdapter followersAdapter;
+    private BusinessFollowersAdapter followersAdapter;
 
 
     public void show(AppCompatActivity activity, ArrayList<Follower> followers){
         final Dialog dialog = new Dialog(activity);
-        followersAdapter = new FollowersAdapter(activity,followers);
+        followersAdapter = new BusinessFollowersAdapter(activity,followers);
         dialog.setContentView(R.layout.dialog_show_followers);
         findViews(dialog , followers.size());
         dialog.show();

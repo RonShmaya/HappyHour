@@ -16,13 +16,26 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.HappyHour">
         <activity
-            android:name=".activities.Activity_bar_tables"
-            android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:name=".activities.Activity_test"
+            android:exported="false" />
         <activity
-            android:name=".activities.Activity_create_bar"
+            android:name=".activities.private_account.Activity_my_reservations"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.private_account.Activity_reservation"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.private_account.Activity_follow_bar"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.business_account.Activity_bar_tables"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.business_account.Activity_create_bar"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -30,15 +43,15 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.Activity_registration_private_account"
+            android:name=".activities.private_account.Activity_private_account_profile"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.Activity_customer_main_page"
+            android:name=".activities.private_account.Activity_customer_main_page"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.Activity_bar_account"
+            android:name=".activities.business_account.Activity_bar_account"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

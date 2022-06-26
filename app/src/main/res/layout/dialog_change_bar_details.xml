@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.Activity_create_bar"
+    tools:context=".activities.business_account.Activity_create_bar"
     android:layout_width="300dp"
     android:layout_height="350dp"
     android:orientation="vertical">
