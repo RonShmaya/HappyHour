@@ -1,6 +1,8 @@
 package com.example.happyhour.dialogs;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,8 @@ public class DialogShowFollowers {
 
     public void show(AppCompatActivity activity, ArrayList<Follower> followers){
         final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         followersAdapter = new BusinessFollowersAdapter(activity,followers);
         dialog.setContentView(R.layout.dialog_show_followers);
         findViews(dialog , followers.size());

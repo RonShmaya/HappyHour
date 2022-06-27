@@ -224,13 +224,29 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_height="5dp"
                     android:background="#6CA19C9C" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/barDetails_LST_posts"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="#6CA19C9C" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/barDetails_LBL_barType"
@@ -271,6 +287,12 @@
                         android:textColor="#555B6E"
                         android:textSize="17sp"
                         android:textStyle="bold" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/barDetails_TXT_description"
+                        android:layout_marginBottom="3dp"
+                        android:background="#6CA19C9C" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/barDetails_FAB_changeDescription"

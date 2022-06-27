@@ -249,5 +249,14 @@ public class MyDB {
         refPrivateAccounts.child(userId).child("favorite_2").setValue(fav_2);
         refPrivateAccounts.child(userId).child("imgUri").setValue(uri);
     }
+
+    public void update_bar_photo(Bar bar, String url) {
+        refBars.child(bar.getId()).child("bar_photo").setValue(url);
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("bar_photo").setValue(url);
+    }
+    public void update_bar_menu_photo(Bar bar, String url) {
+        refBars.child(bar.getId()).child("menu_photo").setValue(url);
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("menu_photo").setValue(url);
+    }
 }
 

@@ -86,21 +86,15 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             listBars_RAB_rating = itemView.findViewById(R.id.listBars_RAB_rating);
 
 
-            listBars_BTN_remove_account.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (barlistener != null) {
-                        barlistener.minus(getItem(getAdapterPosition()), getAdapterPosition());
-                    }
+            listBars_BTN_remove_account.setOnClickListener(view -> {
+                if (barlistener != null) {
+                    barlistener.minus(getItem(getAdapterPosition()), getAdapterPosition());
                 }
             });
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (barlistener != null) {
-                        barlistener.clicked(getItem(getAdapterPosition()), getAdapterPosition());
-                    }
+            itemView.setOnClickListener(view -> {
+                if (barlistener != null) {
+                    barlistener.clicked(getItem(getAdapterPosition()), getAdapterPosition());
                 }
             });
         }

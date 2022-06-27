@@ -146,9 +146,9 @@ public class Activity_bar_tables extends AppCompatActivity {
                         .setDescription(table.getDescription())
                         .setName(table.getName())
                         .addOrder(OrdersAdapter.ORDER_KEY, order);
-                //todo add photo
                 barsForAdapter.add(new Bar()
                         .setName(bar.getName())
+                        .setBar_photo(bar.getBar_photo())
                         .setHappy_hour(bar.getHappy_hour())
                         .addTable(OrdersAdapter.TABLE_KEY, table_for_adapter));
             });
@@ -185,6 +185,7 @@ public class Activity_bar_tables extends AppCompatActivity {
         add_table_dialog.setCallback_add_table(new DialogAddTable.Callback_add_table() {
             @Override
             public void table_to_add(Table table) {
+                MyServices.getInstance().makeToast("table added");
                 tables.add(table);
                 tablesAdapter.notifyItemInserted((tables.size() - 1));
                 DataManager.getDataManager().add_table(bar, table);

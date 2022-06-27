@@ -33,9 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-// TODO: 23/06/2022 add toolbar features
-// TODO: 23/06/2022 upload photo
-// TODO: 23/06/2022 add favorite bar type?
+
 public class Activity_customer_main_page extends AppCompatActivity {
     private RecyclerView customer_menu_LST_hot_today;
     private RecyclerView customer_menu_LST_fab1;

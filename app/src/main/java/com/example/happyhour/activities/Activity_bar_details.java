@@ -1,11 +1,16 @@
 package com.example.happyhour.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -14,33 +19,45 @@ import com.example.happyhour.activities.business_account.Activity_bar_account;
 import com.example.happyhour.activities.business_account.Activity_bar_tables;
 import com.example.happyhour.activities.private_account.Activity_customer_main_page;
 import com.example.happyhour.activities.private_account.Activity_reservation;
+import com.example.happyhour.adapters.PostsAdapter;
 import com.example.happyhour.adapters.ReviewAdapter;
+import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
 import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.dialogs.DialogAddReview;
 import com.example.happyhour.dialogs.DialogChangeBarDetails;
+import com.example.happyhour.dialogs.DialogPost;
 import com.example.happyhour.dialogs.DialogShowFollowers;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.Follower;
+import com.example.happyhour.objects.Post;
 import com.example.happyhour.objects.Review;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyDB;
 import com.example.happyhour.tools.MyServices;
+import com.example.happyhour.tools.MyStorage;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
 
 
-// TODO: 20/06/2022 upload post
-// TODO: 20/06/2022 post -> create object remove for b in dialog (passing arg for visiabilty BTN remove), remove -> delete likes in private and photo in storage
+// TODO: 20/06/2022 upload post -> !!! post likes must contain in map for unduplicates
+// TODO: 20/06/2022 post -> create object remove for b in dialog (passing arg for visibility BTN remove), remove -> delete likes in private and photo in storage
 // TODO: 20/06/2022 photos list + show all
-// TODO: 20/06/2022 change bar photo
-// TODO: 20/06/2022 see menu
+
+// TODO: 20/06/2022 see menu - some dialog like in post
 // TODO: 20/06/2022 change menu
 
 public class Activity_bar_details extends AppCompatActivity {
@@ -78,6 +95,11 @@ public class Activity_bar_details extends AppCompatActivity {
     private ArrayList<Review> reviews;
     private Bar bar;
     private String barId;
+    private boolean isUploadBarPhoto = false;
+
+    private RecyclerView barDetails_LST_posts;
+    private PostsAdapter postsAdapter;
+    private ArrayList<Post> posts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +109,36 @@ public class Activity_bar_details extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         barId = bundle.getString(DataManager.EXTRA_BAR);
 
+        posts = new ArrayList<>(Arrays.asList(
+                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
+                new Post("https://www.investopedia.com/thmb/P5raK6ER-FdxphRjkUDhNLV2sak=/2121x1414/filters:fill(auto,1)/GettyImages-1124491867-6228971a834f4bce80a78fe0551ccb88.jpg"),
+                new Post("https://cdn.pixabay.com/photo/2015/11/26/22/28/woman-1064664__480.jpg"),
+                new Post("https://cdn.pixabay.com/photo/2015/11/26/22/28/woman-1064664__480.jpg"),
+                new Post("https://www.simmonsbar.co.uk/app/uploads/2021/08/005-1-9.jpg"),
+                new Post("https://www.investopedia.com/articles/personal-finance/011216/economics-owning-bar.asp"),
+                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
+                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
+                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745")
+        ));
+        postsAdapter = new PostsAdapter(this , posts);
+        postsAdapter.setPostListener(new PostsAdapter.PostListener() {
+            @Override
+            public void clicked(Post post, int position) {
+                new DialogPost().show(Activity_bar_details.this, post);
+            }
+        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        barDetails_LST_posts = findViewById(R.id.barDetails_LST_posts);
+        barDetails_LST_posts.setLayoutManager(layoutManager);
+        barDetails_LST_posts.setAdapter(postsAdapter);
 
+
+
+
+
+
+
+        MyStorage.getInstance().setCallback_create_bar_img_upload(callback_create_bar_img_upload);
         findViews();
         update_ui_by_account_type();
     }
@@ -99,7 +150,8 @@ public class Activity_bar_details extends AppCompatActivity {
         Boolean account_visibility_business = null;
         if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Business) {
             account_visibility_business = true;
-        } else if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private) {
+        }
+        else if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private) {
             account_visibility_business = false;
         }
 
@@ -110,8 +162,8 @@ public class Activity_bar_details extends AppCompatActivity {
         int business_visible_value = account_visibility_business == true ? View.VISIBLE : View.INVISIBLE;
         int private_visible_value = account_visibility_business == true ? View.INVISIBLE : View.VISIBLE;
 
-        business_views_visability(business_visible_value);
-        private_views_visability(private_visible_value);
+        business_views_visibility(business_visible_value);
+        private_views_visibility(private_visible_value);
 
     }
 
@@ -129,16 +181,9 @@ public class Activity_bar_details extends AppCompatActivity {
         barDetails_RAB_rating.setRating(bar.starsAvg());
         barDetails_LBL_followers.setText(bar.getFollowers().size() + " - Followers");
 
-
-        // TODO: 20/06/2022 add photo        barDetails_LBL_menu
-        // TODO: 20/06/2022 add               barDetails_RAB_rating
-        // TODO: 20/06/2022 photo     barDetails_IMG_barPhoto
-        // TODO: 20/06/2022 photo                 reviews
-
-
     }
 
-    private void private_views_visability(int visibility_value) {
+    private void private_views_visibility(int visibility_value) {
         barDetails_BTN_makeReservation.setVisibility(visibility_value);
         barDetails_BTN_follow.setVisibility(visibility_value);
         barDetails_BTN_writeReview.setVisibility(visibility_value);
@@ -153,7 +198,7 @@ public class Activity_bar_details extends AppCompatActivity {
         }
     }
 
-    private void business_views_visability(int visibility_value) {
+    private void business_views_visibility(int visibility_value) {
         business_account_actions.forEach((action, fab) -> fab.setVisibility(visibility_value));
 
         barDetails_BTN_uploadPost.setVisibility(visibility_value);
@@ -218,12 +263,30 @@ public class Activity_bar_details extends AppCompatActivity {
     };
 
 
-    private View.OnClickListener changeBarPhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
+    private View.OnClickListener changeBarPhoto = view -> {
+        isUploadBarPhoto = true;
+        add_photo();
     };
+
+    private void add_photo() {
+        ImagePicker.Companion.with(this)
+                .crop()
+                .cropOval()
+                .maxResultSize(512, 512, true)
+                .provider(ImageProvider.BOTH) //Or bothCameraGallery()
+                .createIntentFromDialog((Function1) (new Function1() {
+                    public Object invoke(Object var1) {
+                        this.invoke((Intent) var1);
+                        return Unit.INSTANCE;
+                    }
+
+                    public final void invoke(@NotNull Intent it) {
+                        Intrinsics.checkNotNullParameter(it, "it");
+                        launcher.launch(it);
+                    }
+                }));
+    }
+
     private View.OnClickListener changeBarType = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -285,11 +348,9 @@ public class Activity_bar_details extends AppCompatActivity {
                             barDetails_LBL_happyHour.getId());
         }
     };
-    private View.OnClickListener changeMenu = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
+    private View.OnClickListener changeMenu = view -> {
+        isUploadBarPhoto = false;
+        add_photo();
     };
     private View.OnClickListener add_review_listener = new View.OnClickListener() {
         @Override
@@ -407,4 +468,40 @@ public class Activity_bar_details extends AppCompatActivity {
             finish();
         }
     };
+    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
+        if (result.getResultCode() == RESULT_OK) {
+            Uri uri = result.getData().getData();
+            if(isUploadBarPhoto) {
+                barDetails_IMG_barPhoto.setImageURI(uri);
+                MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
+            }
+            else{
+               //todo
+                MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
+            }
+        } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+            MyServices.getInstance().makeToast("image upload failed please, try again");
+        }
+    });
+    private Callback_create_bar_img_upload callback_create_bar_img_upload = new Callback_create_bar_img_upload() {
+        @Override
+        public void main_img(String url) {
+            bar.setBar_photo(url);
+            MyDB.getInstance().update_bar_photo(bar,url);
+            MyServices.getInstance().makeToast("uploading");
+        }
+
+        @Override
+        public void menu_img(String url) {
+            bar.setBar_photo(url);
+            MyDB.getInstance().update_bar_photo(bar,url);
+            MyServices.getInstance().makeToast("uploading");
+        }
+
+        @Override
+        public void failed() {
+            MyServices.getInstance().makeToast("something went wrong please try again");
+        }
+    };
+
 }

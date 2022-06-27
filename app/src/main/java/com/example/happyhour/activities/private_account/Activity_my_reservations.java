@@ -109,10 +109,12 @@ public class Activity_my_reservations extends AppCompatActivity {
                                     .setDescription(table.getDescription())
                                     .setName(table.getName())
                                     .addOrder(OrdersAdapter.ORDER_KEY, order);
-                            //todo add photo
+
                             barsToAdapter.add(new Bar()
                                     .setName(bar.getName())
+                                    .setBar_photo(bar.getBar_photo())
                                     .setHappy_hour(bar.getHappy_hour())
+                                    .setBar_photo(bar.getBar_photo())
                                     .addTable(OrdersAdapter.TABLE_KEY, table_for_adapter));
 
                         }

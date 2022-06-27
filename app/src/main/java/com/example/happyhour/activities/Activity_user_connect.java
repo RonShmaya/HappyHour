@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import java.util.List;
 
-// TODO: 23/06/2022 new private to another activity
+
 public class Activity_user_connect extends AppCompatActivity {
     public enum eUserPick {CreatePrivateAccount, CreateBusinessAccount, Login }
     private DataManager.eUserTypes userType;
