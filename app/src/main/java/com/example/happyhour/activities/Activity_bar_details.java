@@ -21,8 +21,8 @@ import com.example.happyhour.activities.private_account.Activity_customer_main_p
 import com.example.happyhour.activities.private_account.Activity_reservation;
 import com.example.happyhour.adapters.PostsAdapter;
 import com.example.happyhour.adapters.ReviewAdapter;
-import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
 import com.example.happyhour.callbacks.Callback_get_bars;
+import com.example.happyhour.callbacks.Callback_upload_bar_imgs;
 import com.example.happyhour.dialogs.DialogAddReview;
 import com.example.happyhour.dialogs.DialogChangeBarDetails;
 import com.example.happyhour.dialogs.DialogMenu;
@@ -45,7 +45,6 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,12 +53,13 @@ import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
 
 
-// TODO: 20/06/2022 upload post -> !!! post likes must contain in map to prevent duplicates
-// TODO: 20/06/2022 post -> create object remove for b in dialog (passing arg for visibility BTN remove), remove -> delete likes in private and photo in storage
-// TODO: 20/06/2022 photos list + show all
+
 
 public class Activity_bar_details extends AppCompatActivity {
+    public enum eUploadImg {BarPhoto, MenuPhoto, PostPhoto}
 
+    ;
+    private eUploadImg uploadImg;
     private FloatingActionButton barDetails_FAB_changeBarName;
     private FloatingActionButton barDetails_FAB_changeBarPhoto;
     private FloatingActionButton barDetails_FAB_changeBarType;
@@ -93,7 +93,6 @@ public class Activity_bar_details extends AppCompatActivity {
     private ArrayList<Review> reviews;
     private Bar bar;
     private String barId;
-    private boolean isUploadBarPhoto = false;
 
     private RecyclerView barDetails_LST_posts;
     private PostsAdapter postsAdapter;
@@ -107,38 +106,10 @@ public class Activity_bar_details extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         barId = bundle.getString(DataManager.EXTRA_BAR);
 
-        posts = new ArrayList<>(Arrays.asList(
-                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
-                new Post("https://www.investopedia.com/thmb/P5raK6ER-FdxphRjkUDhNLV2sak=/2121x1414/filters:fill(auto,1)/GettyImages-1124491867-6228971a834f4bce80a78fe0551ccb88.jpg"),
-                new Post("https://cdn.pixabay.com/photo/2015/11/26/22/28/woman-1064664__480.jpg"),
-                new Post("https://cdn.pixabay.com/photo/2015/11/26/22/28/woman-1064664__480.jpg"),
-                new Post("https://www.simmonsbar.co.uk/app/uploads/2021/08/005-1-9.jpg"),
-                new Post("https://www.investopedia.com/articles/personal-finance/011216/economics-owning-bar.asp"),
-                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
-                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745"),
-                new Post("https://firebasestorage.googleapis.com/v0/b/happy-hour-ad071.appspot.com/o/PRIVATE_ACCOUNTS%2F6HeFuiD0ckb1d8aiTPD9RfRRdsY2?alt=media&token=2c1bc54e-5a9c-44c8-a468-8a2bce6d5745")
-        ));
-        postsAdapter = new PostsAdapter(this , posts);
-        postsAdapter.setPostListener(new PostsAdapter.PostListener() {
-            @Override
-            public void clicked(Post post, int position) {
-                new DialogPost().show(Activity_bar_details.this, post);
-            }
-        });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        barDetails_LST_posts = findViewById(R.id.barDetails_LST_posts);
-        barDetails_LST_posts.setLayoutManager(layoutManager);
-        barDetails_LST_posts.setAdapter(postsAdapter);
-
-
-
-
-
-
-
-        MyStorage.getInstance().setCallback_create_bar_img_upload(callback_create_bar_img_upload);
+        MyStorage.getInstance().setCallback_upload_bar_imgs(callback_upload_bar_imgs);
         findViews();
         update_ui_by_account_type();
+
     }
 
 
@@ -148,8 +119,7 @@ public class Activity_bar_details extends AppCompatActivity {
         Boolean account_visibility_business = null;
         if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Business) {
             account_visibility_business = true;
-        }
-        else if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private) {
+        } else if (DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private) {
             account_visibility_business = false;
         }
 
@@ -206,6 +176,7 @@ public class Activity_bar_details extends AppCompatActivity {
             business_account_actions.forEach((action, fab) -> fab.setOnClickListener(action));
             barDetails_BTN_myTables.setOnClickListener(go_to_my_table);
             action_return_back.setOnClickListener(view -> go_next(Activity_bar_account.class));
+            barDetails_BTN_uploadPost.setOnClickListener(uploadPost);
             init_data(DataManager.getDataManager().getBar(barId));
         }
 
@@ -238,6 +209,7 @@ public class Activity_bar_details extends AppCompatActivity {
         barDetails_IMG_barPhoto = findViewById(R.id.barDetails_IMG_barPhoto);
         barDetails_LST_Reviews = findViewById(R.id.barDetails_LST_Reviews);
         barDetails_RAB_rating = findViewById(R.id.barDetails_RAB_rating);
+        barDetails_LST_posts = findViewById(R.id.barDetails_LST_posts);
 
         action_logout = findViewById(R.id.action_logout);
         action_return_back = findViewById(R.id.action_return_back);
@@ -246,11 +218,12 @@ public class Activity_bar_details extends AppCompatActivity {
 
         barDetails_LBL_menu.setOnClickListener(show_menu);
     }
+
     private View.OnClickListener show_menu = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             new DialogMenu()
-                .show(Activity_bar_details.this, bar.getMenu_photo());
+                    .show(Activity_bar_details.this, bar.getMenu_photo());
         }
     };
 
@@ -271,7 +244,11 @@ public class Activity_bar_details extends AppCompatActivity {
 
 
     private View.OnClickListener changeBarPhoto = view -> {
-        isUploadBarPhoto = true;
+        uploadImg = eUploadImg.BarPhoto;
+        add_photo();
+    };
+    private View.OnClickListener uploadPost = view -> {
+        uploadImg = eUploadImg.PostPhoto;
         add_photo();
     };
 
@@ -324,7 +301,7 @@ public class Activity_bar_details extends AppCompatActivity {
             String userId = DataManager.getDataManager().getPrivateAccount().getId();
             String userName = DataManager.getDataManager().getPrivateAccount().getName();
             String img = DataManager.getDataManager().getPrivateAccount().getImgUri();
-            Follower follower = new Follower(userName,img);
+            Follower follower = new Follower(userName, img);
 
             if (DataManager.getDataManager().getPrivateAccount().getFollow_bars().containsKey(bar.getId())) {
                 barDetails_BTN_follow.setText("not follow");
@@ -334,7 +311,7 @@ public class Activity_bar_details extends AppCompatActivity {
 
             } else {
                 barDetails_BTN_follow.setText("following");
-                bar.getFollowers().put(userId,follower);
+                bar.getFollowers().put(userId, follower);
                 barDetails_LBL_followers.setText(bar.getFollowers().size() + " - Followers");
                 DataManager.getDataManager().add_follower(bar, userId, follower);
             }
@@ -356,7 +333,7 @@ public class Activity_bar_details extends AppCompatActivity {
         }
     };
     private View.OnClickListener changeMenu = view -> {
-        isUploadBarPhoto = false;
+        uploadImg = eUploadImg.MenuPhoto;
         add_photo();
     };
     private View.OnClickListener add_review_listener = new View.OnClickListener() {
@@ -366,10 +343,10 @@ public class Activity_bar_details extends AppCompatActivity {
                 @Override
                 public void review_to_add(Review review) {
                     reviews.add(review);
-                    bar.add_review(review.getId(),review);
+                    bar.add_review(review.getId(), review);
                     barDetails_RAB_rating.setRating(bar.starsAvg());
-                    reviewsAdapter.notifyItemChanged((reviews.size() -1) );
-                    MyDB.getInstance().add_review(bar , review);
+                    reviewsAdapter.notifyItemChanged((reviews.size() - 1));
+                    MyDB.getInstance().add_review(bar, review);
                 }
             });
             dialogAddReview.show(Activity_bar_details.this);
@@ -442,6 +419,14 @@ public class Activity_bar_details extends AppCompatActivity {
     private void init_data(Bar bar) {
         this.bar = bar;
         views_get_data();
+
+        posts = new ArrayList<>(bar.getPosts().values());
+        postsAdapter = new PostsAdapter(this, posts);
+        postsAdapter.setPostListener((post, position) -> new DialogPost().show(Activity_bar_details.this, post));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        barDetails_LST_posts.setLayoutManager(layoutManager);
+        barDetails_LST_posts.setAdapter(postsAdapter);
+
         reviews = new ArrayList<>(bar.getReviews().values());
         reviewsAdapter = new ReviewAdapter(this, reviews);
         barDetails_LST_Reviews.setAdapter(reviewsAdapter);
@@ -457,11 +442,12 @@ public class Activity_bar_details extends AppCompatActivity {
             barDetails_BTN_follow.setText("follow");
         }
     }
+
     private View.OnClickListener show_followers_callback = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            ArrayList<Follower> followers = new ArrayList<>( bar.getFollowers().values());
-            new DialogShowFollowers().show(Activity_bar_details.this , followers);
+            ArrayList<Follower> followers = new ArrayList<>(bar.getFollowers().values());
+            new DialogShowFollowers().show(Activity_bar_details.this, followers);
         }
     };
     private View.OnClickListener make_reservation = new View.OnClickListener() {
@@ -479,28 +465,41 @@ public class Activity_bar_details extends AppCompatActivity {
         if (result.getResultCode() == RESULT_OK) {
             Uri uri = result.getData().getData();
             MyServices.getInstance().makeToast("uploading");
-            if(isUploadBarPhoto) {
+            if (uploadImg == eUploadImg.BarPhoto) {
                 barDetails_IMG_barPhoto.setImageURI(uri);
                 MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
-            }
-            else{
+            } else if (uploadImg == eUploadImg.MenuPhoto) {
                 MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
+            } else if (uploadImg == eUploadImg.PostPhoto) {
+                MyStorage.getInstance().uploadPost(DataManager.getDataManager().getBusinessAccount().getId(), barId, bar.getPosts().size() + "", uri);
             }
         } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
             MyServices.getInstance().makeToast("image upload failed please, try again");
         }
     });
-    private Callback_create_bar_img_upload callback_create_bar_img_upload = new Callback_create_bar_img_upload() {
+    private Callback_upload_bar_imgs callback_upload_bar_imgs = new Callback_upload_bar_imgs() {
         @Override
         public void main_img(String url) {
             bar.setBar_photo(url);
-            MyDB.getInstance().update_bar_photo(bar,url);
+            MyDB.getInstance().update_bar_photo(bar, url);
         }
 
         @Override
         public void menu_img(String url) {
             bar.setMenu_photo(url);
-            MyDB.getInstance().update_bar_menu_photo(bar,url);
+            MyDB.getInstance().update_bar_menu_photo(bar, url);
+        }
+
+        @Override
+        public void post_img(String url) {
+            Post post = new Post()
+                    .setImg(url)
+                    .setPost_id(bar.getPosts().size() + Post.class.getSimpleName())
+                    .setBar_id(barId);
+            posts.add(post);
+            postsAdapter.notifyDataSetChanged();
+            bar.addPost(post);
+            MyDB.getInstance().add_bar_post(bar, post);
         }
 
         @Override

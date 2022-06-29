@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
-import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
+import com.example.happyhour.callbacks.Callback_upload_bar_imgs;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.objects.eMusicType;
@@ -88,7 +88,7 @@ public class Activity_create_bar extends AppCompatActivity {
 
         init_toolbar();
         findViews();
-        MyStorage.getInstance().setCallback_create_bar_img_upload(callback_create_bar_img_upload);
+        MyStorage.getInstance().setCallback_upload_bar_imgs(callback_create_bar_img_upload);
         init_actions();
 
     }
@@ -303,7 +303,7 @@ public class Activity_create_bar extends AppCompatActivity {
             MyServices.getInstance().makeToast("image upload failed please, try again");
         }
     });
-    private Callback_create_bar_img_upload callback_create_bar_img_upload = new Callback_create_bar_img_upload() {
+    private Callback_upload_bar_imgs callback_create_bar_img_upload = new Callback_upload_bar_imgs() {
         @Override
         public void main_img(String url) {
             finish_creating_bar(url);
@@ -312,6 +312,10 @@ public class Activity_create_bar extends AppCompatActivity {
         @Override
         public void menu_img(String url) {
             urlMenuPhoto = url;
+        }
+
+        @Override
+        public void post_img(String url) {
         }
 
         @Override

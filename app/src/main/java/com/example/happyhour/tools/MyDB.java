@@ -11,6 +11,7 @@ import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.Follower;
 import com.example.happyhour.objects.MyTime;
 import com.example.happyhour.objects.Order;
+import com.example.happyhour.objects.Post;
 import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.objects.Review;
 import com.example.happyhour.objects.Table;
@@ -257,6 +258,11 @@ public class MyDB {
     public void update_bar_menu_photo(Bar bar, String url) {
         refBars.child(bar.getId()).child("menu_photo").setValue(url);
         refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("menu_photo").setValue(url);
+    }
+
+    public void add_bar_post(Bar bar, Post post) {
+        refBars.child(bar.getId()).child("posts").child(post.getPost_id()).setValue(post);
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("posts").child(post.getPost_id()).setValue(post);
     }
 }
 

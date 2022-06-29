@@ -2,7 +2,7 @@ package com.example.happyhour.tools;
 
 import android.net.Uri;
 
-import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
+import com.example.happyhour.callbacks.Callback_upload_bar_imgs;
 import com.example.happyhour.callbacks.Callback_upload_profile_img;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -11,11 +11,12 @@ public class MyStorage {
     public static final String BUSINESS_ACCOUNTS = "BUSINESS_ACCOUNTS";
     public static final String PRIVATE_ACCOUNTS = "PRIVATE_ACCOUNTS";
     public static final String MENU = "MENU";
+    public static final String POSTS = "POSTS";
     public static final String MY_BARS = "MY_BARS";
 
     private static MyStorage _instance = new MyStorage();
-    private Callback_upload_profile_img callback_upload_img;
-    private Callback_create_bar_img_upload callback_create_bar_img_upload;
+    private Callback_upload_profile_img callback_upload_profile_img;
+    private Callback_upload_bar_imgs callback_upload_bar_imgs;
     private FirebaseStorage myStorage;
     private StorageReference ref_private_account;
     private StorageReference ref_business_account;
@@ -27,12 +28,12 @@ public class MyStorage {
         ref_business_account = myStorage.getReference(BUSINESS_ACCOUNTS);
     }
 
-    public MyStorage setCallback_upload_img(Callback_upload_profile_img callback_upload_img) {
-        this.callback_upload_img = callback_upload_img;
+    public MyStorage setCallback_upload_profile_img(Callback_upload_profile_img callback_upload_profile_img) {
+        this.callback_upload_profile_img = callback_upload_profile_img;
         return this;
     }
-    public MyStorage setCallback_create_bar_img_upload(Callback_create_bar_img_upload callback_create_bar_img_upload) {
-        this.callback_create_bar_img_upload = callback_create_bar_img_upload;
+    public MyStorage setCallback_upload_bar_imgs(Callback_upload_bar_imgs callback_upload_bar_imgs) {
+        this.callback_upload_bar_imgs = callback_upload_bar_imgs;
         return this;
     }
 
@@ -42,12 +43,12 @@ public class MyStorage {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             ref_private_account.child(photoId).getDownloadUrl().addOnSuccessListener(uri -> {
-                                if (callback_upload_img != null) {
-                                    callback_upload_img.img_uploaded(uri.toString());
+                                if (callback_upload_profile_img != null) {
+                                    callback_upload_profile_img.img_uploaded(uri.toString());
                                 }
                             });
-                        } else if (callback_upload_img != null) {
-                            callback_upload_img.failed();
+                        } else if (callback_upload_profile_img != null) {
+                            callback_upload_profile_img.failed();
                         }
                     });
         }
@@ -63,12 +64,12 @@ public class MyStorage {
             ref_business_account.child(accountId).child(MY_BARS).child(barID).putFile(resultUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     ref_business_account.child(accountId).child(MY_BARS).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
-                        if (callback_create_bar_img_upload != null) {
-                            callback_create_bar_img_upload.main_img(uri.toString());
+                        if (callback_upload_bar_imgs != null) {
+                            callback_upload_bar_imgs.main_img(uri.toString());
                         }
                     });
-                } else if (callback_create_bar_img_upload != null) {
-                    callback_create_bar_img_upload.failed();
+                } else if (callback_upload_bar_imgs != null) {
+                    callback_upload_bar_imgs.failed();
                 }
             });
         }
@@ -79,12 +80,28 @@ public class MyStorage {
             ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).putFile(uriMenuPhoto).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
-                        if (callback_create_bar_img_upload != null) {
-                            callback_create_bar_img_upload.menu_img(uri.toString());
+                        if (callback_upload_bar_imgs != null) {
+                            callback_upload_bar_imgs.menu_img(uri.toString());
                         }
                     });
-                } else if (callback_create_bar_img_upload != null) {
-                    callback_create_bar_img_upload.failed();
+                } else if (callback_upload_bar_imgs != null) {
+                    callback_upload_bar_imgs.failed();
+                }
+            });
+        }
+    }
+
+    public void uploadPost(String accountId, String barId,String postId, Uri postUri) {
+        if (postUri != null) {
+            ref_business_account.child(accountId).child(MY_BARS).child(barId).child(POSTS).child(postId).putFile(postUri).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    ref_business_account.child(accountId).child(MY_BARS).child(barId).child(POSTS).child(postId).getDownloadUrl().addOnSuccessListener(uri -> {
+                        if (callback_upload_bar_imgs != null) {
+                            callback_upload_bar_imgs.post_img(uri.toString());
+                        }
+                    });
+                } else if (callback_upload_bar_imgs != null) {
+                    callback_upload_bar_imgs.failed();
                 }
             });
         }

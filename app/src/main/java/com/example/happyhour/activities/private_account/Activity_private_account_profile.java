@@ -69,7 +69,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
 
         init_toolbar();
         findViews();
-        MyStorage.getInstance().setCallback_upload_img(callback_upload_img);
+        MyStorage.getInstance().setCallback_upload_profile_img(callback_upload_img);
 
     }
 

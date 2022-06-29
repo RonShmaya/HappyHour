@@ -16,6 +16,7 @@ public class Bar {
     private HashMap<String , Review> reviews =new HashMap<String , Review>();
     private HashMap<String , Follower> followers = new HashMap<>();
     private HashMap<String,Table> tables = new HashMap<>();
+    private HashMap<String,Post> posts = new HashMap<>();
     private MyTime openTime = new MyTime();
     private MyTime closingTime = new MyTime();
 
@@ -203,5 +204,21 @@ public class Bar {
     public Bar setMenu_photo(String menu_photo) {
         this.menu_photo = menu_photo;
         return this;
+    }
+
+    public HashMap<String, Post> getPosts() {
+        return posts;
+    }
+
+    public Bar setPosts(HashMap<String, Post> posts) {
+        this.posts = posts;
+        return this;
+    }
+
+    public void addPost(Post post) {
+        this.posts.put(post.getPost_id() , post);
+    }
+    public void removePost(String post_id) {
+        this.posts.remove(post_id);
     }
 }
