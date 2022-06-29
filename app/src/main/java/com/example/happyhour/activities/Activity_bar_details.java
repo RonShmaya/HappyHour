@@ -25,6 +25,7 @@ import com.example.happyhour.callbacks.Callback_create_bar_img_upload;
 import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.dialogs.DialogAddReview;
 import com.example.happyhour.dialogs.DialogChangeBarDetails;
+import com.example.happyhour.dialogs.DialogMenu;
 import com.example.happyhour.dialogs.DialogPost;
 import com.example.happyhour.dialogs.DialogShowFollowers;
 import com.example.happyhour.objects.Bar;
@@ -53,12 +54,9 @@ import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
 
 
-// TODO: 20/06/2022 upload post -> !!! post likes must contain in map for unduplicates
+// TODO: 20/06/2022 upload post -> !!! post likes must contain in map to prevent duplicates
 // TODO: 20/06/2022 post -> create object remove for b in dialog (passing arg for visibility BTN remove), remove -> delete likes in private and photo in storage
 // TODO: 20/06/2022 photos list + show all
-
-// TODO: 20/06/2022 see menu - some dialog like in post
-// TODO: 20/06/2022 change menu
 
 public class Activity_bar_details extends AppCompatActivity {
 
@@ -245,7 +243,16 @@ public class Activity_bar_details extends AppCompatActivity {
         action_return_back = findViewById(R.id.action_return_back);
 
         barDetails_LBL_followers.setOnClickListener(show_followers_callback);
+
+        barDetails_LBL_menu.setOnClickListener(show_menu);
     }
+    private View.OnClickListener show_menu = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            new DialogMenu()
+                .show(Activity_bar_details.this, bar.getMenu_photo());
+        }
+    };
 
     private View.OnClickListener changeBarName = new View.OnClickListener() {
         @Override
@@ -471,12 +478,12 @@ public class Activity_bar_details extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
         if (result.getResultCode() == RESULT_OK) {
             Uri uri = result.getData().getData();
+            MyServices.getInstance().makeToast("uploading");
             if(isUploadBarPhoto) {
                 barDetails_IMG_barPhoto.setImageURI(uri);
                 MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
             }
             else{
-               //todo
                 MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barId, uri);
             }
         } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
@@ -488,14 +495,12 @@ public class Activity_bar_details extends AppCompatActivity {
         public void main_img(String url) {
             bar.setBar_photo(url);
             MyDB.getInstance().update_bar_photo(bar,url);
-            MyServices.getInstance().makeToast("uploading");
         }
 
         @Override
         public void menu_img(String url) {
-            bar.setBar_photo(url);
-            MyDB.getInstance().update_bar_photo(bar,url);
-            MyServices.getInstance().makeToast("uploading");
+            bar.setMenu_photo(url);
+            MyDB.getInstance().update_bar_menu_photo(bar,url);
         }
 
         @Override

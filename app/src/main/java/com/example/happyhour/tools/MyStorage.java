@@ -78,7 +78,7 @@ public class MyStorage {
         if (uriMenuPhoto != null) {
             ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).putFile(uriMenuPhoto).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    ref_business_account.child(accountId).child(MY_BARS).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
+                    ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
                         if (callback_create_bar_img_upload != null) {
                             callback_create_bar_img_upload.menu_img(uri.toString());
                         }
