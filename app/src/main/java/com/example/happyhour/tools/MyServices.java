@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.icu.util.Calendar;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -19,8 +21,10 @@ import android.widget.Toast;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.happyhour.objects.MyTime;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
+import java.util.List;
 
 public class MyServices {
     private static MyServices _instance = null;
@@ -127,5 +131,23 @@ public class MyServices {
             }
         }
     }
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
 
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p1;
+
+    }
 }

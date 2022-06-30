@@ -7,6 +7,7 @@ public class PrivateAccount extends Account {
     private eBarType favorite_1;
     private eBarType favorite_2;
     private String imgUri = "";
+    private AddressMaps addressMaps = new AddressMaps();
     private HashMap<String , String> follow_bars = new HashMap<>();
     private HashMap<String , Order> orders = new HashMap<>();
 
@@ -65,6 +66,15 @@ public class PrivateAccount extends Account {
 
     public PrivateAccount setImgUri(String imgUri) {
         this.imgUri = imgUri;
+        return this;
+    }
+
+    public AddressMaps getAddressMaps() {
+        return addressMaps;
+    }
+
+    public PrivateAccount setAddressMaps(AddressMaps addressMaps) {
+        this.addressMaps = addressMaps;
         return this;
     }
 }

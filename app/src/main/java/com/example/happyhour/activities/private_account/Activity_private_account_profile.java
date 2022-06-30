@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,17 +19,21 @@ import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
 import com.example.happyhour.callbacks.Callback_upload_profile_img;
+import com.example.happyhour.objects.AddressMaps;
+import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyServices;
 import com.example.happyhour.tools.MyStorage;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.github.drjacky.imagepicker.constant.ImageProvider;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.database.annotations.NotNull;
@@ -53,8 +58,15 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private AutoCompleteTextView profile_ACTV_favorite1;
     private TextInputLayout profile_TIL_favorite2;
     private AutoCompleteTextView profile_ACTV_favorite2;
+    private TextInputLayout profile_TIL_addressCity;
+    private TextInputEditText profile_TIETL_addressCity;
+    private TextInputLayout profile_TIL_addressStreet;
+    private TextInputEditText profile_TIETL_addressStreet;
+    private TextInputLayout profile_TIL_addressNum;
+    private TextInputEditText profile_TIETL_addressNum;
     private MaterialButton profile_BTN_create;
     private boolean is_first_time_user = false;
+    private boolean isAllInputsOk = true;
     private ArrayList<String> barTypes_fav_1;
     private ArrayList<String> barTypes_fav_2;
     private FloatingActionButton fab_search;
@@ -83,8 +95,18 @@ public class Activity_private_account_profile extends AppCompatActivity {
         profile_ACTV_favorite2 = findViewById(R.id.profile_ACTV_favorite2);
         profile_BTN_create = findViewById(R.id.profile_BTN_create);
 
+        profile_TIL_addressCity = findViewById(R.id.profile_TIL_addressCity);
+        profile_TIETL_addressCity = findViewById(R.id.profile_TIETL_addressCity);
+        profile_TIL_addressStreet = findViewById(R.id.profile_TIL_addressStreet);
+        profile_TIETL_addressStreet = findViewById(R.id.profile_TIETL_addressStreet);
+        profile_TIL_addressNum = findViewById(R.id.profile_TIL_addressNum);
+        profile_TIETL_addressNum = findViewById(R.id.profile_TIETL_addressNum);
+
         profile_LBL_name.setText("Name: "+DataManager.getDataManager().getPrivateAccount().getName());
         is_first_time_user = DataManager.getDataManager().getPrivateAccount().getFavorite_1() == null;
+        if(!is_first_time_user){
+            init_data();
+        }
         init_favorite(profile_ACTV_favorite1);
         init_favorite(profile_ACTV_favorite2);
 
@@ -98,6 +120,17 @@ public class Activity_private_account_profile extends AppCompatActivity {
         });
 
     }
+
+    private void init_data() {
+        PrivateAccount privateAccount = DataManager.getDataManager().getPrivateAccount();
+        profile_ACTV_favorite1.setText(privateAccount.getFavorite_1().toString().replace('_', ' '));
+        profile_ACTV_favorite2.setText(privateAccount.getFavorite_2().toString().replace('_', ' '));
+        AddressMaps addressMaps = privateAccount.getAddressMaps();
+        profile_TIETL_addressCity.setText(addressMaps.getCity());
+        profile_TIETL_addressStreet.setText(addressMaps.getStreet());
+        profile_TIETL_addressNum.setText(addressMaps.getStreet_num());
+    }
+
 
     private void add_photo() {
         ImagePicker.Companion.with(this)
@@ -120,21 +153,26 @@ public class Activity_private_account_profile extends AppCompatActivity {
 
     private void save_clicked() {
         //photo is not must
-        profile_TIL_favorite1.setError("");
-        profile_TIL_favorite2.setError("");
-        boolean input_ok = true;
-        if (profile_ACTV_favorite1.getText().toString().isEmpty()) {
-            profile_TIL_favorite1.setError("Cannot Be Empty");
-            input_ok = false;
-        }
-        if (profile_ACTV_favorite2.getText().toString().isEmpty()) {
-            profile_TIL_favorite2.setError("Cannot Be Empty");
-            input_ok = false;
-        }
-        if (!input_ok)
+        isAllInputsOk = true;
+        verifyInput(profile_ACTV_favorite1 , profile_TIL_favorite1);
+        verifyInput(profile_ACTV_favorite2 , profile_TIL_favorite2);
+        verifyInput(profile_TIETL_addressCity , profile_TIL_addressCity);
+        verifyInput(profile_TIETL_addressStreet , profile_TIL_addressStreet);
+        verifyInput(profile_TIETL_addressNum , profile_TIL_addressNum);
+
+        if (!isAllInputsOk)
             return;
         if (profile_ACTV_favorite2.getText().toString().equals(profile_ACTV_favorite1.getText().toString())) {
             MyServices.getInstance().makeToast("please pick different favorites");
+            return;
+        }
+        AddressMaps addressMaps = new AddressMaps(profile_TIETL_addressCity.getText().toString(),
+                profile_TIETL_addressStreet.getText().toString(),
+                profile_TIETL_addressNum.getText().toString());
+        LatLng latLng = MyServices.getInstance().getLocationFromAddress(this , addressMaps.toString());
+        if(latLng == null){
+            isAllInputsOk = false;
+            profile_TIETL_addressCity.setError("Wrong Address");
             return;
         }
 
@@ -143,12 +181,19 @@ public class Activity_private_account_profile extends AppCompatActivity {
         if(imgUri.isEmpty()){
             imgUri =  DataManager.getDataManager().getPrivateAccount().getImgUri();
         }
-        DataManager.getDataManager().set_private_account_details(fav_1, fav_2,imgUri);
+        DataManager.getDataManager().set_private_account_details(fav_1, fav_2,imgUri,addressMaps);
         if(is_first_time_user)
             go_next(Activity_customer_main_page.class);
         MyServices.getInstance().makeToast("Saved...");
     }
-
+    private void verifyInput(EditText text, TextInputLayout msgToUser) {
+        if (text.getText().toString().isEmpty()) {
+            msgToUser.setError("cannot be empty");
+            isAllInputsOk = false;
+            return;
+        }
+        msgToUser.setError("");
+    }
     private void init_favorite(AutoCompleteTextView actv_to_show) {
         ArrayList<String> fav_list = DataManager.getDataManager().getBarTypesNames();
         Collections.sort(fav_list);

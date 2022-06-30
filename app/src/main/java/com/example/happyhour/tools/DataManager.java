@@ -1,6 +1,7 @@
 package com.example.happyhour.tools;
 
 import com.example.happyhour.objects.Account;
+import com.example.happyhour.objects.AddressMaps;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.Follower;
@@ -152,11 +153,12 @@ public class DataManager {
         MyDB.getInstance().add_follower(bar , userId, follower);
     }
 
-    public void set_private_account_details(eBarType fav_1, eBarType fav_2, String uri) {
+    public void set_private_account_details(eBarType fav_1, eBarType fav_2, String uri, AddressMaps addressMaps) {
         this.privateAccount.setFavorite_1(fav_1);
         this.privateAccount.setFavorite_2(fav_2);
         this.privateAccount.setImgUri(uri);
-        MyDB.getInstance().add_private_account_details( this.privateAccount.getId(),fav_1, fav_2,uri);
+        this.privateAccount.setAddressMaps(addressMaps);
+        MyDB.getInstance().add_private_account_details( this.privateAccount.getId(),fav_1, fav_2,uri,addressMaps);
 
     }
 

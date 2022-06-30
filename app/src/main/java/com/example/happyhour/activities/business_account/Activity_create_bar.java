@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
 import com.example.happyhour.callbacks.Callback_upload_bar_imgs;
+import com.example.happyhour.objects.AddressMaps;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.objects.eMusicType;
@@ -28,6 +29,7 @@ import com.example.happyhour.tools.MyServices;
 import com.example.happyhour.tools.MyStorage;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.github.drjacky.imagepicker.constant.ImageProvider;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
@@ -60,6 +62,12 @@ public class Activity_create_bar extends AppCompatActivity {
     private TextInputEditText createBar_TIETL_description;
     private TextInputLayout createBar_TIL_description;
     private TextInputLayout createBar_TIL_barType;
+    private TextInputLayout createBar_TIL_addressCity;
+    private TextInputEditText createBar_TIETL_addressCity;
+    private TextInputLayout createBar_TIL_addressStreet;
+    private TextInputEditText createBar_TIETL_addressStreet;
+    private TextInputLayout createBar_TIL_addressNum;
+    private TextInputEditText createBar_TIETL_addressNum;
     private AutoCompleteTextView createBar_ACTV_barType;
     private ShapeableImageView createBar_IMG_menu;
     private FloatingActionButton createBar_FAB_upload_menu;
@@ -143,6 +151,12 @@ public class Activity_create_bar extends AppCompatActivity {
         createBar_ACTV_barType = findViewById(R.id.createBar_ACTV_barType);
         createBar_TIETL_HappyHour = findViewById(R.id.createBar_TIETL_HappyHour);
         createBar_TIL_HappyHour = findViewById(R.id.createBar_TIL_HappyHour);
+        createBar_TIL_addressCity = findViewById(R.id.createBar_TIL_addressCity);
+        createBar_TIETL_addressCity = findViewById(R.id.createBar_TIETL_addressCity);
+        createBar_TIL_addressStreet = findViewById(R.id.createBar_TIL_addressStreet);
+        createBar_TIETL_addressStreet = findViewById(R.id.createBar_TIETL_addressStreet);
+        createBar_TIL_addressNum = findViewById(R.id.createBar_TIL_addressNum);
+        createBar_TIETL_addressNum = findViewById(R.id.createBar_TIETL_addressNum);
         createBar_LBL_musicTypeError = findViewById(R.id.createBar_LBL_musicTypeError);
         loading_animation_view = findViewById(R.id.loading_animation_view);
 
@@ -167,6 +181,9 @@ public class Activity_create_bar extends AppCompatActivity {
         verify_text_inputs.put(createBar_TIETL_barName, createBar_TIL_barName);
         verify_text_inputs.put(createBar_TIETL_description, createBar_TIL_description);
         verify_text_inputs.put(createBar_TIETL_HappyHour, createBar_TIL_HappyHour);
+        verify_text_inputs.put(createBar_TIETL_addressCity, createBar_TIL_addressCity);
+        verify_text_inputs.put(createBar_TIETL_addressStreet, createBar_TIL_addressStreet);
+        verify_text_inputs.put(createBar_TIETL_addressNum, createBar_TIL_addressNum);
         verify_text_inputs.put(createBar_ACTV_barType, createBar_TIL_barType);
     }
 
@@ -184,11 +201,11 @@ public class Activity_create_bar extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             isAllInputsOk = true;
-            if(uriMenuPhoto == null){
+            if (uriMenuPhoto == null) {
                 isAllInputsOk = false;
                 MyServices.getInstance().makeToast("Please add menu");
             }
-            if(uriBarPhoto == null){
+            if (uriBarPhoto == null) {
                 isAllInputsOk = false;
                 MyServices.getInstance().makeToast("Please add main photo");
             }
@@ -200,12 +217,22 @@ public class Activity_create_bar extends AppCompatActivity {
             } else {
                 createBar_LBL_musicTypeError.setText("");
             }
+            if(isAllInputsOk){
+                AddressMaps addressMaps = new AddressMaps(createBar_TIETL_addressCity.getText().toString(),
+                        createBar_TIETL_addressStreet.getText().toString(),
+                        createBar_TIETL_addressNum.getText().toString());
+                LatLng latLng = MyServices.getInstance().getLocationFromAddress(Activity_create_bar.this , addressMaps.toString());
+                if(latLng == null){
+                    isAllInputsOk = false;
+                    createBar_TIL_addressCity.setError("Wrong Address");
+                }
+            }
             if (isAllInputsOk) {
                 barID = UUID.randomUUID().toString();
                 loading_animation_view.setVisibility(View.VISIBLE);
                 loading_animation_view.playAnimation();
-                MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barID , uriMenuPhoto);
-                MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barID , uriBarPhoto);
+                MyStorage.getInstance().uploadMenuBar(DataManager.getDataManager().getBusinessAccount().getId(), barID, uriMenuPhoto);
+                MyStorage.getInstance().uploadImageBar(DataManager.getDataManager().getBusinessAccount().getId(), barID, uriBarPhoto);
             }
 
         }
@@ -215,6 +242,9 @@ public class Activity_create_bar extends AppCompatActivity {
         eBarType ebarType = eBarType.valueOf(createBar_ACTV_barType.getText().toString().replace(' ', '_'));
         ArrayList<eMusicType> emusicTypeList = new ArrayList<>();
         musicTypesChipsChecked.forEach(musicType -> emusicTypeList.add(eMusicType.valueOf(musicType.getText().toString().replace(' ', '_'))));
+        AddressMaps addressMaps = new AddressMaps(createBar_TIETL_addressCity.getText().toString(),
+                createBar_TIETL_addressStreet.getText().toString(),
+                createBar_TIETL_addressNum.getText().toString());
         Bar bar = new Bar()
                 .setBarType(ebarType)
                 .setDescription(createBar_TIETL_description.getText().toString())
@@ -222,12 +252,13 @@ public class Activity_create_bar extends AppCompatActivity {
                 .setHappy_hour(createBar_TIETL_HappyHour.getText().toString())
                 .setMusicTypes(emusicTypeList)
                 .setId(barID)
+                .setAddressMaps(addressMaps)
                 .setBar_photo(url)
                 .setMenu_photo(urlMenuPhoto)
                 .setOwner_id(DataManager.getDataManager().getBusinessAccount().getId());
         DataManager.getDataManager().addBusinessAccountBar(bar);
         Bundle bundle = new Bundle();
-        bundle.putString(DataManager.EXTRA_BAR , bar.getId());
+        bundle.putString(DataManager.EXTRA_BAR, bar.getId());
         Intent intent = new Intent(this, Activity_bar_tables.class);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -288,14 +319,14 @@ public class Activity_create_bar extends AppCompatActivity {
                     }
                 }));
     }
+
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
         if (result.getResultCode() == RESULT_OK) {
             Uri uri = result.getData().getData();
-            if(isUploadBarPhoto) {
+            if (isUploadBarPhoto) {
                 createBar_IMG_barPhoto.setImageURI(uri);
                 uriBarPhoto = uri;
-            }
-            else{
+            } else {
                 createBar_IMG_menu.setImageURI(uri);
                 uriMenuPhoto = uri;
             }

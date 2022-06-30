@@ -202,9 +202,11 @@ public class Activity_reservation extends AppCompatActivity {
 
             MyServices.getInstance().makeToast("order saved...");
             bar.getTables().get(table.getId()).getOrders().put(order.getOrder_id() , order);
+            DataManager.getDataManager().getPrivateAccount().getOrders().put(order.getOrder_id(),order);
             tables.remove(table);
             tablesAdapter.notifyItemRemoved(position);
             MyDB.getInstance().add_reservation(bar , table.getId(), order);
+
         }
 
         @Override

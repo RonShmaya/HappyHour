@@ -1,6 +1,7 @@
 package com.example.happyhour.activities.private_account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,6 +52,8 @@ public class Activity_customer_main_page extends AppCompatActivity {
     private FloatingActionButton fab_search;
     private BottomNavigationView nav_view;
     private LottieAnimationView loading_animation_view;
+    private HashMap<String, Bar> myBars = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +119,7 @@ public class Activity_customer_main_page extends AppCompatActivity {
         public void get_bars(HashMap<String, Bar> bars) {
             loading_animation_view.cancelAnimation();
             loading_animation_view.setVisibility(View.GONE);
+            myBars = bars;
             init_adapters(bars);
         }
 
@@ -193,6 +198,17 @@ public class Activity_customer_main_page extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_google_maps);
+        toolbar.setNavigationIconTint(Color.BLACK);
+        toolbar.setNavigationOnClickListener(v -> {
+            String bars_gson = new Gson().toJson(myBars);
+            Bundle bundle = new Bundle();
+            bundle.putString(Activity_maps.EXTRA_BARS, bars_gson);
+            Intent intent = new Intent(this, Activity_maps.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        });
 
         nav_view = findViewById(R.id.nav_view);
 

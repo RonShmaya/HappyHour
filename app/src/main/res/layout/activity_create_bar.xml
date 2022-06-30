@@ -192,6 +192,109 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/createBar_TIL_addressCity"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/comfortaa_bold"
+                        app:errorEnabled="true"
+                        android:hint="City"
+                        android:textColorHint="#555B6E"
+                        app:boxStrokeColor="#555B6E"
+                        app:boxStrokeWidth="2dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="15"
+                        app:hintTextColor="#555B6E">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createBar_TIETL_addressCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:imeOptions="actionDone"
+                            android:maxLength="15"
+                            android:outlineAmbientShadowColor="#555B6E"
+                            android:shadowColor="#555B6E"
+                            android:textColor="#555B6E" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/createBar_TIL_addressStreet"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/comfortaa_bold"
+                        app:errorEnabled="true"
+                        android:hint="Street"
+                        android:textColorHint="#555B6E"
+                        app:boxStrokeColor="#555B6E"
+                        app:boxStrokeWidth="2dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="15"
+                        app:hintTextColor="#555B6E">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createBar_TIETL_addressStreet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:imeOptions="actionDone"
+                            android:maxLength="15"
+                            android:outlineAmbientShadowColor="#555B6E"
+                            android:shadowColor="#555B6E"
+                            android:textColor="#555B6E" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/createBar_TIL_addressNum"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/comfortaa_bold"
+                        app:errorEnabled="true"
+                        android:hint="Num"
+                        android:textColorHint="#555B6E"
+                        app:boxStrokeColor="#555B6E"
+                        app:boxStrokeWidth="2dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="3"
+                        app:hintTextColor="#555B6E">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createBar_TIETL_addressNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="30"
+                            android:digits="123456789"
+                            android:inputType="number"
+                            android:fontFamily="@font/comfortaa_bold"
+                            android:imeOptions="actionDone"
+                            android:maxLength="3"
+                            android:outlineAmbientShadowColor="#555B6E"
+                            android:shadowColor="#555B6E"
+                            android:textColor="#555B6E" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/createBar_TIL_barType"

@@ -19,6 +19,7 @@ public class Bar {
     private HashMap<String,Post> posts = new HashMap<>();
     private MyTime openTime = new MyTime();
     private MyTime closingTime = new MyTime();
+    private AddressMaps addressMaps = new AddressMaps();
 
 
 
@@ -220,5 +221,14 @@ public class Bar {
     }
     public void removePost(String post_id) {
         this.posts.remove(post_id);
+    }
+
+    public AddressMaps getAddressMaps() {
+        return addressMaps;
+    }
+
+    public Bar setAddressMaps(AddressMaps addressMaps) {
+        this.addressMaps = addressMaps;
+        return this;
     }
 }

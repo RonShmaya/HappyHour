@@ -6,6 +6,7 @@ import com.example.happyhour.callbacks.Callback_account_creating;
 import com.example.happyhour.callbacks.Callback_find_account;
 import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.objects.Account;
+import com.example.happyhour.objects.AddressMaps;
 import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.BusinessAccount;
 import com.example.happyhour.objects.Follower;
@@ -143,6 +144,12 @@ public class MyDB {
     public void delete_bar(BusinessAccount businessAccount, Bar bar) {
         refBars.child(bar.getId()).removeValue();
         refBusinessAccounts.child(businessAccount.getId()).child("myBars").child(bar.getId()).removeValue();
+
+        bar.getTables().values().forEach(table -> {
+            table.getOrders().values().forEach( order -> {
+                refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).removeValue();
+            });
+        });
     }
 
     public void delete_table(BusinessAccount businessAccount, Bar bar, Table table) {
@@ -245,10 +252,11 @@ public class MyDB {
         refPrivateAccounts.child(order.getUser_id()).child("orders").child(order.getOrder_id()).removeValue();
     }
 
-    public void add_private_account_details(String userId , eBarType fav_1, eBarType fav_2, String uri) {
+    public void add_private_account_details(String userId , eBarType fav_1, eBarType fav_2, String uri, AddressMaps addressMaps) {
         refPrivateAccounts.child(userId).child("favorite_1").setValue(fav_1);
         refPrivateAccounts.child(userId).child("favorite_2").setValue(fav_2);
         refPrivateAccounts.child(userId).child("imgUri").setValue(uri);
+        refPrivateAccounts.child(userId).child("addressMaps").setValue(addressMaps);
     }
 
     public void update_bar_photo(Bar bar, String url) {
