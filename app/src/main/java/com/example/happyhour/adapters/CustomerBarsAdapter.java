@@ -65,7 +65,7 @@ public class CustomerBarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.list_bar_customer_RAB_rating.setRating(bar.starsAvg());
         holder.list_bar_customer_LBL_followers.setText(bar.getFollowers().size() + " Followers");
 
-        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.list_bar_customer_IMG);
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.list_bar_customer_IMG);
 
     }
 

@@ -50,7 +50,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         new SimpleDateFormat("dd/MM/yy", Locale.US).format(bar.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate()));
         holder.listOrder_LBL_happy_hour.setText(bar.getHappy_hour());
 
-        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.listOrder_IMG);
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listOrder_IMG);
     }
 
     @Override

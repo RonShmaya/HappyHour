@@ -113,7 +113,7 @@ public class Activity_follow_bar extends AppCompatActivity {
         });
         fab_search = findViewById(R.id.fab_search);
         fab_search.setOnClickListener(view -> {
-            go_next(Activity_customer_main_page.class); //todo change it!
+            go_next(Activity_search.class);
         });
     }
     private <T extends AppCompatActivity> void go_next(Class<T> nextActivity ) {

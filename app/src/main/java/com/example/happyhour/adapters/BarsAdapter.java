@@ -53,7 +53,7 @@ public class BarsAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder.listBars_LBL_barType.setText(bar.barTypeToString());
         holder.listBars_RAB_rating.setRating(bar.starsAvg());
 
-        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(holder.listBars_IMG);
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listBars_IMG);
 
     }
 

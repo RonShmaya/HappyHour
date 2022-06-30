@@ -15,11 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.HappyHour">
-
+        <activity
+            android:name=".activities.private_account.Activity_search"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.private_account.Activity_my_reservations"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.private_account.Activity_reservation"
             android:exported="true"
@@ -65,7 +68,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

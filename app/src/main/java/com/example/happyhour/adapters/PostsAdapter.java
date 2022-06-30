@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,8 @@ import com.example.happyhour.objects.Post;
 import java.util.ArrayList;
 
 public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static enum eList {list_post, list_search }
+    private eList elst;
 
     public interface PostListener {
         void clicked(Post post, int position);
@@ -24,9 +27,10 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private PostListener postListener;
     private ArrayList<Post> posts = new ArrayList<>();
 
-    public PostsAdapter(Activity activity, ArrayList<Post> posts){
+    public PostsAdapter(Activity activity, ArrayList<Post> posts, eList elst ){
         this.activity = activity;
         this.posts = posts;
+        this.elst = elst;
     }
 
     public PostsAdapter setPostListener(PostListener postListener) {
@@ -36,7 +40,12 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_post, parent, false);
+        View view = null;
+        if(this.elst == eList.list_post)
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_post, parent, false);
+        else if(this.elst == eList.list_search)
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_search_img, parent, false);
+
         PostHolder barHolder = new PostHolder(view);
         return barHolder;
     }
@@ -46,8 +55,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final PostHolder holder = (PostHolder) viewHolder;
         Post post = getItem(position);
 
-
-        Glide.with(activity).load(post.getImg()).placeholder(R.drawable.img_bar_basic).into(holder.list_post_IMG);
+        Glide.with(activity).load(post.getImg()).placeholder(R.drawable.img_placeholder).into(holder.list_post_IMG);
 
     }
 
@@ -64,6 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     class PostHolder extends RecyclerView.ViewHolder {
 
         private AppCompatImageView list_post_IMG;
+        private LinearLayout list_post_LLT;
 
         public PostHolder(View itemView) {
             super(itemView);

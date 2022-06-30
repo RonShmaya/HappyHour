@@ -29,7 +29,7 @@
                 android:layout_height="60dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/listFollower_LBL_name"
+                    android:id="@+id/post_LBL_barName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -41,7 +41,7 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/listReview_IMG_reviewer"
+                    android:id="@+id/post_IMG_barImg"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_alignParentEnd="true"
@@ -56,7 +56,7 @@
 
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/list_post_IMG"
+                android:id="@+id/post_IMG"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:scaleType="centerCrop"
@@ -67,7 +67,7 @@
                 android:layout_height="60dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/list_bar_customer_LBL_followers"
+                    android:id="@+id/post_LBL_likes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -77,7 +77,7 @@
                     android:textSize="13sp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/list_bar_customer_BTN_follow"
+                    android:id="@+id/post_BTN_follow_or_remove"
                     style="@style/Widget.Material3.Button.IconButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,6 +92,7 @@
                     app:iconTintMode="screen"
                     app:strokeColor="#646B6767"
                     app:strokeWidth="1dp" />
+
 
             </RelativeLayout>
 

@@ -259,10 +259,22 @@ public class MyDB {
         refBars.child(bar.getId()).child("menu_photo").setValue(url);
         refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("menu_photo").setValue(url);
     }
-
+    public void remove_bar_post(Bar bar, Post post) {
+        refBars.child(bar.getId()).child("posts").child(post.getPost_id()).removeValue();
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("posts").child(post.getPost_id()).removeValue();
+    }
     public void add_bar_post(Bar bar, Post post) {
         refBars.child(bar.getId()).child("posts").child(post.getPost_id()).setValue(post);
         refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("posts").child(post.getPost_id()).setValue(post);
+    }
+
+    public void unLike(Bar bar, Post post, String userId) {
+        refBars.child(bar.getId()).child("posts").child(post.getPost_id()).child("likes").child(userId).removeValue();
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("posts").child(post.getPost_id()).child("likes").child(userId).removeValue();
+    }
+    public void like(Bar bar, Post post, String userId,String userName) {
+        refBars.child(bar.getId()).child("posts").child(post.getPost_id()).child("likes").child(userId).setValue(userName);
+        refBusinessAccounts.child(bar.getOwner_id()).child("myBars").child(bar.getId()).child("posts").child(post.getPost_id()).child("likes").child(userId).setValue(userName);
     }
 }
 

@@ -2,7 +2,7 @@ package com.example.happyhour.objects;
 
 import java.util.HashMap;
 
-public class Post {
+public class Post implements Comparable<Post>{
     private String img;
     private String bar_id;
     private String post_id;
@@ -45,9 +45,11 @@ public class Post {
     public HashMap<String, String> getLikes() {
         return likes;
     }
+
     public  void addLikes(String user_id , String user_name) {
         likes.put(user_id , user_name);
     }
+
     public  void removeLikes(String user_id) {
         likes.remove(user_id);
     }
@@ -57,4 +59,11 @@ public class Post {
         this.likes = likes;
         return this;
     }
+
+    @Override
+    public int compareTo(Post post) {
+        return post.likes.size() - this.likes.size();
+    }
+
+
 }

@@ -191,7 +191,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
         });
         fab_search = findViewById(R.id.fab_search);
         fab_search.setOnClickListener(view -> {
-            go_next(Activity_customer_main_page.class); //todo change it!
+            go_next(Activity_search.class);
         });
     }
 

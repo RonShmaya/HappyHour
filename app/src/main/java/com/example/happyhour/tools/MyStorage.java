@@ -13,6 +13,7 @@ public class MyStorage {
     public static final String MENU = "MENU";
     public static final String POSTS = "POSTS";
     public static final String MY_BARS = "MY_BARS";
+    public static final String BAR_PHOTO = "BAR_PHOTO";
 
     private static MyStorage _instance = new MyStorage();
     private Callback_upload_profile_img callback_upload_profile_img;
@@ -32,6 +33,7 @@ public class MyStorage {
         this.callback_upload_profile_img = callback_upload_profile_img;
         return this;
     }
+
     public MyStorage setCallback_upload_bar_imgs(Callback_upload_bar_imgs callback_upload_bar_imgs) {
         this.callback_upload_bar_imgs = callback_upload_bar_imgs;
         return this;
@@ -61,9 +63,9 @@ public class MyStorage {
 
     public void uploadImageBar(String accountId, String barID, Uri resultUri) {
         if (resultUri != null) {
-            ref_business_account.child(accountId).child(MY_BARS).child(barID).putFile(resultUri).addOnCompleteListener(task -> {
+            ref_business_account.child(accountId).child(MY_BARS).child(barID).child(BAR_PHOTO).putFile(resultUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    ref_business_account.child(accountId).child(MY_BARS).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
+                    ref_business_account.child(accountId).child(MY_BARS).child(barID).child(BAR_PHOTO).getDownloadUrl().addOnSuccessListener(uri -> {
                         if (callback_upload_bar_imgs != null) {
                             callback_upload_bar_imgs.main_img(uri.toString());
                         }
@@ -77,9 +79,9 @@ public class MyStorage {
 
     public void uploadMenuBar(String accountId, String barID, Uri uriMenuPhoto) {
         if (uriMenuPhoto != null) {
-            ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).putFile(uriMenuPhoto).addOnCompleteListener(task -> {
+            ref_business_account.child(accountId).child(MY_BARS).child(barID).child(MENU).putFile(uriMenuPhoto).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    ref_business_account.child(accountId).child(MY_BARS).child(MENU).child(barID).getDownloadUrl().addOnSuccessListener(uri -> {
+                    ref_business_account.child(accountId).child(MY_BARS).child(barID).child(MENU).getDownloadUrl().addOnSuccessListener(uri -> {
                         if (callback_upload_bar_imgs != null) {
                             callback_upload_bar_imgs.menu_img(uri.toString());
                         }
@@ -91,7 +93,7 @@ public class MyStorage {
         }
     }
 
-    public void uploadPost(String accountId, String barId,String postId, Uri postUri) {
+    public void uploadPost(String accountId, String barId, String postId, Uri postUri) {
         if (postUri != null) {
             ref_business_account.child(accountId).child(MY_BARS).child(barId).child(POSTS).child(postId).putFile(postUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -106,4 +108,14 @@ public class MyStorage {
             });
         }
     }
+
+    public void delete_post(String accountId, String barId, String postId) {
+        ref_business_account.child(accountId).child(MY_BARS).child(barId).child(POSTS).child(postId).delete();
+    }
+    public void delete_bar(String accountId, String barId) {
+        ref_business_account.child(accountId).child(MY_BARS).child(barId).child(MENU).delete();
+        ref_business_account.child(accountId).child(MY_BARS).child(barId).child(BAR_PHOTO).delete();
+    }
+
+
 }

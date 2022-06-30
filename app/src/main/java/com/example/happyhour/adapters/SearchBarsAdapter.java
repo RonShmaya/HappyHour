@@ -15,7 +15,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
-public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchBarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface Barlistener {
         void clicked(Bar bar, int position);
@@ -25,7 +25,7 @@ public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.V
     private Barlistener barlistener;
     private ArrayList<Bar> bars = new ArrayList<>();
 
-    public PrivateFollowingAdapter(Activity activity, ArrayList<Bar> bars){
+    public SearchBarsAdapter(Activity activity, ArrayList<Bar> bars){
         this.activity = activity;
         this.bars = bars;
     }
@@ -36,7 +36,7 @@ public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_bars_following, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_bars_search, parent, false);
         BarHolder barHolder = new BarHolder(view);
         return barHolder;
     }
@@ -46,12 +46,10 @@ public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.V
         final BarHolder holder = (BarHolder) viewHolder;
         Bar bar = getItem(position);
 
-
-        holder.listBarFollowing_LBL_name.setText(bar.getName());
-        holder.listBarFollowing_LBL_barType.setText(bar.barTypeToString());
-        holder.listBarFollowing_LBL_business_hours.setText("Open: "+bar.getOpenTime().toString()+ " - " + bar.getClosingTime().toString());
-        holder.listBarFollowing_LBL_happy_hour.setText(bar.getHappy_hour());
-        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listBarFollowing_IMG);
+        holder.listBarSearch_LBL_name.setText(bar.getName());
+        holder.listBarSearch_LBL_musicType.setText(bar.barMusicToString());
+        holder.listBarSearch_LBL_happyHour.setText("Happy Hour - "+bar.getHappy_hour());
+        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listBarSearch_IMG);
     }
 
     @Override
@@ -67,19 +65,18 @@ public class PrivateFollowingAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     class BarHolder extends RecyclerView.ViewHolder {
 
-        private ShapeableImageView listBarFollowing_IMG;
-        private MaterialTextView listBarFollowing_LBL_name;
-        private MaterialTextView listBarFollowing_LBL_barType;
-        private MaterialTextView listBarFollowing_LBL_business_hours;
-        private MaterialTextView listBarFollowing_LBL_happy_hour;
+        private ShapeableImageView listBarSearch_IMG;
+        private MaterialTextView listBarSearch_LBL_name;
+        private MaterialTextView listBarSearch_LBL_happyHour;
+        private MaterialTextView listBarSearch_LBL_musicType;
 
         public BarHolder(View itemView) {
             super(itemView);
-            listBarFollowing_IMG = itemView.findViewById(R.id.listBarFollowing_IMG);
-            listBarFollowing_LBL_name = itemView.findViewById(R.id.listBarFollowing_LBL_name);
-            listBarFollowing_LBL_barType = itemView.findViewById(R.id.listBarFollowing_LBL_barType);
-            listBarFollowing_LBL_business_hours = itemView.findViewById(R.id.listBarFollowing_LBL_business_hours);
-            listBarFollowing_LBL_happy_hour = itemView.findViewById(R.id.listBarFollowing_LBL_happy_hour);
+            listBarSearch_IMG = itemView.findViewById(R.id.listBarSearch_IMG);
+            listBarSearch_LBL_name = itemView.findViewById(R.id.listBarSearch_LBL_name);
+            listBarSearch_LBL_happyHour = itemView.findViewById(R.id.listBarSearch_LBL_happyHour);
+            listBarSearch_LBL_musicType = itemView.findViewById(R.id.listBarSearch_LBL_musicType);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

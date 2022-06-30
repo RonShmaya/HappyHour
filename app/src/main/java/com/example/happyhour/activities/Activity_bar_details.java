@@ -52,13 +52,8 @@ import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.internal.Intrinsics;
 
-
-
-
 public class Activity_bar_details extends AppCompatActivity {
     public enum eUploadImg {BarPhoto, MenuPhoto, PostPhoto}
-
-    ;
     private eUploadImg uploadImg;
     private FloatingActionButton barDetails_FAB_changeBarName;
     private FloatingActionButton barDetails_FAB_changeBarPhoto;
@@ -140,7 +135,7 @@ public class Activity_bar_details extends AppCompatActivity {
             MyServices.getInstance().makeToast("something went wrong! signOut");
             return;
         }
-        Glide.with(this).load(bar.getBar_photo()).placeholder(R.drawable.img_bar_basic).into(barDetails_IMG_barPhoto);
+        Glide.with(this).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(barDetails_IMG_barPhoto);
         barDetails_LBL_description.setText(bar.getDescription());
         barDetails_LBL_name.setText(bar.getName());
         barDetails_LBL_barType.setText(bar.barTypeToString());
@@ -421,8 +416,8 @@ public class Activity_bar_details extends AppCompatActivity {
         views_get_data();
 
         posts = new ArrayList<>(bar.getPosts().values());
-        postsAdapter = new PostsAdapter(this, posts);
-        postsAdapter.setPostListener((post, position) -> new DialogPost().show(Activity_bar_details.this, post));
+        postsAdapter = new PostsAdapter(this, posts, PostsAdapter.eList.list_post);
+        postsAdapter.setPostListener((post, position) -> new DialogPost().show(Activity_bar_details.this, bar, post, posts, postsAdapter));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         barDetails_LST_posts.setLayoutManager(layoutManager);
         barDetails_LST_posts.setAdapter(postsAdapter);
