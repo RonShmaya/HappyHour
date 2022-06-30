@@ -244,7 +244,7 @@
                             android:id="@+id/profile_TIETL_addressNum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:digits="123456789"
+                            android:digits="0123456789"
                             android:ems="30"
                             android:fontFamily="@font/comfortaa_bold"
                             android:imeOptions="actionDone"

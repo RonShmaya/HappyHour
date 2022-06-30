@@ -68,6 +68,8 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private MaterialButton profile_BTN_create;
     private boolean is_first_time_user = false;
     private boolean isAllInputsOk = true;
+    private boolean isGetPhoto = true;
+    private boolean isSaveClicked = false;
     private ArrayList<String> barTypes_fav_1;
     private ArrayList<String> barTypes_fav_2;
     private FloatingActionButton fab_search;
@@ -155,6 +157,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private void save_clicked() {
         //photo is not must
         isAllInputsOk = true;
+        isSaveClicked=true;
         verifyInput(profile_ACTV_favorite1 , profile_TIL_favorite1);
         verifyInput(profile_ACTV_favorite2 , profile_TIL_favorite2);
         verifyInput(profile_TIETL_addressCity , profile_TIL_addressCity);
@@ -182,10 +185,13 @@ public class Activity_private_account_profile extends AppCompatActivity {
         if(imgUri.isEmpty()){
             imgUri =  DataManager.getDataManager().getPrivateAccount().getImgUri();
         }
+        if(!isGetPhoto)
+            return;
+        isSaveClicked=false;
         DataManager.getDataManager().set_private_account_details(fav_1, fav_2,imgUri,addressMaps);
         if(is_first_time_user)
             go_next(Activity_customer_main_page.class);
-        MyServices.getInstance().makeToast("Saved...");
+        MyServices.getInstance().makeToast("Saving..");
     }
     private void verifyInput(EditText text, TextInputLayout msgToUser) {
         if (text.getText().toString().isEmpty()) {
@@ -284,6 +290,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResult result) -> {
         if (result.getResultCode() == RESULT_OK) {
             Uri uri = result.getData().getData();
+            isGetPhoto = false;
             profile_IMG_photo.setImageURI(uri);
             MyStorage.getInstance().uploadImageProfile(DataManager.getDataManager().getPrivateAccount().getId() , uri);
         } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
@@ -293,10 +300,14 @@ public class Activity_private_account_profile extends AppCompatActivity {
     private Callback_upload_profile_img callback_upload_img = new Callback_upload_profile_img() {
         @Override
         public void img_uploaded(String url) {
+            isGetPhoto = true;
             imgUri = url;
+            if(isSaveClicked)
+                save_clicked();
         }
         @Override
         public void failed() {
+            isGetPhoto = true;
             MyServices.getInstance().makeToast("image upload failed please, try again");
         }
     };

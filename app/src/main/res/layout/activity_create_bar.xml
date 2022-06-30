@@ -281,7 +281,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="30"
-                            android:digits="123456789"
+                            android:digits="0123456789"
                             android:inputType="number"
                             android:fontFamily="@font/comfortaa_bold"
                             android:imeOptions="actionDone"
