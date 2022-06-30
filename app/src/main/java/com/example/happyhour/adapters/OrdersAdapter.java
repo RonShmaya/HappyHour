@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.objects.Bar;
+import com.example.happyhour.tools.DataManager;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -41,8 +42,16 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         final BarHolder holder = (BarHolder) viewHolder;
         Bar bar = getItem(position);
 
+        if(DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Business){
+            holder.listOrder_LBL_bar_name.setText(bar.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getUser_name());
+            Glide.with(activity).load(bar.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getUser_img()).placeholder(R.drawable.img_placeholder).into(holder.listOrder_IMG);
+        }
+        else if(DataManager.getDataManager().getUserType() == DataManager.eUserTypes.Private){
+            holder.listOrder_LBL_bar_name.setText(bar.getName());
+            Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listOrder_IMG);
+        }
 
-        holder.listOrder_LBL_bar_name.setText(bar.getName());
+
         holder.listOrder_LBL_table_name.setText("table: "+bar.getTables().get(TABLE_KEY).getName());
         holder.listOrder_LBL_table_description.setText(bar.getTables().get(TABLE_KEY).getDescription());
         holder.listOrder_LBL_table_num_of_places.setText("num of places: "+bar.getTables().get(TABLE_KEY).getNumOfPlaces());
@@ -50,7 +59,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         new SimpleDateFormat("dd/MM/yy", Locale.US).format(bar.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate()));
         holder.listOrder_LBL_happy_hour.setText(bar.getHappy_hour());
 
-        Glide.with(activity).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(holder.listOrder_IMG);
+
     }
 
     @Override

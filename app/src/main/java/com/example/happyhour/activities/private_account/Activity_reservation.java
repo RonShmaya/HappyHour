@@ -195,6 +195,8 @@ public class Activity_reservation extends AppCompatActivity {
             Order order = new Order()
                     .setMyTime(time)
                     .setDate(date)
+                    .setUser_img(DataManager.getDataManager().getPrivateAccount().getImgUri())
+                    .setUser_name(DataManager.getDataManager().getPrivateAccount().getName())
                     .setBarId(bar.getId())
                     .setUser_id(DataManager.getDataManager().getPrivateAccount().getId())
                     .setOrder_id(UUID.randomUUID().toString());

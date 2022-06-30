@@ -1,6 +1,7 @@
 package com.example.happyhour.activities.private_account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,6 +92,11 @@ public class Activity_follow_bar extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_google_maps);
+        toolbar.setNavigationIconTint(Color.BLACK);
+        toolbar.setNavigationOnClickListener(v -> {
+            go_next(Activity_maps.class);
+        });
         nav_view = findViewById(R.id.nav_view);
 
         nav_view.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

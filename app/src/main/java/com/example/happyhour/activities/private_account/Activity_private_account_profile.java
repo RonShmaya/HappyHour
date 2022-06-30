@@ -1,6 +1,7 @@
 package com.example.happyhour.activities.private_account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -209,6 +210,15 @@ public class Activity_private_account_profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_google_maps);
+        toolbar.setNavigationIconTint(Color.BLACK);
+        toolbar.setNavigationOnClickListener(v -> {
+            if(!is_first_time_user)
+                go_next(Activity_maps.class);
+            else
+                MyServices.getInstance().makeToast("Please Enter All Fields First");
+
+        });
 
         nav_view = findViewById(R.id.nav_view);
 
@@ -217,7 +227,7 @@ public class Activity_private_account_profile extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(is_first_time_user){
-                    MyServices.getInstance().makeToast("Please Enter Favorites First");
+                    MyServices.getInstance().makeToast("Please Enter All Fields First");
                 }
                 else if(item.getItemId() == R.id.action_home){
                     go_next(Activity_customer_main_page.class);

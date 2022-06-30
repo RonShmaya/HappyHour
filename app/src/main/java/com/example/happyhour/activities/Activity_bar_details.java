@@ -136,7 +136,7 @@ public class Activity_bar_details extends AppCompatActivity {
             return;
         }
         Glide.with(this).load(bar.getBar_photo()).placeholder(R.drawable.img_placeholder).into(barDetails_IMG_barPhoto);
-        barDetails_LBL_description.setText(bar.getDescription());
+        barDetails_LBL_description.setText("Address: "+bar.getAddressMaps().toString()+"\n"+bar.getDescription());
         barDetails_LBL_name.setText(bar.getName());
         barDetails_LBL_barType.setText(bar.barTypeToString());
         barDetails_LBL_musicType.setText(bar.barMusicToString());
@@ -284,7 +284,7 @@ public class Activity_bar_details extends AppCompatActivity {
                             R.id.dialogChangeBar_TIETL_edit_last_detail,
                             150,
                             "description",
-                            barDetails_LBL_description.getText().toString(),
+                            bar.getDescription(),
                             Activity_bar_details.this,
                             barDetails_LBL_description.getId());
         }
@@ -377,7 +377,7 @@ public class Activity_bar_details extends AppCompatActivity {
         @Override
         public void change_text(String newTxt, int objResId) {
             if (barDetails_LBL_description.getId() == objResId) {
-                barDetails_LBL_description.setText(newTxt);
+                barDetails_LBL_description.setText("Address: "+bar.getAddressMaps().toString()+"\n"+newTxt);
                 DataManager.getDataManager().change_bar_description(bar.getId(), newTxt);
 
             } else if (barDetails_LBL_name.getId() == objResId) {

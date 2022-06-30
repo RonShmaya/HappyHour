@@ -7,6 +7,8 @@ public class Order {
     private MyTime myTime;
     private String order_id;
     private String user_id;
+    private String user_name;
+    private String user_img;
     private String barId;
 
     public Order() {
@@ -57,5 +59,21 @@ public class Order {
         return this;
     }
 
+    public String getUser_name() {
+        return user_name;
+    }
 
+    public Order setUser_name(String user_name) {
+        this.user_name = user_name;
+        return this;
+    }
+
+    public String getUser_img() {
+        return user_img;
+    }
+
+    public Order setUser_img(String user_img) {
+        this.user_img = user_img;
+        return this;
+    }
 }

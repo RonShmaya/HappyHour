@@ -1,6 +1,7 @@
 package com.example.happyhour.activities.private_account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.example.happyhour.tools.MyServices;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
@@ -57,6 +59,7 @@ public class Activity_search extends AppCompatActivity {
     private View search_V_music;
     private HashMap<LinearLayout, SearchBy> searchOptions;
     private SearchBy searchBy;
+    private HashMap<String, Bar> myBars = new HashMap<>();
 
 
     @Override
@@ -92,6 +95,17 @@ public class Activity_search extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_google_maps);
+        toolbar.setNavigationIconTint(Color.BLACK);
+        toolbar.setNavigationOnClickListener(v -> {
+            String bars_gson = new Gson().toJson(myBars);
+            Bundle bundle = new Bundle();
+            bundle.putString(Activity_maps.EXTRA_BARS, bars_gson);
+            Intent intent = new Intent(this, Activity_maps.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        });
         nav_view = findViewById(R.id.nav_view);
 
         nav_view.setOnItemSelectedListener(item -> {
@@ -145,6 +159,7 @@ public class Activity_search extends AppCompatActivity {
         public void get_bars(HashMap<String, Bar> bars) {
             loading_animation_view.cancelAnimation();
             loading_animation_view.setVisibility(View.GONE);
+            myBars = bars;
             init_adapters(bars);
         }
 

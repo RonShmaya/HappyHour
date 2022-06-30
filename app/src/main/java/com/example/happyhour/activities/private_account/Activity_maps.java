@@ -48,15 +48,14 @@ public class Activity_maps extends AppCompatActivity implements OnMapReadyCallba
         setContentView(R.layout.activity_maps);
 
         Bundle bundle = getIntent().getExtras();
-        String bars_gson = bundle.getString(EXTRA_BARS, null);
-        if (bars_gson != null) {
-            myBars = new Gson().fromJson(bars_gson, new TypeToken<HashMap<String, Bar>>() {
-            }.getType());
-
-        } else {
+        if (bundle == null || bundle.getString(EXTRA_BARS, null) == null) {
             MyDB.getInstance().setCallback_get_bars(callback_get_bars);
             MyDB.getInstance().get_bars();
+        } else {
+            String bars_gson = bundle.getString(EXTRA_BARS, null);
+            myBars = new Gson().fromJson(bars_gson, new TypeToken<HashMap<String, Bar>>() {}.getType());
         }
+
         init_toolbar();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -75,15 +74,15 @@ public class Activity_maps extends AppCompatActivity implements OnMapReadyCallba
             LatLng address = MyServices.getInstance().getLocationFromAddress(this, bar.getAddressMaps().toString());
             if (address != null) {
                 MarkerOptions marker = new MarkerOptions().position(address).title(bar.getName());
-                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar_google_map));
+                marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bar_google_maps));
                 mMap.addMarker(marker);
                 markerOptions.add(marker);
             }
         });
         PrivateAccount privateAccount = DataManager.getDataManager().getPrivateAccount();
         LatLng userAddress = MyServices.getInstance().getLocationFromAddress(this, privateAccount.getAddressMaps().toString());
-         MarkerOptions marker = new MarkerOptions().position(userAddress).title(privateAccount.getName());
-         marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user_map));
+        MarkerOptions marker = new MarkerOptions().position(userAddress).title(privateAccount.getName());
+        marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user_google_maps));
         mMap.addMarker(marker);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(userAddress));

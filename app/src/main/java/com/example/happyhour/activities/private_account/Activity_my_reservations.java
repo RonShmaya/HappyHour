@@ -1,6 +1,10 @@
 package com.example.happyhour.activities.private_account;
 
+import static com.example.happyhour.adapters.OrdersAdapter.ORDER_KEY;
+import static com.example.happyhour.adapters.OrdersAdapter.TABLE_KEY;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +33,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -121,7 +126,15 @@ public class Activity_my_reservations extends AppCompatActivity {
 
                     }));
         });
+        Collections.sort(barsToAdapter, (bar1, bar2) -> {
+            int result = bar1.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate()
+                    .compareTo(bar2.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate());
+            if(result != 0)
+                return result;
 
+            return bar1.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getMyTime()
+                    .compareTo(bar2.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getMyTime());
+        });
         ordersAdapter = new OrdersAdapter(this , barsToAdapter);
         order_LST_tables.setAdapter(ordersAdapter);
 
@@ -136,6 +149,12 @@ public class Activity_my_reservations extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_google_maps);
+        toolbar.setNavigationIconTint(Color.BLACK);
+        toolbar.setNavigationOnClickListener(v -> {
+            go_next(Activity_maps.class);
+        });
+
         nav_view = findViewById(R.id.nav_view);
 
         nav_view.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

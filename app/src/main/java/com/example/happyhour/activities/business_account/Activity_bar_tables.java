@@ -1,5 +1,8 @@
 package com.example.happyhour.activities.business_account;
 
+import static com.example.happyhour.adapters.OrdersAdapter.ORDER_KEY;
+import static com.example.happyhour.adapters.OrdersAdapter.TABLE_KEY;
+
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -18,8 +21,8 @@ import com.example.happyhour.adapters.OrdersAdapter;
 import com.example.happyhour.adapters.TableAdapter;
 import com.example.happyhour.dialogs.DialogAddTable;
 import com.example.happyhour.objects.Bar;
-import com.example.happyhour.objects.Table;
 import com.example.happyhour.objects.MyTime;
+import com.example.happyhour.objects.Table;
 import com.example.happyhour.tools.DataManager;
 import com.example.happyhour.tools.MyDB;
 import com.example.happyhour.tools.MyServices;
@@ -30,6 +33,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -103,7 +107,7 @@ public class Activity_bar_tables extends AppCompatActivity {
         bar_tables_BTN_show_all.setOnClickListener(view -> bar_tables_LST_tables.setAdapter(tablesAdapter));
         bar_tables_FAB_addTime.setOnClickListener(view -> {
             DialogFragment newFragment = new MyServices.DatePickerFragment();
-            ((MyServices.DatePickerFragment)newFragment).setCallback_date(callback_date);
+            ((MyServices.DatePickerFragment) newFragment).setCallback_date(callback_date);
             newFragment.show(getSupportFragmentManager(), "datePicker");
         });
     }
@@ -112,10 +116,10 @@ public class Activity_bar_tables extends AppCompatActivity {
         @Override
         public void get_input_date(Date date) {
             Date date_now = new Date(System.currentTimeMillis());
-            String date_now_str =  simpleDateFormat.format(System.currentTimeMillis());
-            String date_str =  simpleDateFormat.format(date);
+            String date_now_str = simpleDateFormat.format(System.currentTimeMillis());
+            String date_str = simpleDateFormat.format(date);
 
-            if(!(date_now_str.equals(date_str)) && date.compareTo(date_now) < 0){
+            if (!(date_now_str.equals(date_str)) && date.compareTo(date_now) < 0) {
                 MyServices.getInstance().makeToast("Date Must Be From\n" + date_now_str + " forward");
                 return;
             }
@@ -124,39 +128,49 @@ public class Activity_bar_tables extends AppCompatActivity {
 
         }
     };
+
     private void show_orders(String date_to_search) {
         final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR , 0);
-        cal.set(Calendar.MINUTE , 0);
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
         String date_str = simpleDateFormat.format(cal.getTime());
         Date date = cal.getTime();
         barsForAdapter.clear();
         bar.getTables().values().forEach(table -> {
             table.getOrders().values().forEach(order -> {
                 if (order.getDate().compareTo(date) < 0
-                        &&  !(simpleDateFormat.format(order.getDate()).equals(date_str))) {
+                        && !(simpleDateFormat.format(order.getDate()).equals(date_str))) {
                     MyDB.getInstance().remove_order(bar, table.getId(), order);
                     return;
                 }
-                if(!(date_to_search.equals(simpleDateFormat.format(order.getDate())))){
+                if (!(date_to_search.equals(simpleDateFormat.format(order.getDate())))) {
                     return;
                 }
                 Table table_for_adapter = new Table()
                         .setNumOfPlaces(table.getNumOfPlaces())
                         .setDescription(table.getDescription())
                         .setName(table.getName())
-                        .addOrder(OrdersAdapter.ORDER_KEY, order);
+                        .addOrder(ORDER_KEY, order);
                 barsForAdapter.add(new Bar()
                         .setName(bar.getName())
                         .setBar_photo(bar.getBar_photo())
                         .setHappy_hour(bar.getHappy_hour())
-                        .addTable(OrdersAdapter.TABLE_KEY, table_for_adapter));
+                        .addTable(TABLE_KEY, table_for_adapter));
             });
         });
-        if(barsForAdapter.size() == 0){
-            MyServices.getInstance().makeToast("There is no Reservation in this day");
+        if (barsForAdapter.size() == 0) {
+            MyServices.getInstance().makeToast("There is no Reservation on this day");
         }
-        ordersAdapter = new OrdersAdapter(this , barsForAdapter);
+        Collections.sort(barsForAdapter, (bar1, bar2) -> {
+            int result = bar1.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate()
+                    .compareTo(bar2.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getDate());
+            if (result != 0)
+                return result;
+
+            return bar1.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getMyTime()
+                    .compareTo(bar2.getTables().get(TABLE_KEY).getOrders().get(ORDER_KEY).getMyTime());
+        });
+        ordersAdapter = new OrdersAdapter(this, barsForAdapter);
         bar_tables_LST_tables.setAdapter(ordersAdapter);
     }
 
