@@ -252,6 +252,10 @@ public class Activity_private_account_profile extends AppCompatActivity {
         });
         fab_search = findViewById(R.id.fab_search);
         fab_search.setOnClickListener(view -> {
+            if(is_first_time_user){
+                MyServices.getInstance().makeToast("Please Enter All Fields First");
+                return;
+            }
             go_next(Activity_search.class);
         });
     }
