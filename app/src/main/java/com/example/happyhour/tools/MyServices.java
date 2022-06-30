@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.icu.util.Calendar;
 import android.location.Address;
 import android.location.Geocoder;
@@ -14,7 +12,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,8 +36,7 @@ public class MyServices {
     private MyServices(Context context) {
         this.context = context.getApplicationContext();
         this.toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
-        toast.getView().getBackground().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.DARKEN);
-        ((TextView) toast.getView().findViewById(android.R.id.message)).setTextColor(Color.parseColor("#FF577F"));
+
     }
 
     public static void initHelper(Context context) {
