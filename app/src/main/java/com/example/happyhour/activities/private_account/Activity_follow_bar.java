@@ -25,6 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +64,13 @@ public class Activity_follow_bar extends AppCompatActivity {
     private Callback_get_bars callback_get_bars = new Callback_get_bars() {
         @Override
         public void get_bars(HashMap<String, Bar> bars) {
+            String bars_gson = new Gson().toJson(bars);
+            Bundle bundle = new Bundle();
+            bundle.putString(Activity_maps.EXTRA_BARS, bars_gson);
+            Intent intent = new Intent(Activity_follow_bar.this, Activity_maps.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
         @Override
         public void get_bar(Bar bar) {
@@ -95,7 +103,9 @@ public class Activity_follow_bar extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_google_maps);
         toolbar.setNavigationIconTint(Color.BLACK);
         toolbar.setNavigationOnClickListener(v -> {
-            go_next(Activity_maps.class);
+            loading_animation_view.playAnimation();
+            loading_animation_view.setVisibility(View.VISIBLE);
+            MyDB.getInstance().get_bars();
         });
         nav_view = findViewById(R.id.nav_view);
 

@@ -19,11 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.happyhour.R;
 import com.example.happyhour.activities.Activity_user_connect;
+import com.example.happyhour.callbacks.Callback_get_bars;
 import com.example.happyhour.callbacks.Callback_upload_profile_img;
 import com.example.happyhour.objects.AddressMaps;
+import com.example.happyhour.objects.Bar;
 import com.example.happyhour.objects.PrivateAccount;
 import com.example.happyhour.objects.eBarType;
 import com.example.happyhour.tools.DataManager;
+import com.example.happyhour.tools.MyDB;
 import com.example.happyhour.tools.MyServices;
 import com.example.happyhour.tools.MyStorage;
 import com.github.drjacky.imagepicker.ImagePicker;
@@ -38,9 +41,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.database.annotations.NotNull;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kotlin.Unit;
@@ -219,8 +224,10 @@ public class Activity_private_account_profile extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_google_maps);
         toolbar.setNavigationIconTint(Color.BLACK);
         toolbar.setNavigationOnClickListener(v -> {
-            if(!is_first_time_user)
-                go_next(Activity_maps.class);
+            if(!is_first_time_user) {
+                MyDB.getInstance().setCallback_get_bars(callback_get_bars);
+                MyDB.getInstance().get_bars();
+            }
             else
                 MyServices.getInstance().makeToast("Please Enter All Fields First");
 
@@ -259,7 +266,25 @@ public class Activity_private_account_profile extends AppCompatActivity {
             go_next(Activity_search.class);
         });
     }
-
+    private Callback_get_bars callback_get_bars = new Callback_get_bars() {
+        @Override
+        public void get_bars(HashMap<String, Bar> bars) {
+            String bars_gson = new Gson().toJson(bars);
+            Bundle bundle = new Bundle();
+            bundle.putString(Activity_maps.EXTRA_BARS, bars_gson);
+            Intent intent = new Intent(Activity_private_account_profile.this, Activity_maps.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        @Override
+        public void get_bar(Bar bar) {
+        }
+        @Override
+        public void failed() {
+            MyServices.getInstance().makeToast("something went wrong");
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_bar_menu, menu);
