@@ -25,6 +25,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class DialogPost {
+    public interface Callback_clicked_post_enter_bar {
+        void post_clicked(Bar bar);
+    }
 
     private MaterialTextView post_LBL_barName;
     private CircleImageView post_IMG_barImg;
@@ -32,12 +35,17 @@ public class DialogPost {
     private MaterialTextView post_LBL_likes;
     private MaterialButton post_BTN_follow_or_remove;
     private DataManager.eUserTypes userType;
+    private Callback_clicked_post_enter_bar callback_clicked_post;
     private Context context;
     private Bar bar;
     private Post post;
     private ArrayList posts;
     private PostsAdapter postsAdapter;
 
+    public DialogPost setCallback_clicked_post(Callback_clicked_post_enter_bar callback_clicked_post) {
+        this.callback_clicked_post = callback_clicked_post;
+        return this;
+    }
 
     public void show(Context context, Bar bar, Post post , ArrayList posts , PostsAdapter postsAdapter) {
         final Dialog dialog = new Dialog(context);
@@ -86,6 +94,9 @@ public class DialogPost {
             set_btn_icon(context.getDrawable(R.drawable.ic_not_like));
         }
         post_BTN_follow_or_remove.setOnClickListener(like_btn_clicked);
+        post_LBL_barName.setOnClickListener(post_clicked);
+        post_IMG_barImg.setOnClickListener(post_clicked);
+        post_IMG.setOnClickListener(post_clicked);
     }
 
     private void init_business_account(Dialog dialog) {
@@ -120,6 +131,14 @@ public class DialogPost {
                 set_btn_icon(context.getDrawable(R.drawable.ic_like));
                 post_LBL_likes.setText("Likes: "+post.getLikes().size());
                 MyDB.getInstance().like(bar , post, userId, userName);
+            }
+        }
+    };
+    private View.OnClickListener post_clicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(callback_clicked_post != null){
+                callback_clicked_post.post_clicked(bar);
             }
         }
     };

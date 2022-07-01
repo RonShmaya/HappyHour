@@ -192,6 +192,7 @@ public class Activity_search extends AppCompatActivity {
         search_LST_posts.setLayoutManager(layoutManager);
         search_LST_posts.setAdapter(postsAdapter);
         postsAdapter.setPostListener((post, position) -> new DialogPost()
+                .setCallback_clicked_post(callback_clicked_post)
                 .show(Activity_search.this, bar_and_posts.get(post), post, null, null));
 
         init_search_engine();
@@ -333,6 +334,12 @@ public class Activity_search extends AppCompatActivity {
         public boolean isSearchContain(Bar bar, String input) {
             return bar.barMusicToString().toLowerCase().contains(input.toLowerCase());
         }
-
     }
+    private DialogPost.Callback_clicked_post_enter_bar callback_clicked_post = new DialogPost.Callback_clicked_post_enter_bar() {
+        @Override
+        public void post_clicked(Bar bar) {
+            go_next_bundle(Activity_bar_details.class , bar);
+        }
+
+    };
 }
