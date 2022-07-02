@@ -39,15 +39,15 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 |<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/MpQ2gxbeIiYzi7Wii3/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/GGxoOJNQOkKpMOoJW0/giphy.gif" alt="animated"/>|
 
 ### 💃 Private Account
-- About lottie animation
-- About fire base authentication & UI
--
+- About google maps
+- 
+
 |Home page|Google maps|Search Engine|
 |---|---|---|
 |<img src="https://media.giphy.com/media/1O7hkrPEDXVWsWwxBa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/k5mfcFpYSpWRowsUpa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/hcfXtHdeXM7fYXM8n6/giphy.gif" alt="animated"/>
 
 |Make Review|Search page|Following page|Reservation|
-|---|---|---|
+|---|---|---|---|
 |<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
 
 
