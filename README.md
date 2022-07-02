@@ -41,7 +41,7 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 ### 💃 Private Account
 - About lottie animation
 - About fire base authentication & UI
--media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif
+-
 |Home page|Google maps|Search page|
 |---|---|---|
 |<img src="https://media.giphy.com/media/1O7hkrPEDXVWsWwxBa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/k5mfcFpYSpWRowsUpa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
