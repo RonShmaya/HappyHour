@@ -9,6 +9,21 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 
 ## :space_invader: Methods
 ### Private account
-- v
-- v
-- v
+- Find bars by their happy hours, their names, or the type of music they play.
+- Locate bars near you with Google Maps.
+- Make a reservation.
+- Exposure to bar posts.
+- Make like to posts.
+- Follow bars and get discount.
+- Write bar review.
+- Get lists of the best bars rank.
+- Choose your favorite bar types and get lists accordingly.
+- Get your orders list - Old orders are deleted from the server automatically.
+- Get your followers list.
+
+### Business account
+- Create your own bars.
+- Upload posts.
+- Create tables.
+- See bar orders.
+- Update bar details.
