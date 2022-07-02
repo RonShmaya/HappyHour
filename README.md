@@ -28,3 +28,14 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 - Create tables.
 - See bar orders.
 - Update bar details.
+
+## :iphone: App Screens
+-
+-
+-
+
+### :calling: Login
+|lottie animation|authentication by google|authentication by phone number
+|--|--|--|
+|<img src="https:/media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>
+
