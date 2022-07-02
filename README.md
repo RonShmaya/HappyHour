@@ -40,14 +40,15 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 
 ### 💃 Private Account
 - About google maps
-- 
+- About upload photos
+- About calender view
 
 |Home page|Google maps|Search Engine|
 |---|---|---|
 |<img src="https://media.giphy.com/media/1O7hkrPEDXVWsWwxBa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/k5mfcFpYSpWRowsUpa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/hcfXtHdeXM7fYXM8n6/giphy.gif" alt="animated"/>
 
-|Make Review|Search page|Following page|Reservation|
+|Make Review|Search page|Profile page|Reservation|
 |---|---|---|---|
-|<img src="https://media.giphy.com/media/ft3nsXBNr740EJZgYK/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/H9ywaDxnJ1SxwtmGXe/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
+|<img src="https://media.giphy.com/media/ft3nsXBNr740EJZgYK/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/H9ywaDxnJ1SxwtmGXe/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/a14Z5ys9IKUy2jL7tn/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/r65IN7S5jU9YHX0DU8/giphy.gif" alt="animated"/>
 
 
