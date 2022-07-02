@@ -32,10 +32,12 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 ## :iphone: App Screens
 -
 -
--
-
+https://
 ### :calling: Login
-|lottie animation|authentication by google|authentication by phone number
+- about lottie animation
+- about fire base authentication & UI
+- 
+|lottie animation|authentication by google|authentication by phone number|
 |--|--|--|
-|<img src="https:/media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>
+|<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/MpQ2gxbeIiYzi7Wii3/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/GGxoOJNQOkKpMOoJW0/giphy.gif" alt="animated"/>
 
