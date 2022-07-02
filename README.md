@@ -29,6 +29,16 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 - See bar orders.
 - Update bar details.
 
+## :iphone: Tools & Libraries
+- Real Time Firebase - DB on cloud
+- Storage Firebase - upload photos & videos on cloud
+- Authentication Firbase - for making user with providers like phone and google
+- Google Maps
+- Glide - get photos from cloud Easily
+- Lottie - make your on animation 
+- Gson 
+- Image Picker for upload photos
+
 ## :iphone: App Screens
 ### :calling: Login
 - About lottie animation
