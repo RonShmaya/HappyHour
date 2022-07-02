@@ -53,7 +53,7 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 
 ### 🍹: Business Account
 |Home page|Bar page|Tables & Ordres|
-|---|---|---|---|
+|---|---|---|
 |<img src="https://media.giphy.com/media/5h9RTI05Hmv1iDACAh/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/0KvyBJgiodaxMQGhfh/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/mEC8JQBXxZIO5TpPWL/giphy.gif" alt="animated"/>|
 
 
