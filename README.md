@@ -42,12 +42,12 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 - About lottie animation
 - About fire base authentication & UI
 -
-|Home page|Google maps|Search page|
+|Home page|Google maps|Search Engine|
 |---|---|---|
 |<img src="https://media.giphy.com/media/1O7hkrPEDXVWsWwxBa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/k5mfcFpYSpWRowsUpa/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/hcfXtHdeXM7fYXM8n6/giphy.gif" alt="animated"/>
 
-|Home page|Google maps|Search page|
+|Make Review|Search page|Following page|Reservation|
 |---|---|---|
-|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
+|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
 
 
