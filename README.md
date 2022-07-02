@@ -41,17 +41,18 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 
 ## :iphone: App Screens
 ### :calling: Login
-- About lottie animation
-- About fire base authentication & UI
+- lottie animation
+- fire base authentication & UI
 
 |Lottie animation|Authentication by google|Authentication by phone number|
 |---|---|---|
 |<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/MpQ2gxbeIiYzi7Wii3/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/GGxoOJNQOkKpMOoJW0/giphy.gif" alt="animated"/>|
 
 ### 💃 Private Account
-- About google maps
-- About upload photos
-- About calender view
+- Upload photos using Image Picker
+- Search engine
+- google maps - find location by address
+- Calender - you can get date or time from user
 
 |Home page|Google maps|Search Engine|
 |---|---|---|
