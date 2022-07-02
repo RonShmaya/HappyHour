@@ -1,1 +1,1 @@
-<p align="center"><img src="app/src/main/res/drawable/ic_logo_small.png" height="300" width="400"></p>
+<p align="center"><img src="app/src/main/res/drawable/ic_logo.png" height="250" width="400"></p>
