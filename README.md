@@ -30,14 +30,11 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 - Update bar details.
 
 ## :iphone: App Screens
--
--
-https://
 ### :calling: Login
-- about lottie animation
-- about fire base authentication & UI
+- About lottie animation
+- About fire base authentication & UI
 - 
-|lottie animation|authentication by google|authentication by phone number|
+|Lottie animation|Authentication by google|Authentication by phone number|
 |---|---|---|
 |<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/MpQ2gxbeIiYzi7Wii3/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/GGxoOJNQOkKpMOoJW0/giphy.gif" alt="animated"/>
 
