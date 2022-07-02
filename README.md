@@ -48,6 +48,6 @@ When we succeed in finding some time to hang out, we try to be spontaneous, but 
 
 |Make Review|Search page|Following page|Reservation|
 |---|---|---|---|
-|<img src="https://media.giphy.com/media/ft3nsXBNr740EJZgYK/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/ilK1ah3h5UpAI3KWX2/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
+|<img src="https://media.giphy.com/media/ft3nsXBNr740EJZgYK/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/H9ywaDxnJ1SxwtmGXe/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/Be5MuKhbTDToCp2ybG/giphy.gif" alt="animated"/>
 
 
