@@ -38,6 +38,6 @@ https://
 - about fire base authentication & UI
 - 
 |lottie animation|authentication by google|authentication by phone number|
-|--|--|--|
+|---|---|---|
 |<img src="https://media.giphy.com/media/R4AJsqt466ysE6D1EO/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/MpQ2gxbeIiYzi7Wii3/giphy.gif" alt="animated"/>|<img src="https://media.giphy.com/media/GGxoOJNQOkKpMOoJW0/giphy.gif" alt="animated"/>
 
